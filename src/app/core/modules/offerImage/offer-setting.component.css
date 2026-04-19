@@ -1,0 +1,107 @@
+.dx-rtl .dx-button-has-icon .dx-icon {
+  color: #fff !important;
+}
+
+/* .dx-fileuploader-input-wrapper {
+  height: 100px !important;
+}
+
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button,
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button:focus,
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button:hover {
+  margin: 14px 0 !important;
+  height: 58px !important;
+}
+.dx-fileuploader-file-info {
+  display: none;
+} */
+
+::ng-deep .dx-list-item-content > div {
+  padding: 5px;
+  font-size: 15px;
+}
+.list-container {
+  padding: 10px;
+}
+.product-pop-count h6,
+.plus-btn-container,
+.minus-btn-container,
+.input-count {
+  display: inline-block;
+  padding: 0 5px;
+}
+.product-img-container {
+  position: relative;
+  margin: 3px 0;
+  cursor: pointer;
+}
+.product-img-container img {
+  height: 60px;
+  width: 100%;
+}
+.product-img-container .img-banner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(64, 158, 153, 0.4);
+}
+.product-img-container .img-banner > i {
+  position: relative;
+  right: 37%;
+  top: 30%;
+  color: #fff;
+}
+.list-item {
+  background-color: #f8f8f8;
+  padding: 0 3px 0;
+  margin-top: 3px;
+}
+
+.dx-fileuploader-input-wrapper {
+  padding: 10px 10px;
+  /* height: 100%; */
+  text-align: center;
+  width: 50%;
+  height: 100px;
+  background-color: #f8f8f8;
+}
+
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button,
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button:focus,
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button:hover {
+  float: none;
+  border: none;
+  margin: 0px 0;
+  height: 70px;
+  width: 35%;
+
+  background-size: 100% 100%;
+}
+.image-upload > input,
+.image-upload-lg > input {
+  display: none;
+}
+.image-upload {
+  text-align: center;
+  height: 110px;
+  width: 110px;
+  padding: 20px;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+.image-upload-lg {
+  width: 100%;
+  text-align: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  height: 77%;
+  background-color: #fff;
+}

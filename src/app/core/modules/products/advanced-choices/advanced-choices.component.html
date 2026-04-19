@@ -1,0 +1,335 @@
+<section class="container py-2">
+ <dx-button (onClick)="saveAll()" class="btn"  style="    background-color:#27c7bf;color: #fff "  >حفظ الكل</dx-button>
+  <div class="row" *ngFor="let item of options; let i = index">
+    <div class="col-md-3">
+      <div class="dx-field input-with-icon">
+        <i class="fas fa-tag" style="transform: rotate(90deg)"></i>
+        <div class="dx-field-value">
+          <dx-text-box
+            [(value)]="item.label_ar"
+            placeholder="مسمي الخيار (مثل اللون أو القياس )"
+            [rtlEnabled]="true"
+            class="with-icon"
+          ></dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dx-field input-with-icon">
+        <i class="fas fa-tag" style="transform: rotate(90deg)"></i>
+        <div class="dx-field-value">
+          <dx-text-box
+           [(value)]="item.label_en"
+            placeholder="En مسمي الخيار (مثل اللون أو القياس )" 
+            [rtlEnabled]="true"
+            class="with-icon"
+          ></dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dx-field input-with-icon">
+        <i class="fas fa-tag"></i>
+       
+        <div class="dx-field-value">
+          <dx-select-box
+          [items]="advancedChoices"
+            displayExpr="value"
+             valueExpr="key"
+            [(value)]="item.type"
+            [rtlEnabled]="true"
+          ></dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="options.length > 1">
+      <div class="dx-field mt-3">
+        <div class="dx-field-value">
+          <dx-button
+            (onClick)="deleteOption(i)"
+            type="danger"
+            icon="far fa-trash-alt"
+            style="padding: 0"
+          ></dx-button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+  
+      <div class="row" *ngFor="let val of options[i].values; let j = index">
+        <div class="col-md-3 mt-2">
+          <div class="dx-field input-with-icon">
+            <div class="dx-field-value">
+              <dx-text-box
+              [(value)]="options[i].values[j].name_ar"
+                placeholder="القيمة"
+                [rtlEnabled]="true"
+                class="with-icon"
+                (onValueChanged)="getoptions()"
+              ></dx-text-box>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="dx-field input-with-icon">
+            <div class="dx-field-value">
+              <dx-text-box
+                [(value)]="options[i].values[j].name_en"
+                placeholder="القيمة En"
+                [rtlEnabled]="true"
+                class="with-icon"
+                (onValueChanged)="getoptions()"
+              ></dx-text-box>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="dx-field mt-2" *ngIf="options[i].type == 'Color'">
+            <div class="dx-field-value">
+              <dx-color-box  [(value)]="options[i].values[j].display_value"></dx-color-box>
+            </div>
+          </div>
+          <div class="dx-field" *ngIf="options[i].type == 'image'">
+            <div class="dx-field-value mt-1">
+              <div class="image-upload-lg">
+                <label for="file-input{{j}}">
+                  <div class="col-3 text-right">
+                    <img
+                    #img
+                  
+                     
+                      [src]="path+options[i].values[j].display_value ? path+options[i].values[j].display_value :imgSrc "
+                      height="30px"
+                      alt=""
+                    />
+                  </div>
+                </label>
+               
+  
+                <input #companyImg   (change)="showPreview($event, i,  j,img)" accept="image/*" id="file-input{{j}}" type="file" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" *ngIf="options[i].values.length > 1">
+          <div class="dx-field mt-3">
+            <div class="dx-field-value">
+              <dx-button
+                (onClick)="deleteValue(i,j)"
+                type="danger"
+                class="p-0"
+              >
+                <i class="far fa-trash-alt"></i
+              ></dx-button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center adding-value mt-2">
+        <dx-button
+          icon="plus"
+          (onClick)="addValue(i)"
+          class="btn default-btn"
+          >أضافة قيمة جديدة</dx-button
+        >
+      </div>
+    </div>
+    <div class="line-border"></div>
+  </div>
+  <div class="text-center mt-2 row">
+    <div class="col-md-6 mx-auto">
+      <dx-button
+        icon="plus"
+        (onClick)="addOption()"
+        class="btn btn-block default-btn"
+        >أضافة خيار جديد</dx-button
+      >
+    </div>
+  </div>
+</section>
+<div class="line-border"></div>
+
+<div class="container-fluid py-2">
+  <!-- <div>
+    <div class="dx-field mt-2">
+      <div class="dx-field-value">
+        <dx-check-box  [(value)]="unlimited_quantity" text="الكمية غير محدودة"></dx-check-box>
+      </div>
+    </div>
+  </div> -->
+  <div id="accordion">
+    <dx-accordion
+      #accordion
+      [dataSource]="result"
+      [collapsible]="true"
+      [multiple]="true"
+      [animationDuration]="300"
+     
+      itemTitleTemplate="title"
+      itemTemplate="item"
+    >
+      <div *dxTemplate="let company of 'title';let i = index">
+          <h1>{{company}}</h1> 
+        <div class="row">
+          <div class="col-8">
+          
+          </div>
+          <div class="col-4">
+            <span *ngIf="!unlimited_quantity" class="text-left" style="font-size: 13px; font-weight: 500">
+              متوفر عدد  {{details[i]?.quantity}} 
+            </span>
+          </div>
+        </div>
+      </div>
+      <div *dxTemplate="let company of 'item'; let i=index">
+       
+          <div class="row">
+            <div class="col-md-3 mt-1">
+              <div class="dx-field input-with-icon">
+                <i class="fas fa-coins"></i>
+  
+                <div class="dx-field-value">
+                  <dx-number-box
+                    [(value)]="details[i].price"
+                    placeholder="السعر"
+                    format="$ #,##0.##" 
+                    [rtlEnabled]="true"
+                    class="with-icon"
+                    readOnly="true"
+                  ></dx-number-box>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mt-1">
+              <div class="dx-field input-with-icon">
+                <i class="fas fa-coins"></i>
+  
+                <div class="dx-field-value">
+                  <dx-number-box
+                  [(value)]="details[i].cost_price"
+                    placeholder="سعر التكلفة"
+                    format="$ #,##0.##" 
+                    [rtlEnabled]="true"
+                    class="with-icon"
+                    readOnly="true"
+                  ></dx-number-box>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mt-1">
+              <div class="dx-field input-with-icon">
+                <i class="fas fa-coins"></i>
+  
+                <div class="dx-field-value">
+                  <dx-number-box
+                  [(value)]="details[i].price_sale"
+                    placeholder="سعر البيع"
+                    format="$ #,##0.##" 
+                    [rtlEnabled]="true"
+                    class="with-icon"
+                   
+                  >
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                </dx-validator></dx-number-box>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mt-1">
+              <div class="dx-field input-with-icon">
+                <i class="fas fa-coins"></i>
+  
+                <div class="dx-field-value">
+                  <dx-number-box
+                  [(value)]="details[i].discount_price"
+                  placeholder="سعر الخصم"
+                    [rtlEnabled]="true"
+                    format="$ #,##0.##" 
+                    class="with-icon"
+                
+                  ></dx-number-box>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 mt-1">
+              <div class="dx-field input-with-icon">
+                <i class="fas fa-barcode"></i>
+  
+                <div class="dx-field-value">
+                  <dx-text-box
+                  [(value)]="details[i].parcode"
+                    placeholder="باركود"
+                    [rtlEnabled]="true"
+                    class="with-icon"
+                    
+                  ></dx-text-box>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-2 mt-1">
+              <div class="dx-field input-with-icon">
+                <i style="transform: rotate(90deg)" class="fas fa-tag"></i>
+  
+                <div class="dx-field-value">
+                  <dx-text-box
+                  [(value)]="details[i].sku"
+                  placeholder="sku"
+                    [rtlEnabled]="true"
+                    class="with-icon"
+                  ></dx-text-box>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mt-1" >
+              <div class="dx-field input-with-icon">
+                <i class="fas fa-bell"></i>
+  
+                <div class="dx-field-value">
+                  <dx-number-box
+                  [(value)]="details[i].min_quantity"
+                    placeholder="أقل كمية"
+                    [rtlEnabled]="true"
+                    class="with-icon"
+                    [min]="1"
+                 
+                  ></dx-number-box>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="line-border"></div>
+      
+  
+          <div class="product-pop-count d-inline-block text-left">
+            <!-- <div class="plus-btn-container">
+              <dx-button
+              (onClick)="plus(i)"
+                icon="plus"
+                value="1"
+                class="rounded-circle bg-default"
+              ></dx-button>
+            </div> -->
+            <div class="input-count">
+             
+                <dx-check-box [(value)]="details[i].report_status"   >
+               
+                </dx-check-box>
+                <p  class="product-name mr-2" style="display:inline;">عرض ف التقرير </p>
+              </div>
+            
+            <!-- <div class="minus-btn-container">
+              <dx-button
+              (onClick)="minus(i)"
+                icon="minus"
+                class="rounded-circle bg-default"
+              ></dx-button>
+            </div> -->
+          </div> 
+        </div>
+       
+      
+    </dx-accordion>
+  </div>
+</div> 

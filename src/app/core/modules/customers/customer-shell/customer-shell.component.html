@@ -1,0 +1,45 @@
+<div>
+  <app-customer-list #list [datasource]= "customerList" (showDeletePopUp)="showDeletePopup($event)" (showunDeletePopUp)="showunDeletePopup($event)" (showPopUp)="showPopUp($event)"></app-customer-list>
+</div>
+<app-customer-popup
+#popup
+[popTitle]="popTitle"
+[addCase]="addCase"
+  [Villages] = "Villages"
+  [States]="States"
+  [Cities]="Cities"
+  (OnHiding)="hidePopUp()"
+  [isCustomerPopupVisible]="isCustomerPopupVisible"
+  (AddCustomer)="addCustomer($event)"
+   (EditCustomer)="editCustomer($event)"
+></app-customer-popup>
+<app-delete-pop-up
+(whenPopupConfirm)="whenDeletePopupConfirm($event)"
+(whenPopupHide)="hideDeletePopup()"
+[isDeletePopupVisible]="isConfirmDeletePopupVisible"
+>
+</app-delete-pop-up>
+<!--<app-delete-pop-up (whenPopupConfirm)="whenunDeletePopupConfirm($event)"
+                   (whenPopupHide)="hideunDeletePopup()"
+                   [isDeletePopupVisible]="isConfirmDeleteunPopupVisible">
+</app-delete-pop-up>-->
+<dx-popup [visible]="isConfirmDeleteunPopupVisible"
+          [shading]="true"
+          [title]="'هل أنت متأكد من تفعيل هذا المستخدم'"
+          shadingColor="rgba(0, 0, 0, 0.2)"
+          [closeOnOutsideClick]="true"
+          [rtlEnabled]="true"
+          [maxWidth]="400"
+          [maxHeight]="180"
+          dragEnabled="true"
+          (onHiding)="hideunDeletePopup()">
+  <div *dxTemplate="let data of 'content'">
+
+    <div class="mt-3 text-center">
+      <dx-button class="btn-danger btn"
+                 (click)="whenunDeletePopupConfirm(true)">نعم</dx-button>
+      <dx-button class="default-btn  btn"
+                 (click)="whenunDeletePopupConfirm(false)">لا</dx-button>
+    </div>
+  </div>
+</dx-popup>

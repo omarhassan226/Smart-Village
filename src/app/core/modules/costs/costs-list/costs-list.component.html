@@ -1,0 +1,123 @@
+<div class="container-fluid text-right my-2">
+  <div
+    class="btn-group flex-wrap"
+    role="group"
+    aria-label="Button group with nested dropdown"
+  >
+    <h6 class="header-text">التكاليف التشغيلية</h6>
+    <button
+      type="button"
+      class="btn circle-right-side"
+      style="background-color: #f2f0f0; border: 1px solid #f8f8f8"
+    >
+      <img
+        src="../../../../../assets/images/cbe3d3ea-b022-4fab-9373-0f694afff02e.jpg"
+      />
+    </button>
+
+    <div class="btn-group" role="group">
+      <button
+        id="btnGroupDrop1"
+        type="button"
+        class="btn dropdown-toggle mt-1"
+        style="background-color: #f2f0f0; border: 1px solid #f8f8f8"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        خيارات العرض : {{selectedItem}} 
+      </button>
+      <div class="dropdown-menu dropdown-menu-right"
+           aria-labelledby="btnGroupDrop1">
+        <a (click)="getSelectedDropdown('كهرباء')" class="dropdown-item">كهرباء</a>
+        <a (click)="getSelectedDropdown('الايجار')" class="dropdown-item">الايجار</a>
+        <a (click)="getSelectedDropdown('الشحن')" class="dropdown-item">الشحن</a>
+        <a (click)="getSelectedDropdown('التسويق')" class="dropdown-item">التسويق</a>
+        <a (click)="getSelectedDropdown('الأجور')" class="dropdown-item">الأجور</a>
+        <a (click)="getSelectedDropdown('أخرى')" class="dropdown-item">أخرى</a>
+
+      </div>
+    </div>
+    <button type="button" class="btn mt-1">التاريخ من :</button>
+    <dx-date-box  (onValueChanged)="costFilter()" [(value)]="start_date" class="btn mt-1" [rtlEnabled]="true"></dx-date-box>
+    <button type="button" class="btn mt-1">التاريخ إلي :</button>
+    <dx-date-box
+    (onValueChanged)="costFilter()"
+    [(value)]="end_date"
+      class="btn circle-left-side mt-1"
+      [rtlEnabled]="true"
+    ></dx-date-box>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <dx-data-grid
+    #gridRef
+    [dataSource]="Costs"
+    width="100%"
+    keyExpr="id"
+    [showBorders]="true"
+    [rtlEnabled]="true"
+    width="100%"
+    [focusedRowEnabled]="true"
+    [columnAutoWidth]="true"
+    [noDataText]="'لايوجد بيانات'"
+  >
+    <dxi-column dataField="type" dataType="string" [caption]="'النوع'">
+      <dxi-validation-rule type="required" [message]="'Required'"
+        >عرض جميع المنتجات</dxi-validation-rule
+      >
+    </dxi-column>
+
+    <dxi-column dataType="string" [caption]="'التكلفة'" dataField="cost">
+    </dxi-column>
+    <dxi-column
+      dataType="string"
+      [caption]="'الملفات المرفقة'"
+      dataField="file"
+      cellTemplate="cellTemplate1"
+    >
+    <div *dxTemplate="let cell of 'cellTemplate1'">
+<a *ngIf="cell.row.data.file" href="https://smartvillageapp.com/app/{{cell?.row?.data?.file}}" download="https://smartvillageapp.com/app/{{cell?.row?.data?.file}}">
+  <dx-button class="btn p-0 default-btn w-50" icon="download"></dx-button> </a>
+<p *ngIf="!cell.row.data.file">لايوجد ملفات</p>
+
+    </div>
+    </dxi-column>
+    <dxi-column dataType="date" [caption]="'التاريخ'" dataField="date">
+    </dxi-column>
+    <dxi-column dataType="string" [caption]="'ملاحظات'" dataField="notes">
+    </dxi-column>
+    <dxi-column type="buttons" cellTemplate="cellTemplate" [caption]="'التحكم'">
+      <div *dxTemplate="let cell of 'cellTemplate'">
+        <div
+          class="btn-group"
+          role="group"
+          style="direction: ltr"
+          aria-label="Basic example"
+        >
+          <button type="button" class="btn btn-light"
+          (click)="showDeletePopUp.emit(gridRef.focusedRowKey)">
+            <i class="far fa-trash-alt text-danger"></i>
+          </button>
+          <button
+            type="button"
+            (click)="editCost.emit(gridRef.focusedRowKey)"
+            class="btn btn-light"
+          >
+            <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+          </button>
+        </div>
+      </div>
+    </dxi-column>
+
+
+    <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[5, 10]"
+      [showInfo]="false"
+    >
+    </dxo-pager>
+  </dx-data-grid>
+</div>

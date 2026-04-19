@@ -1,0 +1,89 @@
+<div class="container-fluid website-bg p-3">
+    <div class="row">
+      <div class="col-lg-6 col-md-12 mt-2">
+        <h6 class="font-weight-bold text-right"> الكلمة باللغة العربية</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+  
+            <dx-text-box placeholder="ادخل الكلمة باللغة العربية" [rtlEnabled]="true" [(value)]="name_ar">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 mt-2">
+        <h6 class="font-weight-bold text-right">   االكلمة باللغه الانجليزية </h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="ادخل االكلمة باللغه الانجليزية "
+                         [rtlEnabled]="true" [(value)]="name_en" >
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 mt-2">
+        <h6 class="font-weight-bold text-right">الاصاف الفرعيه</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-drop-down-box
+            
+            [(value)] ="categoryList"
+            valueExpr="id"
+            [deferRendering]="false"
+            displayExpr="category_ar"
+            [showClearButton]="false"
+            [rtlEnabled]="true"
+            [dataSource]="minCategoryList">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+            <div *dxTemplate="let data of 'content'">
+              <dx-data-grid
+                #gridRef
+                [dataSource]="minCategoryList"
+                keyExpr="id"
+                [(selectedRowKeys)]="categoryList"
+                [columnAutoWidth]="true"
+                [showBorders]="false"
+                [rtlEnabled]="true"
+                height="100%"
+                [paging]="{ enabled: false }">
+  
+                <dxo-search-panel
+                  [visible]="true"
+                  width="95%"
+                  [placeholder]="'Search'"
+                ></dxo-search-panel>
+  
+                <dxo-selection
+                  selectAllMode="allPages"
+                  showCheckBoxesMode="onClick"
+                  mode="multiple"
+                ></dxo-selection>
+  
+                <dxi-column
+                  dataField="category_ar"
+                  caption=" "
+                ></dxi-column>
+               
+              </dx-data-grid>
+              
+            </div>
+          </dx-drop-down-box>
+        
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="text-center mt-4">
+      <dx-button text="أضافة" [useSubmitBehavior]="true" class="btn py-0 default-btn" (click)="addSupplier()"> </dx-button>
+    </div>
+  </div>
+
+

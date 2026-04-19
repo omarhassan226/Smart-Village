@@ -1,0 +1,90 @@
+<section id="costs-form">
+  <div class="row">
+    <div class="col-md-2 col-sm-6 mt-1">
+      <div class="dx-field-label">النوع</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box
+          [items]="costsType"
+            placeholder="أختر النوع"
+            [rtlEnabled]="true"
+            [(value)]="type"
+            
+          >
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+        </dx-validator>
+      </dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-6 mt-1">
+      <div class="dx-field-label">المبلغ</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box
+          [rtlEnabled]="true"
+          format="$ #,##0.##"
+          [(value)]="cost"
+      >
+      <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+    </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-6">
+      <div class="dx-field" style="margin-top: 30px">
+        <div class="dx-field-value">
+          <div class="image-upload-lg">
+            <label for="file-input">
+              <img
+                 
+              [src]="imgSrc"
+              height="25px"
+              alt=""
+            />  
+                
+            </label>
+           
+  
+            <input #costfile  (change)="showPreview($event)"  id="file-input" type="file" />
+          </div>
+        </div>
+       
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-6 mt-1">
+      <div class="dx-field-label">ملاحظات</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-box [(value)]="notes" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-sm-6 mt-1">
+      <div class="dx-field-label">التاريخ</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-date-box    displayFormat="shortdate"  type="date" [(value)]="date" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+          </dx-date-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-3 mt-2">
+      <div class="dx-field" style="margin-top: 21px">
+        <div class="dx-field-value">
+          <dx-button [useSubmitBehavior]="true" (onClick)="handleData()" text="أضافة" class="btn py-0 default-btn"> </dx-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

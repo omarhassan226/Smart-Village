@@ -1,0 +1,33 @@
+<div [class.hidden]="showtabs == true || showtabs_Select==true ">
+  <div class="text-right delivery-btn-container">
+    <h6 class="d-inline font-weight-bold">خيارات الشحن</h6>
+    <div class="d-inline">
+      <button (click)="showTabsSelect()" class="btn dilvery-list-add-btn">
+        <i class="fas fa-plus-circle"></i> أضافة خيار توصيل
+      </button>
+    </div>
+    <div class="d-inline">
+      <button (click)="showTabs()" class="btn dilvery-list-add-btn">
+        <i class="fas fa-plus-circle"></i> أضافة منطقة توصيل
+      </button>
+    </div>
+  </div>
+  <app-delivery-list (getMainDataById)="getShippingById($event)" #list (showDeletePopUp)="showDeletePopUp($event)" [shippingList]="shippingList"></app-delivery-list>
+</div>
+<div [class.hidden]="showtabs !== true">
+  <app-delivering-tab-shell 
+     #tab
+     (AddDeliveryChoice)= handleShippingData($event)
+   
+     ></app-delivering-tab-shell>
+</div>
+<div [class.hidden]="showtabs_Select !== true">
+  <app-deliveringselect-tab-shell #tabb
+                                  (AddDeliveryChoice)=handleShippingData($event)></app-deliveringselect-tab-shell>
+</div>
+<app-delete-pop-up
+(whenPopupConfirm)="whenDeletePopupConfirm($event)"
+(whenPopupHide)="hideDeletePopup()"
+[isDeletePopupVisible]="isConfirmDeletePopupVisible"
+>
+</app-delete-pop-up>

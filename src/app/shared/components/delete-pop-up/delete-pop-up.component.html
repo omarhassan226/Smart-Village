@@ -1,0 +1,28 @@
+<dx-popup
+  [visible]="isDeletePopupVisible"
+  [shading]="true"
+  [title]="'هل أنت متأكد من حذف هذ العنصر'"
+  shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true"
+  [rtlEnabled]="true"
+  [maxWidth]="400"
+  [maxHeight]="180"
+  dragEnabled="true"
+  (onHiding)="OnHiding.emit($event)"
+>
+  <div *dxTemplate="let data of 'content'">
+   
+    <div class="mt-3 text-center">
+      <dx-button 
+      class="btn-danger btn"
+      (click)="whenPopupConfirm.emit(true)"
+        >نعم</dx-button
+      >
+      <dx-button 
+      class="default-btn  btn"
+      (click)="whenPopupConfirm.emit(false)"
+        >لا</dx-button
+      >
+    </div>
+  </div>
+</dx-popup>

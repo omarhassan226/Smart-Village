@@ -1,0 +1,17 @@
+.logo-conatiner {
+  position: relative;
+  text-align: right;
+  padding: 15px 33px 10px;
+}
+
+.logo-conatiner span {
+  position: absolute;
+  left: 30px;
+  top: 22px;
+  font-weight: 600;
+}
+
+/*.border-left.bg-white.dx-template-wrapper {
+  overflow-y: scroll;
+}
+*/

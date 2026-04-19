@@ -1,0 +1,85 @@
+<div class="row" *ngIf="showOrderList" style="background-color: #f8f8f8">
+  <div class="col-md-8">
+    <app-order-list
+
+
+                    [products]="productsListOrder"
+                    (showPopUp)="showListPopUp($event)"></app-order-list>
+  </div>
+  <div class="col-md-4">
+    <app-orders-bascket [ishidden]="ishidden"
+                        (showCompleteOrder)="showCompleteOrderPage()"
+                        [customerInfo]="customerInfo"
+                        [totalprice]="totalprice"
+                        [products]="products"
+                        [Shippings]="Shippings"
+                        (showPopUp)="showBascketPopUp($event)"
+                        (companyShipping)="callweight($event)"
+                        (way_Payment)="way_Payment($event)"
+                        [addresslist]="addresslist"
+                        [costShipping]="costShipping"
+                        (deleteProduct)="deleteProduct($event)"
+                        (deleteUser)="deleteUser()"
+                        (addressUser)="addressUser($event)"
+                        
+                        #tab ></app-orders-bascket>
+  </div>
+</div>
+<app-follow-order-list (canceLOrder)="showCancelOrderPopUp($event)"
+                       (showDetailsPage)="showDetailsPage()"
+                       *ngIf="showCompleteOrder"></app-follow-order-list>
+<!--<app-order-details-list *ngIf="showOrderDetails"></app-order-details-list>-->
+<app-orders-popup (addCustomer)="addCustomer($event)"
+                  (addProduct)="addProduct($event)"
+                  [isOrdersPopupVisible]="isOrdersPopupVisible"
+                  [popupTitle]="popTitle"
+                  (OnHiding)="OnHiding()"
+                  [productSelected]="productSelected"
+                  [slider]="slider"
+                  [colors]="colors"
+                  [sizes]="sizes"
+                  [users]="users"
+                  [showform]="showform"
+                  ></app-orders-popup>
+<dx-popup [visible]="isAdminPopupVisibleupload"
+          [shading]="true"
+          [title]="titlefile"
+          shadingColor="rgba(0, 0, 0, 0.2)"
+          [closeOnOutsideClick]="true"
+          [rtlEnabled]="true"
+          [maxWidth]="600"
+          height="auto"
+          dragEnabled="true"
+          (onHiding)="hidePopUp()">
+  <div *dxTemplate="let data of 'content'">
+    <div class="row">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">الملف</div>
+      </div>
+      <div class="col-lg-4 col-md-12 mt-1">
+        <div class="image-upload-lg">
+          <label for="fileMain-input">
+            <img [src]="imgSrc2" style="width: 100%; height: 100px;" />
+            <input hidden id="fileMain-input" type="file" (change)="showPreview1($event)" />
+          </label>
+          <div class="text-center"> اختر الملف</div>
+
+          
+        </div>
+      </div>
+     
+
+    </div>
+   
+    
+
+   
+    <div class="row mt-2">
+      <div class="col-md-3 col-sm-4 mx-auto mt-3">
+        <dx-button class="dilvery-list-add-btn" (onClick)="savefile()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>
+
+

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\core",
+    "\\src\\app\\core\\modules",
+    "\\src\\app\\core\\modules\\costs\\costs-shell",
+    "\\src\\app\\core\\modules\\delivering",
+    "\\src\\app\\core\\modules\\delivering\\delivering-area",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components"
+  ],
+  "SelectedNode": "\\src\\app\\core\\modules\\delivering\\delivering-area\\delivering-area.component.ts",
+  "PreviewInSolutionExplorer": false
+}

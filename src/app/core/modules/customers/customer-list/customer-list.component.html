@@ -1,0 +1,79 @@
+<div class="container-fluid mt-2">
+  <dx-data-grid
+    #gridRef
+    [dataSource]="datasource"
+    width="100%"
+    keyExpr="id"
+    [showBorders]="false"
+    [rtlEnabled]="true"
+    width="100%"
+    [focusedRowEnabled]="true"
+    [columnAutoWidth]="true"
+    [noDataText]="'لايوجد بيانات'"
+ 
+    (onToolbarPreparing)="onToolbarPreparing($event)"
+  >
+    <dxo-search-panel [visible]="true" [placeholder]="''"> </dxo-search-panel>
+
+    <dxi-column dataField="full_name" dataType="string" [caption]="'الاسم'">
+      <dxi-validation-rule type="required" [message]="'Required'"
+        >عرض جميع المنتجات</dxi-validation-rule
+      >
+    </dxi-column>
+
+    <dxi-column dataType="string" [caption]="'رقم الهاتف'" dataField="phone" style="direction:ltr">
+    </dxi-column>
+    <dxi-column dataType="string" [caption]="'العنوان'" dataField="full_address">
+    </dxi-column>
+    <dxi-column
+      dataType="string"
+      [caption]="'عدد الطلبات'"
+      dataField="orders_count"
+    >
+    </dxi-column>
+    <dxi-column
+      dataType="string"
+      [caption]="'تاريخ الأضافة'"
+      dataField="created_at"
+    >
+    </dxi-column>
+
+    <dxi-column type="buttons" cellTemplate="cellTemplate" [caption]="'التحكم'">
+      <div *dxTemplate="let cell of 'cellTemplate'">
+        <div class="btn-group"
+             role="group"
+             style="direction: ltr"
+             aria-label="Basic example">
+          <!--<button (click)="showDeletePopUp.emit(gridRef.focusedRowKey)" type="button" class="btn py-0 btn-light">
+            <i class="far fa-trash-alt text-danger"></i>
+          </button>-->
+          <button type="button"
+                  (click)="showPopUp.emit({text:'تعديل العميل', id: gridRef.focusedRowKey})"
+                  class="btn py-0 btn-light">
+            <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+          </button>
+          <div *ngIf="cell.row.data.deleted_at;then content else other_content"></div>
+          <ng-template #content>
+            <dx-button  class="btn py-0 ml-1 default-btn" style="background-color:indianred"(click)= showunDeletePopUp.emit(gridRef.focusedRowKey)
+                       
+                       text="محظور">
+            </dx-button>
+          </ng-template>
+          <ng-template #other_content>
+            <dx-button   class="btn py-0 ml-1 default-btn" style="background-color:darkslategray" (click)= showDeletePopUp.emit(gridRef.focusedRowKey)
+                       text="نشط">
+            </dx-button>
+          </ng-template>
+        </div>
+      </div>
+    </dxi-column>
+
+    <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[5, 10]"
+      [showInfo]="false"
+    >
+    </dxo-pager>
+  </dx-data-grid>
+</div>

@@ -1,0 +1,99 @@
+<div class="list-container px-2 mt-1" style="background-color: #fff">
+  <h6 class="text-right">سلة الشراء</h6>
+  <div class="text-center">
+    <dx-button
+      [hidden]="ishidden"
+      (onClick)="showPopUp.emit(users)"
+      text="قم بأختيار العميل"
+      class="btn default-btn btn-block py-0"
+    >
+    </dx-button>
+  </div>
+  <div class="customer-info" *ngIf="(customerInfo | json) != '{}'">
+    <div class="d-inline-block float-right">
+      <div>{{ customerInfo?.name }}</div>
+      <div>{{ customerInfo?.phone }}</div>
+    </div>
+
+    <div class="float-left d-inline-block">
+      <dx-button class="text-danger p-0 bg-transparent border-none" (onClick)="deleteUser.emit()">
+        <i class="fas fa-minus-circle"></i>
+      </dx-button>
+    </div>
+  </div>
+  <div class="line-border"></div>
+  <div *ngIf="!products.length" class="noData">
+    <img src="../../../../../assets/images/emptyList.png" />
+    <p>من فضلك قم بأضافة منتجات للسلة</p>
+  </div>
+  <div class="text-right">
+    <p class="font-weight-bold">تفاصيل الطلب</p>
+  </div>
+  <dx-list [items]="products" height="180px" [noDataText]="''" class="bg-white">
+    <div *dxTemplate="let item of 'item';let i=index">
+      <div class="product">
+        <img src={{item.ImageSrc}} />
+        <div class="product-name">
+          {{ item.Name }}
+          <div class="mt-1">
+            <span class="product-price">{{ item. product_price }}</span>
+            <span class="product-size">{{item.quantity}}x</span>
+          </div>
+        </div>
+
+        <div class="remove">
+          <dx-button class="text-danger p-0 bg-transparent border-none" (onClick)="deleteProduct.emit(i)">
+            <i class="fas fa-minus-circle"></i>
+          </dx-button>
+        </div>
+      </div>
+    </div>
+  </dx-list>
+  <div *ngIf="products.length" class="text-center mt-2">
+    <div class="dx-field">
+      <div class="dx-field-value">
+        <dx-select-box
+                       [dataSource]="addresslist"
+         [(value)]="addressId"   displayExpr="created_at"
+          valueExpr="id" [rtlEnabled]="true" (onValueChanged)="addressUser.emit(addressId)"
+          placeholder="اخترالعنوان" 
+        ></dx-select-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-value">
+        <dx-select-box
+        [dataSource]="payments" [(value)]="way_Pay"   displayExpr="paymentMethod_ar"
+          valueExpr="paymentMethod_en" [rtlEnabled]="true"
+          placeholder="اختر طريقة الدفع" (onValueChanged)="way_Payment.emit(way_Pay)"
+        ></dx-select-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-value">
+        <dx-select-box
+                       [dataSource]="Shippings"
+         [(value)]="companyId"   displayExpr="name_ar"
+          valueExpr="id" [rtlEnabled]="true"
+          placeholder="اختر طريقة الشحن" (onValueChanged)="companyShipping.emit(companyId)"
+        ></dx-select-box>
+      </div>
+    </div>
+  
+    <div class="order-cost"><span> تكلفة الطلب</span> <span>{{totalprice}} ر.ع</span></div>
+    <div class="delivery-cost bg-white">
+      <span> تكلفة التوصيل</span> <span>{{costShipping}} ر.ع</span>
+    </div>
+    <div class="total-cost bg-white">
+      <span>إجمالي الطلب</span> <span>{{totalprice+costShipping}}  ر.ع</span>
+    </div>
+    <div class="text-center">
+      <dx-button
+        (onClick)="showCompleteOrder.emit()"
+        text="اتمام الطلب"
+        class="btn default-btn btn-block py-0"
+      >
+      </dx-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<dx-popup
+  [visible]="isSettingsPopupVisible"
+  [shading]="true"
+  [title]="popTitle"
+  shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true"
+  [rtlEnabled]="true"
+  maxWidth="800px"
+  dragEnabled="true"
+  (onHiding)="OnHiding.emit()"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div class="row py-2">
+      <div class="col-6">
+        <div class="dx-field-label">السوال باللغة العربية</div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box [(value)]="question_ar" [rtlEnabled]="true">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+        <div class="dx-field mt-2">
+          <div class="dx-field-value">
+            <dx-text-area [(value)]="answer_ar" height="250" [rtlEnabled]="true">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+            </dx-text-area>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="dx-field-label">السوال باللغة الانجليزية</div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box [(value)]="question_en" [rtlEnabled]="true">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-area  [(value)]="answer_en" height="250" [rtlEnabled]="true">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+            </dx-text-area>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 text-center">
+      <dx-button 
+      class="default-btn circle-side-button btn"
+      [useSubmitBehavior]="true"
+      (onClick)="handleData()"
+        >حفظ</dx-button
+      >
+    </div>
+  </div>
+</dx-popup>

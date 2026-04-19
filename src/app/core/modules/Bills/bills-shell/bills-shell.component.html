@@ -1,0 +1,382 @@
+<section class="container-fluid mt-2">
+    <div class="row">
+      <div class="col-md-4 website-bg">
+        <div class="list-container website-bg">
+          <div class="text-right bg-white p-3">
+            <h6> عناصر الفاتوره</h6>
+          </div>
+          <dx-list
+            class="list-container"
+            style="height: 300px"
+            #list
+            [dataSource]="basket"
+            [noDataText]="'لايوجد بيانات'"
+            searchExpr="category_ar"
+            searchMode="contains"
+          >
+            <div *dxTemplate="let data of 'item'; let i = index" class="list-item mt-2">
+              <div class="d-inline" style="position: relative; top: 12px">
+                {{i+1}} - {{data.productName}} : {{ data.NameDetail }}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  الكميه:     {{data.quantity  }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  سعر القطعه:     {{data.price  }} 
+              </div>
+              <div class="d-inline float-left">
+                <div
+                  class="btn-group"
+                  role="group"
+                  style="direction: ltr"
+                  aria-label="Basic example"
+                >
+                  <button type="button" class="btn btn-light"  (click)="deleteItem(i)" >
+                    <i class="far fa-trash-alt text-danger"></i>
+                  </button>
+                 
+                </div>
+              </div>
+            </div>
+          </dx-list>
+          <div class="mt-2 text-center">
+            <dx-button
+              class="btn text-default font-weight-bold"
+              style="background-color: #bfefed;"
+             
+            >  الاجمالي{{total}} ر.غ </dx-button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-8" style="clear: both">
+        <div>
+            <h6 class="text-right">البيانات الاساسيه للفاتوره</h6>
+            <div class="line-border"></div>
+            <div class="row">
+              <!-- <div class="col-lg-4 col-md-12 mt-1">
+                <div class="image-upload-lg"> -->
+                  <!-- <label for="fileMain-input">
+                    <img [src]="mainCategory.iamgeUrl" style="width: 100%; height: 70px;" />
+                  </label> -->
+                  <!-- <div class="text-center">أيقونة التصنيف</div> -->
+  
+                  <!-- <input id="fileMain-input" type="file" (change)="uploadFile($event)" /> -->
+                <!-- </div>
+              </div> -->
+             
+              <div class="col-lg-4 col-md-12 mt-1">
+                <div *ngIf="typeID==1">
+                <div class="dx-field-label"> المورد</div>
+                <div class="dx-field">
+                  <div class="dx-field-value">
+                    <dx-select-box [placeholder]="''"  [items]="suppliers" displayExpr="name" [(value)]="supplierID" valueExpr="id" [rtlEnabled]="true">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-select-box>
+                  </div>
+  
+                </div>
+              </div>
+                <div class="dx-field-label">تاريخ الفاتوره </div>
+                <div class="dx-field">
+                  <div class="dx-field-value">
+                    <dx-date-box [rtlEnabled]="true" [(value)]="dateBill">
+
+                   
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-date-box>
+                  </div>
+                </div>
+                  
+                  <div *ngIf="typeID ==1">
+                  <div class="dx-field-label"> طرقعه الدفع</div>
+                  <div class="dx-field">
+                    <div class="dx-field-value">
+                      <dx-select-box [placeholder]="''"  [items]="typespayment" displayExpr="type" [(value)]="paymentWay" valueExpr="id" [rtlEnabled]="true">
+                          <dx-validator>
+                            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                          </dx-validator>
+                        </dx-select-box>
+                    </div>
+    
+                  </div>
+                </div>
+  
+                
+                
+              </div>
+              <div class="col-lg-4 col-md-12 mt-1">
+                <div class="dx-field-label"> نوع الفاتوره</div>
+                <div class="dx-field">
+                  <div class="dx-field-value">
+                    <dx-select-box [placeholder]="''" [items]="typesBills" displayExpr="type" [(value)]="typeID" valueExpr="id" [rtlEnabled]="true">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-select-box>
+                  </div>
+  
+                </div>
+                <div class="dx-field-label"> الملاحظه </div>
+                <div class="dx-field">
+                  <div class="dx-field-value">
+                    <dx-text-box [rtlEnabled]="true"  [(value)] ="note">
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+                    </dx-text-box>
+                  </div>
+  
+                </div>
+                <div *ngIf="paymentWay==3">
+                <div class="dx-field-label"> العربون </div>
+                <div class="dx-field">
+                  <div class="dx-field-value">
+                    <dx-text-box [rtlEnabled]="true"  [(value)] ="costPayment">
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+                    </dx-text-box>
+                  </div>
+                </div>
+  
+                </div>
+              </div>
+              <div class="col-lg-4 text-center col-md-12 mt-4">
+                <dx-button text="حفظ التعديلات" class="btn py-0 default-btn" [useSubmitBehavior]="true" (click)="addbill()">
+                </dx-button>
+              </div>
+              
+            </div>
+            <!-- <h6 class="text-right">الاٌقسام الفرعية</h6>
+            <div class="line-border"></div> -->
+  
+          <!-- <div>
+              *ngFor="let item of sub_Categories;let i=index"
+            <div class="row"  >
+  
+              <div class="col-lg-3 col-md-12 mt-1">
+                <div class="image-upload">
+                  <label for="{{i}}-input">
+                    <img [src]="item.iamgeUrl"  style="width: 100%; height: 100%;"/>
+                  </label>
+  
+                  <input id="{{i}}-input" type="file" (change)="showPreview($event,i)" />
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-12 mt-1">
+                <div class="dx-field-label">الاسم باللغة العربية</div>
+                <div class="dx-field">
+                  <div class="dx-field-value">
+                    <dx-text-box [rtlEnabled]="true" >  <dx-validator>
+                      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                  </dx-validator></dx-text-box>
+                  </div>
+  
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-12 mt-1">
+                <div class="dx-field-label">الاسم باللغة الأنجليزية</div>
+                <div class="dx-field">
+                  <div class="dx-field-value">
+                    <dx-text-box [rtlEnabled]="true" ><dx-validator>
+                      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                  </dx-validator></dx-text-box>
+                  </div>
+  
+                </div>
+              </div>
+  
+              <div class="col-lg-3 text-center col-md-12 mt-4">
+                <dx-button type="danger" icon="far fa-trash-alt" (click)="deleteItem (i)">
+                </dx-button>
+              </div>
+  
+  
+  
+  
+  
+            </div>
+          </div> -->
+            <!-- <div class="col-lg-3 text-center col-md-12 mt-4">
+              <dx-button text="أضافة جديد" class="btn py-0 default-btn" (click)="addItem()" >
+              </dx-button>
+            </div> -->
+          </div>
+        <div>
+          <h6 class="text-right">اضافه عنصر جديد</h6>
+          <div class="line-border"></div>
+          <div class="row">
+            <!-- <div class="col-lg-4 col-md-12 mt-1">
+              <div class="image-upload-lg"> -->
+                <!-- <label for="fileMain-input">
+                  <img [src]="mainCategory.iamgeUrl" style="width: 100%; height: 70px;" />
+                </label> -->
+                <!-- <div class="text-center">أيقونة التصنيف</div> -->
+
+                <!-- <input id="fileMain-input" type="file" (change)="uploadFile($event)" /> -->
+              <!-- </div>
+            </div> -->
+            <div class="col-lg-6 col-md-12 mt-1">
+              <div class="dx-field-label"> المنتج</div>
+              <div class="dx-field">
+                <div class="dx-field-value">
+                    <dx-select-box [placeholder]="''"  [searchEnabled]="true" [items]="products" displayExpr="name_ar" valueExpr="id" [rtlEnabled]="true"  itemTemplate="item" [(value)]="productId"  (onValueChanged)="getDetailsProduct()"> 
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                        <div *dxTemplate="let data of 'item'">
+                          <img style="width: 25px; height: 25px;;" src="https://smartvillageapp.com/app/{{data.image.image}}" />
+                          <div style="display:inline-block">{{data.name_ar}}</div>
+                      </div>
+                      </dx-select-box>
+                </div>
+
+              </div>
+              <div class="dx-field-label">  الكمية</div>
+              <div *ngIf="typeID==1" class="dx-field">
+                <div class="dx-field-value">
+                  <dx-number-box [placeholder]="''"  [rtlEnabled]="true" [(value)] ="quantity" (onValueChanged)="callCost()">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-number-box>
+                </div>
+
+              </div>
+              <div *ngIf="typeID==3" class="dx-field">
+                <div class="dx-field-value">
+                  <dx-number-box [placeholder]="''" [min]="0" [max]="maxQuantity" [rtlEnabled]="true" [(value)] ="quantity" (onValueChanged)="callCostDamage()">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-number-box>
+                </div>
+
+              </div>
+              <div class="dx-field-label">  التكلفه الكليه</div>
+              <div class="dx-field">
+                <div class="dx-field-value">
+                  <dx-number-box [placeholder]="''"  [rtlEnabled]="true" [(value)] ="cost_price" readOnly="true">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-number-box>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-12 mt-1">
+                <div class="dx-field-label"> اختبارات المنتج</div>
+              <div *ngIf="typeID==1"class="dx-field">
+                <div class="dx-field-value">
+                    <dx-select-box [placeholder]="''" [items]="resultFinal" displayExpr="NameDetail" [(value)]="detailId" valueExpr="id" [rtlEnabled]="true">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-select-box>
+                </div>
+
+              </div>
+              <div *ngIf="typeID==3"class="dx-field">
+                <div  class="dx-field-value">
+                    <dx-select-box [placeholder]="''" [items]="resultFinal" displayExpr="NameDetail" [(value)]="detailId" valueExpr="id" [rtlEnabled]="true"  (onValueChanged)="SetQuantityAndPrice()">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-select-box>
+                </div>
+
+              </div>
+              <div class="dx-field-label">  السعر</div>
+              <div *ngIf="typeID==1" class="dx-field">
+                <div  class="dx-field-value">
+                  <dx-number-box [placeholder]="''"  [rtlEnabled]="true" [(value)] ="price" (onValueChanged)="callCost()">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-number-box>
+                </div>
+
+              </div>
+              <div *ngIf="typeID==3"  class="dx-field">
+                <div class="dx-field-value">
+                  <dx-number-box [placeholder]="''"  [rtlEnabled]="true" [(value)] ="pricDamage" readOnly="true" (onValueChanged)="callCostDamage()">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                        </dx-validator>
+                      </dx-number-box>
+                </div>
+
+              </div>
+              
+              </div>
+              
+            <div class="col-lg-3 text-center col-md-12 mt-4">
+              <dx-button text=" اضافه عنصر" class="btn py-0 default-btn" [useSubmitBehavior]="true" (click)="addCategory()">
+              </dx-button>
+            </div>
+          </div>
+          <!-- <h6 class="text-right">الاٌقسام الفرعية</h6>
+          <div class="line-border"></div> -->
+
+        <!-- <div>
+            *ngFor="let item of sub_Categories;let i=index"
+          <div class="row"  >
+
+            <div class="col-lg-3 col-md-12 mt-1">
+              <div class="image-upload">
+                <label for="{{i}}-input">
+                  <img [src]="item.iamgeUrl"  style="width: 100%; height: 100%;"/>
+                </label>
+
+                <input id="{{i}}-input" type="file" (change)="showPreview($event,i)" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-12 mt-1">
+              <div class="dx-field-label">الاسم باللغة العربية</div>
+              <div class="dx-field">
+                <div class="dx-field-value">
+                  <dx-text-box [rtlEnabled]="true" >  <dx-validator>
+                    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                </dx-validator></dx-text-box>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-12 mt-1">
+              <div class="dx-field-label">الاسم باللغة الأنجليزية</div>
+              <div class="dx-field">
+                <div class="dx-field-value">
+                  <dx-text-box [rtlEnabled]="true" ><dx-validator>
+                    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                </dx-validator></dx-text-box>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-lg-3 text-center col-md-12 mt-4">
+              <dx-button type="danger" icon="far fa-trash-alt" (click)="deleteItem (i)">
+              </dx-button>
+            </div>
+
+
+
+
+
+          </div>
+        </div> -->
+          <!-- <div class="col-lg-3 text-center col-md-12 mt-4">
+            <dx-button text="أضافة جديد" class="btn py-0 default-btn" (click)="addItem()" >
+            </dx-button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <app-delete-pop-up
+    (whenPopupConfirm)="whenDeletePopupConfirm($event)"
+    (whenPopupHide)="hideDeletePopup()"
+    [isDeletePopupVisible]="isConfirmDeletePopupVisible"
+    >
+  </app-delete-pop-up>
+   -->

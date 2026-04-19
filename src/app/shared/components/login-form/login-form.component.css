@@ -1,0 +1,14 @@
+.form-container {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  height: 500px;
+  padding: 30px;
+  text-align: center;
+}
+.logo-conatiner {
+  padding: 15px 33px 10px;
+  text-align: center;
+}
+
+.logo-conatiner span {
+  font-weight: 600;
+}

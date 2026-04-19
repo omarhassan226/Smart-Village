@@ -1,0 +1,101 @@
+<div class="container p-2 mt-3">
+    <div class="row">
+        <div class="col-md-4">
+         
+            <div class="image-upload-lg">
+              <label for="file-input1">
+                <div>
+                  <img
+                    height="140px"
+                    [src]="imgSrc1"
+                    
+                    alt=""
+                  />
+                </div>
+                
+              </label>
+              <div class="text-center">بنر للغة العربية</div>
+             
+
+              <input #imageAr  (change)="showPreview1($event)" accept="image/*" id="file-input1" type="file" />
+            </div>
+          </div>
+          <div class="col-md-4">
+         
+            <div class="image-upload-lg">
+              <label for="file-input2">
+                <div >
+                  <img 
+                  height="140px"
+                   
+                    [src]="imgSrc2"
+                   
+                    alt=""
+                  />
+                </div>
+          
+              </label>
+              <div class="text-center">بنر للغة الانجليزية</div>
+
+              <input #imageEn   (change)="showPreview2($event)" accept="image/*" id="file-input2" type="file" />
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 mt-2">
+            <div class="dx-field-label">نوع البنر</div>
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="banner_type" [rtlEnabled]="true">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                </dx-validator>
+                </dx-text-box>
+              </div>
+            </div>
+            <div class="dx-field text-center" style="margin-top: 21px">
+                <div class="dx-field-value">
+                  <dx-button icon="save" (click)="handleBanner()" [useSubmitBehavior]="true"  text="حفظ" class="btn py-0 default-btn"> </dx-button>
+                </div>
+              </div>
+          </div>
+        
+    </div>
+    <div class="row mt-3 pt-2">
+        <div class="col-md-6" *ngFor ="let item of banners">
+            <div class="banner-item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="img-box">
+                            <img     height="140px" src="https://smartvillageapp.com/app/{{item.image_ar}}" />
+                        </div>
+                        <div class="text-center">
+                            بنر للغة العربية
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="img-box">
+                            <img     height="140px" src="https://smartvillageapp.com/app/{{item.image_en}}" />
+                        </div>
+                        <div class="text-center">
+                            بنر للغة الأنجليزية
+                        </div>
+                    </div>
+                    <span class="banner-span mt-2 mx-auto">نوع البنر :{{item.banner_type}}</span>
+                </div>
+                <div class="row">
+                    <div class="text-center mx-auto mt-1">
+                        <dx-button  class="btn py-0 default-btn" (click)="getBannerById(item.id)">تعديل</dx-button>
+                        <dx-button  class="btn py-0 default-btn" (click)="showDeletePopup(item.id)">حذف</dx-button>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<app-delete-pop-up
+(whenPopupConfirm)="whenDeletePopupConfirm($event)"
+(whenPopupHide)="hideDeletePopup()"
+[isDeletePopupVisible]="isConfirmDeletePopupVisible"
+
+>
+</app-delete-pop-up>

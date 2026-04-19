@@ -1,0 +1,154 @@
+<section class="container-fluid py-1 bg-white">
+  <dx-tab-panel
+    #tabPanel
+    class="col-12"
+    [dataSource]="dataSource"
+    [selectedIndex]="0"
+    [loop]="true"
+    [animationEnabled]="true"
+    [showNavButtons]="true"
+    [rtlEnabled]="true"
+    height="100%"
+    width="100%"
+  >
+    <div *dxTemplate="let item of 'title'">
+      <dx-button
+        text="{{ item.text }}"
+        [rtlEnabled]="true"
+        type="normal"
+        stylingMode="text"
+        style="padding: 0"
+      ></dx-button>
+    </div>
+
+    <div *dxTemplate="let item of 'item'">
+      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 0">
+        <div id="chart-demo">
+          <dx-chart [dataSource]="reportOfCosts" title="">
+            <dxi-series valueField="cnstl" name="Cnstl"></dxi-series>
+            <dxo-common-series-settings
+              #seriesSettings
+              argumentField="year"
+              [type]="'stackedspline'"
+              color="#74b72e"
+            >
+            </dxo-common-series-settings>
+            <dxo-margin [bottom]="20"></dxo-margin>
+            <dxo-common-axis-settings>
+              <dxo-grid [visible]="true"></dxo-grid>
+            </dxo-common-axis-settings>
+            <dxo-legend verticalAlignment="top" horizontalAlignment="right">
+            </dxo-legend>
+            <dxo-argument-axis
+              [allowDecimals]="false"
+              [axisDivisionFactor]="60"
+            >
+              <dxo-label>
+                <dxo-format type="decimal"></dxo-format>
+              </dxo-label>
+            </dxo-argument-axis>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+          </dx-chart>
+        </div>
+      </div>
+
+      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 1">
+        <div id="chart-demo">
+          <dx-chart palette="violet" [dataSource]="reportForsearchProduct" title="">
+            <dxi-series valueField="cnstl" name="Cnstl"></dxi-series>
+            <dxo-common-series-settings
+              #seriesSettings
+              argumentField="year"
+              [type]="'stackedspline'"
+              color="#74b72e"
+            >
+            </dxo-common-series-settings>
+            <dxo-margin [bottom]="20"></dxo-margin>
+            <dxo-common-axis-settings>
+              <dxo-grid [visible]="true"></dxo-grid>
+            </dxo-common-axis-settings>
+            <dxo-legend verticalAlignment="top" horizontalAlignment="right">
+            </dxo-legend>
+            <dxo-argument-axis
+              [allowDecimals]="false"
+              [axisDivisionFactor]="60"
+            >
+              <dxo-label>
+                <dxo-format type="decimal"></dxo-format>
+              </dxo-label>
+            </dxo-argument-axis>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+          </dx-chart>
+        </div>
+      </div>
+      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 2">
+        <div id="chart-demo">
+          <dx-chart palette="violet" [dataSource]="reportPopularProduct" title="">
+            <dxi-series valueField="cnstl" name="Cnstl"></dxi-series>
+            <dxo-common-series-settings
+              #seriesSettings
+              argumentField="year"
+              [type]="'stackedspline'"
+              color="#74b72e"
+            >
+            </dxo-common-series-settings>
+            <dxo-margin [bottom]="20"></dxo-margin>
+            <dxo-common-axis-settings>
+              <dxo-grid [visible]="true"></dxo-grid>
+            </dxo-common-axis-settings>
+            <dxo-legend verticalAlignment="top" horizontalAlignment="right">
+            </dxo-legend>
+            <dxo-argument-axis
+              [allowDecimals]="false"
+              [axisDivisionFactor]="60"
+            >
+              <dxo-label>
+                <dxo-format type="decimal"></dxo-format>
+              </dxo-label>
+            </dxo-argument-axis>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+          </dx-chart>
+        </div>
+      </div>
+      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 3">
+        <div id="chart-demo">
+          <div id="chart-demo">
+            <dx-chart
+              palette="violet"
+              [dataSource]="reportOfSales"
+              title=""
+            >
+              <dxi-series valueField="cnstl" name="Cnstl"></dxi-series>
+              <dxo-common-series-settings
+                #seriesSettings
+                argumentField="year"
+                [type]="'stackedspline'"
+                color="#74b72e"
+              >
+              </dxo-common-series-settings>
+              <dxo-margin [bottom]="20"></dxo-margin>
+              <dxo-common-axis-settings>
+                <dxo-grid [visible]="true"></dxo-grid>
+              </dxo-common-axis-settings>
+              <dxo-legend verticalAlignment="top" horizontalAlignment="right">
+              </dxo-legend>
+              <dxo-argument-axis
+                [allowDecimals]="false"
+                [axisDivisionFactor]="60"
+              >
+                <dxo-label>
+                  <dxo-format type="decimal"></dxo-format>
+                </dxo-label>
+              </dxo-argument-axis>
+              <dxo-export [enabled]="true"></dxo-export>
+              <dxo-tooltip [enabled]="true"></dxo-tooltip>
+            </dx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dx-tab-panel>
+</section>

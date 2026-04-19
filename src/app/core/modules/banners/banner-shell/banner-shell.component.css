@@ -1,0 +1,34 @@
+.image-upload > input,
+.image-upload-lg > input {
+  display: none;
+}
+
+.image-upload-lg {
+  width: 100%;
+  text-align: center;
+  height:200px;
+  padding: 20px;
+ background-color: #fff;
+  border: 1px solid gainsboro;
+}
+.banner-item {
+    padding: 5px;
+    border: 1px solid gainsboro;
+    background-color: #fff;
+    margin-top: 20px;
+}
+.img-box {
+    text-align: center;
+    border: 1px solid gainsboro;
+    
+}
+.img-box >img {
+    width: 100%;
+}
+.banner-span {
+    background-color: #1cbbb2;
+    color: #fff;
+    padding: 3px 5px;
+    font-size: 14px;
+    font-weight: 600;
+}

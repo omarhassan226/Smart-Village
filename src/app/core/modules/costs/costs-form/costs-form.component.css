@@ -1,0 +1,16 @@
+#costs-form {
+  padding: 30px 0;
+  background-color: #f8f8f8;
+}
+.image-upload > input,
+.image-upload-lg > input {
+  display: none;
+}
+
+.image-upload-lg {
+  width: 100%;
+  text-align: center;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border: 1px solid gainsboro;
+}

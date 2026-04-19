@@ -1,0 +1,212 @@
+
+
+
+<div class="container-fluid website-bg p-3">
+  <div class="row">
+    <div class="col-lg-6 col-md-12 mt-2">
+      <div class="dx-field-label">اسم المشرف</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+
+          <dx-text-box placeholder="ادخل الاسم" [rtlEnabled]="true" [(value)]="name">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 mt-2">
+      <div class="dx-field-label">الاميل الالكتروني</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-box placeholder="ادخل البريد الالكتروني"
+                       [rtlEnabled]="true" [(value)]="email" type="email">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 mt-2">
+      <div class="dx-field-label">الباسورد</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-box placeholder="ادخل  الرقم السري "
+                       [rtlEnabled]="true" [(value)]="password" mode="password">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 mt-2">
+      <div class="dx-field-label">الصلاحيات</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [dataSource]="roles" [(value)]="RoleId" displayExpr="name"
+                         valueExpr="id" [rtlEnabled]="true" placeholder="الصلاحيه">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-4">
+    <dx-button text="أضافة" [useSubmitBehavior]="true" class="btn py-0 default-btn" (click)="addAdmin()"> </dx-button>
+  </div>
+</div>
+<div class="container-fluid mt-2 website-bg">
+  <div class="container-fluid">
+    <dx-data-grid #gridRef
+                  [dataSource]="admins"
+                  width="100%"
+                  keyExpr="id"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+      <dxo-editing mode="cell"
+                   [allowAdding]="true"
+                   [allowUpdating]="true"
+                   [useIcons]="true">
+      </dxo-editing>
+
+      <dxi-column dataField="username" dataType="string" [caption]="'الاسم'">
+        <dxi-validation-rule type="required" [message]="'Required'">عرض جميع المشرفين</dxi-validation-rule>
+      </dxi-column>
+
+
+      <dxi-column dataType="string"
+                  [caption]="'البريد الالكتروني'"
+                  dataField="email">
+      </dxi-column>
+      <dxi-column dataType="string"
+                  [caption]="'الصلاحيات'"
+                  dataField="roles[0].name">
+      </dxi-column>
+
+      <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column>
+      <dxo-paging [pageSize]="4"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[4, 6]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+</div>
+<app-delete-pop-up (whenPopupConfirm)="whenDeletePopupConfirm($event)"
+                   (whenPopupHide)="hideDeletePopup()"
+                   [isDeletePopupVisible]="isConfirmDeletePopupVisible"
+                     >
+</app-delete-pop-up>
+<dx-popup [visible]="isAdminPopupVisible"
+          [shading]="true"
+          [title]="popTitle"
+          shadingColor="rgba(0, 0, 0, 0.2)"
+          [closeOnOutsideClick]="true"
+          [rtlEnabled]="true"
+          [maxWidth]="600"
+          height="auto"
+          dragEnabled="true"
+          (onHiding)="hidePopUp()">
+  <div *dxTemplate="let data of 'content'">
+    <div class="row">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">اسم العميل</div>
+      </div>
+      <div class="col-md-5 mt-1">
+        <dx-text-box [rtlEnabled]="true"
+                     placeholder="الاسم الأول"
+                     [(value)]="nameEdit">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-3 mt-1">
+        <div class="dx-field-label">البريد الالكتروني</div>
+      </div>
+      <div class="col-md-9 mt-1">
+        <dx-text-box [(value)]="emailEdit" [rtlEnabled]="true" placeholder="البريد الالكتروني">
+
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            <dxi-validation-rule type="email"
+                                 message="بريد الكتروني خطأ">
+            </dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">كلمة السر</div>
+      </div>
+      <div class="col-md-10 mt-1">
+        <dx-text-box [(value)]="passwordEdit" [editorOptions]="{ mode: 'password' }" [rtlEnabled]="true" placeholder="كلمة السر">
+
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+
+          </dx-validator>
+        </dx-text-box>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">العنوان</div>
+      </div>
+      <div class="col-md-4 mt-1">
+        <dx-select-box [rtlEnabled]="true"
+                       placeholder="الصلاحيه"
+                       [dataSource]="roles"
+                       displayExpr="name"
+                       valueExpr="id"
+                       [(value)]="roleEdit">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
+      </div>
+
+
+
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-3 col-sm-4 mx-auto mt-3">
+        <dx-button class="dilvery-list-add-btn" (onClick)=" editAdmin ()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>
+
+

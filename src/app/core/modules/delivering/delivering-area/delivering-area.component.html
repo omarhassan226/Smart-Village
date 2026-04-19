@@ -1,0 +1,269 @@
+<section class="container-fluid py-3 delivery-area">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="setting-item">
+        <div class="text-right">
+          <p class="font-weight-bold">المحافطات</p>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box
+                  placeholder="اسم المحافظة بالعربية"
+                  [rtlEnabled]="true"
+                  [(value)]="state_ar"
+                >
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+              </dx-text-box>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <dx-button
+              icon="plus"
+              class="btn-light btn-block bg-default text-white"
+              (click)="handleStateData()"
+            [useSubmitBehavior]="true"
+            >
+            </dx-button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box
+                  placeholder="اسم المحافظة بالأنجليزية"
+                  [rtlEnabled]="true"
+                  [(value)]="state_en"
+                >
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+              </dx-text-box>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+
+      <dx-list
+        [items]="States"
+        height="300px"
+        [noDataText]="''"
+        class="mt-2 bg-white"
+      >
+        <div *dxTemplate="let item of 'item'" class="p-0">
+          <div class="container-fluid bg-white">
+            <div class="row">
+              <div class="col-6 text-right">
+                <p class="product-name">{{ item.state_ar }}</p>
+              </div>
+              <div class="col-6 text-left">
+                <div class="remove">
+                  <dx-button (click)="showDeletePop.emit({name:'state',id:item.id});" class="text-danger p-0 bg-transparent border-none">
+                    <i class="fas fa-minus-circle"></i>
+                  </dx-button>
+                  <dx-button (click)="getStateById.emit(item.id); editStateStatus = true" class=" p-0 bg-transparent border-none">
+                    <i  class="far fa-edit"></i>
+                  </dx-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dx-list>
+    </div>
+    <div class="col-md-3">
+      <div class="setting-item">
+        <div class="text-right">
+          <p class="font-weight-bold">الولايات</p>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+       
+            <dx-select-box
+              placeholder="اسم المحافظة"
+              [rtlEnabled]="true"
+              [dataSource]="States"
+              displayExpr="state_ar"
+                valueExpr="id"
+                [(value)]="state_id"
+                (onValueChanged)="selectState($event)"
+            >
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+          </dx-select-box>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box
+                  placeholder="اسم الولاية بالعربية"
+                  [rtlEnabled]="true"
+                  [(value)]="city_ar"
+                >
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+              </dx-text-box>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <dx-button
+              icon="plus"
+              class="btn-light btn-block bg-default text-white"
+              (click)="handleCityData()"
+            [useSubmitBehavior]="true"
+            >
+            </dx-button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box
+                  placeholder="اسم الولاية بالأنجليزية"
+                  [rtlEnabled]="true"
+                  [(value)]="city_en"
+                >
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+              </dx-text-box>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+      </div>
+      <dx-list
+        [items]="Cities"
+        height="300px"
+        [noDataText]="''"
+        class="mt-2 bg-white"
+      >
+        <div *dxTemplate="let item of 'item'" class="p-0">
+          <div class="container-fluid bg-white">
+            <div class="row">
+              <div class="col-6 text-right">
+                <p class="product-name">{{ item.city_ar }}</p>
+              </div>
+              <div class="col-6 text-left">
+                <div class="remove">
+                  <dx-button (click)="showDeletePop.emit({name:'city', id: item.id})" class="text-danger p-0 bg-transparent border-none">
+                    <i class="fas fa-minus-circle"></i>
+                  </dx-button>
+                  <dx-button (click)="getCityById.emit(item.id); editCityStatus = true"  class=" p-0 bg-transparent border-none">
+                    <i  class="far fa-edit"></i>
+                  </dx-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dx-list>
+    </div>
+    <div class="col-md-3">
+      <div class="setting-item">
+        <div class="text-right">
+          <p class="font-weight-bold">القري والمناطق</p>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-select-box
+              placeholder="اسم الولاية"
+              [rtlEnabled]="true"
+              [dataSource]="Cities"
+              displayExpr="city_ar"
+                valueExpr="id"
+                [(value)]="city_id"
+                (onValueChanged)="selectCity($event)"
+            >
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+          </dx-select-box>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box
+                  placeholder="اسم القرية بالعربية"
+                  [rtlEnabled]="true"
+                  [(value)]="village_ar"
+                >
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator></dx-text-box>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <dx-button
+              icon="plus"
+              class="btn-light btn-block bg-default text-white"
+              (click)="handleVillageData()"
+            [useSubmitBehavior]="true"
+            >
+            </dx-button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box
+                  placeholder="اسم القرية بالأنجليزية"
+                  [rtlEnabled]="true"
+                  [(value)]="village_en"
+                >    <dx-validator>
+                  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+              </dx-text-box>
+              </div>
+            </div>
+          </div>
+     
+        </div>
+      </div>
+      <dx-list
+        [items]="Villages"
+        height="300px"
+        [noDataText]="''"
+        class="mt-2 bg-white"
+      >
+        <div *dxTemplate="let item of 'item'" class="p-0">
+          <div class="container-fluid bg-white" >
+            <div class="row">
+              <div class="col-6 text-right">
+                <p class="product-name">{{ item.village_ar }}</p>
+              </div>
+              <div class="col-6 text-left">
+                <div class="remove">
+                  <dx-button (click)="showDeletePop.emit({name:'village', id: item.id})" class="text-danger p-0 bg-transparent border-none">
+                    <i class="fas fa-minus-circle"></i>
+                  </dx-button>
+                  <dx-button (click)="getVillageById.emit(item.id); editVillageStatus=true"  class=" p-0 bg-transparent border-none">
+                    <i  class="far fa-edit"></i>
+                  </dx-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dx-list>
+    </div>
+  </div>
+</section>

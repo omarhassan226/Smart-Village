@@ -1,0 +1,8 @@
+<app-costs-form #costForm (AddCost)="submitForm($event)"></app-costs-form>
+<app-costs-list (filter)="filterCosts($event)" (editCost)="getCostById($event)" (showDeletePopUp)="showDeletePopup($event)" #list [Costs]="Costs"></app-costs-list>
+<app-delete-pop-up
+(whenPopupConfirm)="whenDeletePopupConfirm($event)"
+(whenPopupHide)="hideDeletePopup()"
+[isDeletePopupVisible]="isConfirmDeletePopupVisible"
+>
+</app-delete-pop-up>

@@ -1,0 +1,118 @@
+<dx-popup
+  [visible]="isCustomerPopupVisible"
+  [shading]="true"
+  [title]="popTitle"
+  shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true"
+  [rtlEnabled]="true"
+  [maxWidth]="600"
+  height="auto"
+  dragEnabled="true"
+  (onHiding)="OnHiding.emit()"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div class="row">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">اسم العميل</div>
+      </div>
+      <div class="col-md-5 mt-1">
+        <dx-text-box
+          [rtlEnabled]="true"
+          placeholder="الاسم الأول"
+          [(value)]="Fname"
+        >
+        <dx-validator>
+          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+      </dx-validator>
+      </dx-text-box>
+      </div>
+      <div class="col-md-5 mt-1">
+        <dx-text-box
+          [rtlEnabled]="true"
+          placeholder="اسم العائلة"
+          [(value)]="Lname"
+        >
+        <dx-validator>
+          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+      </dx-validator>
+      </dx-text-box>
+      </div>
+    </div>
+   
+    <div class="row mt-2">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">كلمة السر</div>
+      </div>
+      <div class="col-md-10 mt-1">
+        <dx-text-box [(value)]="password"  [editorOptions]="{ mode: 'password' }" [rtlEnabled]="true" placeholder="كلمة السر">
+       
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          
+        </dx-validator>
+        </dx-text-box>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">رقم الهاتف</div>
+      </div>
+      <div class="col-md-10 mt-1">
+        <dx-text-box [(value)]="phone" mask="0000 0000 \968+ " [maskRules]="rules" [rtlEnabled]="true" placeholder="رقم الهاتف">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+        </dx-validator>
+        </dx-text-box>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-2 mt-1">
+        <div class="dx-field-label">العنوان</div>
+      </div>
+      <div class="col-md-4 mt-1">
+        <dx-select-box
+          [rtlEnabled]="true"
+          placeholder="المحافظة"
+          [dataSource]="States"
+          displayExpr="state_ar"
+          valueExpr="id"
+          [(value)]="country_id"
+                        (onValueChanged)="getCitesbystates()"
+        >
+        <dx-validator>
+          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+      </dx-validator>
+      </dx-select-box>
+      </div>
+
+      <div class="col-md-3 mt-1">
+        <dx-select-box
+         [dataSource]="Cities"
+          [rtlEnabled]="true"
+          placeholder="الولاية"
+          displayExpr="city_ar"
+        valueExpr="id"
+        [(value)]="city_id"
+          (onValueChanged)= "filterVillage()"
+        >
+        <dx-validator>
+          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+      </dx-validator>
+      </dx-select-box>
+      </div>
+      <div class="col-md-3 mt-1">
+        <dx-select-box [dataSource]="Villages" [(value)]="village_id"   displayExpr="village_ar"
+        valueExpr="id" [rtlEnabled]="true" placeholder="القرية">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+      </dx-validator>
+      </dx-select-box>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-3 col-sm-4 mx-auto mt-3">
+        <dx-button class="dilvery-list-add-btn" (onClick)="handleData()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>

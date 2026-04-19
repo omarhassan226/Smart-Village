@@ -1,0 +1,68 @@
+<div class="container text-align-center py-3 ">
+  <div class="row">
+<div class="col-10 mx-auto">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="form-container bg-white">
+        <div class="logo-conatiner">
+          <img
+            class="logo-img img-fluid"
+            src="../../../../assets/images/Screen Shot 2020-12-13 at 8.14.15 PM.png"
+          />
+          <span>
+            القرية الذكيــة <br />
+          
+          </span>
+        </div>
+        <form action="your-action" (submit)="onFormSubmit()" autocomplete="off">
+          <div class="dx-fieldset  text-center">
+              <div class="dx-fieldset-header ">تسجيل الدخول</div>
+              <div class="dx-field">
+                  <div class="dx-field-label">البريد الالكتروني</div>
+                  <div class="dx-field-value">
+                      <dx-text-box [rtlEnabled]="true" [(value)]="username"> 
+                          <dx-validator>
+                              <dxi-validation-rule type="required" message="البريد الالكتروني مطلوب"></dxi-validation-rule>
+                              <dxi-validation-rule type="email" message="البريد الالكتروني خطا"></dxi-validation-rule>
+      
+                          </dx-validator>
+                      </dx-text-box>
+                  </div>
+              </div>
+              <div class="dx-field">
+                  <div class="dx-field-label">الرقم السري</div>
+                  <div class="dx-field-value">
+                      <dx-text-box
+                      [rtlEnabled]="true"
+                          mode="password"
+                          [(value)]="password">
+                          <dx-validator>
+                              <dxi-validation-rule type="required" message="الرقم السري مطلوب"></dxi-validation-rule>
+                          </dx-validator>
+                      </dx-text-box>
+                  </div>
+              </div>
+        
+          </div> 
+       
+      
+          <div class="dx-fieldset">
+             
+      
+              <dx-button 
+                  id="button"
+                  text="تسجيل الدخول"
+                  type="success"  
+                  [useSubmitBehavior]="true">
+              </dx-button>
+          </div>
+      </form>
+      
+      </div>
+   
+    </div>
+  </div>
+</div>
+  </div>
+
+</div>

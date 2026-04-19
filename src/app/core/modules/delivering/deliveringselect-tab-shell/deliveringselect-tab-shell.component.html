@@ -1,0 +1,208 @@
+
+
+<div class="container-fluid">
+  <ul class="nav nav-pills mt-3 py-2 bg-white" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active"
+         id="pills-home-tab"
+         data-toggle="pill"
+         href="#pillss-home"
+         role="tab"
+         aria-controls="pills-home"
+         aria-selected="true">البيانات الأساسية</a>
+    </li>
+    
+      <li class="nav-item" role="presentation" [hidden]="shippingedit">
+        <a class="nav-link"
+           id="pills-profile-tab"
+           data-toggle="pill"
+           href="#pillss-profile"
+           role="tab"
+           aria-controls="pills-profile"
+           aria-selected="false">مناطق التوصيل</a>
+      </li>
+   
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active"
+         id="pillss-home"
+         role="tabpanel"
+         aria-labelledby="pills-home-tab">
+      <app-delivery-main-data-form #form (AddDeliveryChoice)="AddDeliveryChoice.emit($event)"></app-delivery-main-data-form>
+    </div>
+    <div class="tab-pane fade"
+         id="pillss-profile"
+         role="tabpanel"
+         aria-labelledby="pills-profile-tab">
+      <section class="container-fluid py-3 delivery-area">
+        <!-- <div class="row">
+          <div class="col-6 text-right py-2">
+            <dx-check-box [(value)]="selectAll"   (onValueChanged)="selectAllfun()">
+           
+            </dx-check-box>
+            <p  class="product-name mr-2" style="display:inline;">تحديد الكل</p>
+          </div>
+        </div> -->
+        <div class="row">
+          <div class="col-md-3">
+            <div class="setting-item">
+              <div class="text-right">
+                <div class="col-6 text-right py-2">
+                  <dx-check-box [(value)]="selectAll"   (onValueChanged)="selectAllfun()">
+                 
+                  </dx-check-box>
+                  <p  class="product-name mr-2" style="display:inline;">تحديد الكل</p>
+                </div>
+                
+                <p class="font-weight-bold">المحافطات</p>
+              </div>
+              
+              
+            </div>
+
+            <dx-list [items]="States"
+                     height="300px"
+                     [noDataText]="''"
+                     class="mt-2 bg-white">
+              <div *dxTemplate="let item of 'item'" class="p-0">
+                <div class="container-fluid bg-white">
+                  <div class="row" style="    height: 50px;
+    border-bottom: 2px solid #f2f0f0;
+    margin-right: 5px;
+    margin-left: 5px;
+  ">
+                    <div class="col-6 text-right py-2">
+                      <dx-check-box [(value)]="item.status"   (onValueChanged)="selectCitybyState()">
+                     
+                      </dx-check-box>
+                      <p  class="product-name mr-2" style="display:inline;">{{ item.state_ar }}</p>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </dx-list>
+          </div>
+          <div class="col-md-3">
+            <div class="setting-item">
+              <div class="text-right">
+                <div class="col-6 text-right py-2">
+                  <dx-check-box [(value)]="selectAllCities"   (onValueChanged)="selectAllfunCities()">
+                 
+                  </dx-check-box>
+                  <p  class="product-name mr-2" style="display:inline;">تحديد الكل</p>
+                </div>
+                <p class="font-weight-bold">الولايات</p>
+              </div>
+              <!--<div class="dx-field">
+                <div class="dx-field-value">
+
+                  <dx-select-box placeholder="اسم المحافظة"
+                                 [rtlEnabled]="true"
+                                 [dataSource]="States"
+                                 displayExpr="state_ar"
+                                 valueExpr="id"
+                                 [(value)]="state_id"
+                                 (onValueChanged)="selectState($event)">
+                    <dx-validator>
+                      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+                  </dx-select-box>
+                </div>
+              </div>-->
+            
+              
+            </div>
+            <dx-list [items]="Cities"
+                     height="300px"
+                     [noDataText]="''"
+                     class="mt-2 bg-white">
+              <div *dxTemplate="let item of 'item'" class="p-0">
+                <div class="container-fluid bg-white">
+                  <div class="row" style="    height: 50px;
+    border-bottom: 2px solid #f2f0f0;
+    margin-right: 5px;
+    margin-left: 5px;
+">
+                    <div class="col-6 text-right py-2" >
+                      <dx-check-box [(value)]="item.status" (onValueChanged)="selectVallgebyState()"
+
+                                    >
+
+                      </dx-check-box>
+                      <p class="product-name mr-2" style="display:inline;">{{ item.city_ar }}</p>
+                    </div>
+
+                  </div>
+                  
+                </div>
+              </div>
+            </dx-list>
+          </div>
+          <div class="col-md-3">
+            <div class="setting-item">
+              <div class="text-right">
+                <div class="col-6 text-right py-2">
+                  <dx-check-box [(value)]="selectAllVillages"   (onValueChanged)="selectAllfunVillages()">
+                 
+                  </dx-check-box>
+                  <p  class="product-name mr-2" style="display:inline;">تحديد الكل</p>
+                </div>
+                <p class="font-weight-bold">القري والمناطق</p>
+              </div>
+              <!--<div class="dx-field">
+                <div class="dx-field-value">
+                  <dx-select-box placeholder="اسم الولاية"
+                                 [rtlEnabled]="true"
+                                 [dataSource]="Cities"
+                                 displayExpr="city_ar"
+                                 valueExpr="id"
+                                 [(value)]="city_id"
+                                 (onValueChanged)="selectCity($event)">
+                    <dx-validator>
+                      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+                  </dx-select-box>
+                </div>
+              </div>-->
+
+            </div>
+            <dx-list [items]="Villages"
+                     height="300px"
+                     [noDataText]="''"
+                     class="mt-2 bg-white">
+              <div *dxTemplate="let item of 'item'" class="p-0">
+                <div class="container-fluid bg-white">
+                  <div class="row" style="  height: 50px;
+    border-bottom: 2px solid #f2f0f0;
+    margin-right: 5px;
+    margin-left: 5px;
+  ">
+                    <div class="col-6 text-right py-2">
+                      <dx-check-box [(value)]="item.status">
+                      
+                      </dx-check-box>
+                      <p class="product-name mr-2" style="display:inline;">{{ item.village_ar }}</p>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </dx-list>
+            <div class="text-left mt-4">
+              <dx-button text="حفظ التغيرات" [useSubmitBehavior]="true" class="btn py-0 default-btn" (click)="saveArea()"> </dx-button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    </div>
+  </div>
+</div>
+<app-delete-pop-up (whenPopupConfirm)="whenDeletePopupConfirm($event)"
+                   (whenPopupHide)="hideDeletePopup()"
+                   [isDeletePopupVisible]="isConfirmDeletePopupVisible">
+</app-delete-pop-up>

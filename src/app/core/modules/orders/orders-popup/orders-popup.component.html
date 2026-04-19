@@ -1,0 +1,110 @@
+<dx-popup
+  [visible]="isOrdersPopupVisible"
+  [shading]="true"
+  [title]="popupTitle"
+  shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true"
+  [rtlEnabled]="true"
+  [maxWidth]="600"
+  dragEnabled="true"
+  (onHiding)="onhidden()"
+>
+  <div *dxTemplate="let data of 'content'">
+    <div *ngIf="popupTitle == 'قم بأختيار العميل'" class="list-container">
+      <dx-list
+        [height]="400"
+        #list
+        [dataSource]="users"
+        [searchEnabled]="true"
+        searchExpr="Fname"
+        (onItemClick)="addCustomer.emit($event.itemData)"
+        searchMode="contains"
+      >
+        <div *dxTemplate="let data of 'item'">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-6">
+                <div>{{ data.Fname }}</div>
+              </div>
+              <div class="col-6">
+                <div class="text-left">{{ data.phone }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dx-list>
+    </div>
+    <div
+      *ngIf="showform"
+      class="product-pop-count text-right"
+    >
+      <h6>قم بتحديد الكمية المطلوبة</h6>
+      <div class="plus-btn-container">
+        <dx-button icon="plus" class="rounded-circle bg-default" (click)="add()"></dx-button>
+      </div>
+      <div class="input-count">
+        <label
+          [(value)]="quantity"
+          width="40px"
+          [max]="productSelected.stock"
+          [min]="1"
+        >{{quantity}}</label>
+      </div>
+      <div class="minus-btn-container">
+        <dx-button icon="minus" class="rounded-circle bg-default"(click)="delete()"></dx-button>
+      </div>
+    </div>
+    <div 
+         class="product-pop-color mt-2 text-right">
+      <div *ngIf="slider">
+        <h6>قم بتحديد الشكل المطلوب</h6>
+        <div class="row">
+          <div class="col-md-2 col-sm-3 col-3" *ngFor="let item of slider ">
+            <div class="product-img-container" >
+              <img id="{{item.randam_key}}" src={{item.display_value}} alt="" (click)="selectImage(item.randam_key)" />
+              <div class="img-banner" *ngIf="item.updated_at"><i class="fas fa-check"></i></div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+      </div>
+      <div class="dx-field " *ngIf="colors">
+        <div class="dx-field-value">
+          <h6>قم بتحديد اللون المطلوب</h6>
+          <dx-select-box [dataSource]="colors" [(value)]="colorId" displayExpr="name_ar"
+                         valueExpr="randam_key" [rtlEnabled]="true"
+                         placeholder="اختراللون  "></dx-select-box>
+        </div>
+      </div>
+      <div class="dx-field " *ngIf="sizes">
+        <div class="dx-field-value">
+          <h6>قم بتحديد الحجم المطلوب</h6>
+          <dx-select-box [dataSource]="sizes" [(value)]="sizeId" displayExpr="name_ar"
+                         valueExpr="randam_key" [rtlEnabled]="true"
+                         placeholder="اختر  الحجم"></dx-select-box>
+        </div>
+      </div>
+      <div *ngIf="showform" class="add-product-container mt-3 text-center">
+        <dx-button (onClick)="addProductToCard()" class="default-btn btn">أضافة المنتج</dx-button>
+      </div>
+    </div>
+    <div
+      *ngIf="popupTitle == 'تاكيد إلغاء الطلب'"
+      class="cancel-order-popup text-right"
+    >
+      <h6>سبب الغاء الطلب</h6>
+      <div class="cancel-order-textarea">
+        <dx-text-area height="300" [(value)]="deleteMessage"></dx-text-area>
+      </div>
+      <div class="add-product-container mt-3 text-center">
+        <dx-button (onClick)="onhidden()" class="default-btn btn"
+          >تراجع</dx-button
+        >
+        <dx-button class="btn-danger btn"  (click)="CancelOrderForAdmin()" >تأكيد </dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>

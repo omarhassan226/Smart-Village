@@ -1,0 +1,30 @@
+
+<section class="container-fluid py-2" style="background-color: #f8f8f8">
+    <div class="row">
+      <div class="col-md-12 mt-12">
+        <div class="setting-item " style="    margin-bottom: 25px;">
+          <h6 class="font-weight-bold text-right"> سياسه الضمان والارجاع</h6>
+          <div class="cancel-order-textarea">
+            <angular-editor  class="heightextarea" [placeholder]="'ادخل سيايه الارجاع والضمان '"  [(ngModel)]="Secure_policy"   style="height: 180px;;"   ></angular-editor>
+          </div>
+        </div>
+        <div class="setting-item" style="    margin-bottom: 25px;">
+          <h6 class="font-weight-bold text-right">سياسه الخصوصيه</h6>
+          <div class="cancel-order-textarea">
+            <angular-editor  class="heightextarea" [placeholder]="' ادخل سياسه الخصوصيه '"     [(ngModel)]="Privacy_policy"  style="height: 180px;;"   ></angular-editor>
+          </div>
+        </div>
+        
+
+        <div class="setting-item" style="margin-bottom:25px;">
+            <h6 class="font-weight-bold text-right">سياسه البيع </h6>
+            <div class="cancel-order-textarea">
+              <angular-editor class="heightextarea" [placeholder]="' ادخل سياسه البيع '"  [(ngModel)]="Sales_policy"   style="height: 180px;;"  ></angular-editor>
+            </div>
+          </div>
+          <div class="text-left mt-4">
+            <dx-button text="حفظ التغيرات" [useSubmitBehavior]="true" class="btn py-0 default-btn" style="background-color:#1cbbb2;" (click)="saveArea()"> </dx-button>
+          </div>
+          
+  
+      </div> </div></section>

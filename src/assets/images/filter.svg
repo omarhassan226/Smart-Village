@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.001" height="24" viewBox="0 0 21.001 24">
+  <g id="filter" transform="translate(0.75 0.75)">
+    <ellipse id="Oval" cx="9.75" cy="4.5" rx="9.75" ry="4.5" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Path" d="M19.5,0A9.747,9.747,0,0,1,12,9.479V15.75a2.25,2.25,0,0,1-4.5,0V9.479A9.747,9.747,0,0,1,0,0" transform="translate(0 4.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+  </g>
+</svg>

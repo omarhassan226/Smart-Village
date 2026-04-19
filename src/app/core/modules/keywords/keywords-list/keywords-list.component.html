@@ -1,0 +1,165 @@
+<div class="container-fluid mt-2 website-bg">
+    <div class="container-fluid">
+      <dx-data-grid #gridRef
+                    [dataSource]="keyWords"
+                    width="100%"
+                    keyExpr="id"
+                    [showBorders]="false"
+                    [rtlEnabled]="true"
+                    width="100%"
+                    [focusedRowEnabled]="false"
+                    [columnAutoWidth]="true"
+                    [noDataText]="'لايوجد بيانات'">
+       
+  
+ 
+  
+  
+        <dxi-column dataType="string"
+                    [caption]="'الكلمة الدالة باللغة الانجليزية '"
+                    dataField="keyword_en">
+        </dxi-column>
+        <dxi-column dataType="string"
+                    [caption]="'الكلمة الدالة باللغة العربية'"
+                    dataField="keyword_ar">
+        </dxi-column>
+  
+        <dxi-column type="buttons"
+                    cellTemplate="cellTemplate"
+                    [caption]="'التحكم'">
+          <div *dxTemplate="let cell of 'cellTemplate'">
+            <div class="btn-group"
+                 role="group"
+                 style="direction: ltr"
+                 aria-label="Basic example">
+              <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+                <i class="far fa-trash-alt text-danger"></i>
+              </button>
+              <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+                <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+              </button>
+            </div>
+          </div>
+        </dxi-column>
+        <dxo-paging [pageSize]="4"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true"
+                   [allowedPageSizes]="[4, 6]"
+                   [showInfo]="false">
+        </dxo-pager>
+      </dx-data-grid>
+    </div>
+  </div>
+  <app-delete-pop-up (whenPopupConfirm)="whenDeletePopupConfirm($event)"
+  (whenPopupHide)="hideDeletePopup()"
+  [isDeletePopupVisible]="isConfirmDeletePopupVisible"
+    >
+</app-delete-pop-up>
+<dx-popup [visible]="isAdminPopupVisibleEdit"
+[shading]="true"
+[title]="popTitle"
+shadingColor="rgba(0, 0, 0, 0.2)"
+[closeOnOutsideClick]="true"
+[rtlEnabled]="true"
+[maxWidth]="600"
+height="auto"
+dragEnabled="true"
+(onHiding)="hidePopUp()">
+<div *dxTemplate="let data of 'content'">
+
+<div class="row mt-2">
+<div class="col-md-3 mt-1">
+  <div class="dx-field-label"> الكلمة باللغة العربية</div>
+</div>
+<div class="col-md-9 mt-1">
+  <dx-text-box placeholder="ادخل الكلمة باللغة العربية" [rtlEnabled]="true" [(value)]="name_ar">
+
+<dx-validator>
+  
+  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+
+</dx-validator>
+</dx-text-box>
+</div>
+
+</div>
+<div class="row mt-2">
+<div class="col-md-3 mt-1">
+  <div class="dx-field-label">  االكلمة باللغه الانجليزية </div>
+</div>
+<div class="col-md-9 mt-1">
+  <dx-text-box placeholder="ادخل االكلمة باللغه الانجليزية "
+  [rtlEnabled]="true" [(value)]="name_en" >
+<dx-validator>
+  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+
+</dx-validator>
+</dx-text-box>
+</div>
+
+</div>
+<div class="row mt-2">
+<div class="col-md-3 mt-1">
+  <div class="dx-field-label">الاصاف الفرعيه</div>
+</div>
+<div class="col-md-9 mt-1">
+  <div class="dx-field-value">
+    <dx-drop-down-box
+    
+    [(value)] ="categoryList"
+    valueExpr="id"
+    [deferRendering]="false"
+    displayExpr="category_ar"
+    [showClearButton]="false"
+    [rtlEnabled]="true"
+    [dataSource]="minCategoryList">
+    <dx-validator>
+      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+  </dx-validator>
+    <div *dxTemplate="let data of 'content'">
+      <dx-data-grid
+        #gridRef
+        [dataSource]="minCategoryList"
+        keyExpr="id"
+        [(selectedRowKeys)]="categoryList"
+        [columnAutoWidth]="true"
+        [showBorders]="false"
+        [rtlEnabled]="true"
+        height="100%"
+        [paging]="{ enabled: false }">
+
+        <dxo-search-panel
+          [visible]="true"
+          width="95%"
+          [placeholder]="'Search'"
+        ></dxo-search-panel>
+
+        <dxo-selection
+          selectAllMode="allPages"
+          showCheckBoxesMode="onClick"
+          mode="multiple"
+        ></dxo-selection>
+
+        <dxi-column
+          dataField="category_ar"
+          caption=" "
+        ></dxi-column>
+       
+      </dx-data-grid>
+      
+    </div>
+  </dx-drop-down-box>
+
+  </div>
+</div>
+
+</div>
+
+
+
+<div class="row mt-2">
+<div class="col-md-3 col-sm-4 mx-auto mt-3">
+<dx-button class="dilvery-list-add-btn" (onClick)="editKeyword()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+</div>
+</div>
+</div>
+</dx-popup>

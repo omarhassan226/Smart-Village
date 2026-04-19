@@ -1,0 +1,458 @@
+<section class="container-fluid py-2" style="background-color: #f8f8f8">
+    <div class="row">
+      <div class="col-md-6 mt-3">
+
+        <fieldset>
+            <legend>الرصيد</legend>
+            <div
+  
+      class="product-pop-count text-right"
+    >
+    <div class="row">
+    <div class="col-6 text-right">
+      <h5> المبلغ المتوفر: </h5>
+      <!-- <div class="plus-btn-container">
+        <dx-button icon="plus" class="rounded-circle bg-default" (click)="add()"></dx-button>
+      </div> -->
+      <div class="input-count">
+        <label
+          
+          width="40px"
+         
+        
+        >{{quantity}} ر.ع</label>
+    </div>
+  </div>
+        
+
+          
+          <div class="col-6 text-left">
+            <dx-button (onClick)="cashExcel()"
+            text="Excel"
+            class="default-btn"></dx-button>
+                       <dx-button (onClick)="cashPDF()"
+                       text="PDF"
+                       class="default-btn"></dx-button>
+                       
+                       <dx-button (onClick)="showPopUp()"
+                       text="تعديل"
+                       class="default-btn"></dx-button>
+          </div>
+        </div>
+     
+      
+      <!-- <div class="minus-btn-container">
+        <dx-button icon="minus" class="rounded-circle bg-default"(click)="delete()"></dx-button>
+      </div> -->
+    </div>
+    
+            <div class="container-fluid py-2 website-bg">
+              <dx-data-grid #gridRef
+                            [dataSource]="AvailableAmount"
+                            width="100%"
+                            keyExpr="id"
+                            [showBorders]="false"
+                            [rtlEnabled]="true"
+                            width="100%"
+                            [focusedRowEnabled]="true"
+                            [columnAutoWidth]="true"
+                            [noDataText]="'لايوجد بيانات'">
+
+                            <dxi-column dataType="string" [caption]="'المبلغ المتوفر'" dataField="amount">
+                            </dxi-column>
+                <dxi-column dataType="date"
+                            [caption]="'التاريخ'"
+                            dataField="date">
+                </dxi-column>
+                
+                <dxi-column dataType="date"
+                            [caption]="'تاريخ المعاملة الفعلي'"
+                            dataField="created_at">
+                </dxi-column>
+                
+
+                <dxi-column dataType="string"
+                            [caption]="'المستخدم'"
+                            dataField="name">
+                </dxi-column>
+                <dxi-column dataType="string"
+                [caption]="'الملاحطه'"
+                dataField="note">
+                </dxi-column>
+
+
+
+
+                <dxo-paging [pageSize]="5"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true"
+                           [allowedPageSizes]="[5, 10]"
+                           [showInfo]="false">
+                </dxo-pager>
+              </dx-data-grid>
+            </div>
+
+
+
+           </fieldset>
+      </div>
+
+      <div class="col-md-6 mt-3">
+
+
+
+        <fieldset>
+          <legend>الديون</legend>
+          <div
+     
+          class="product-pop-count text-right"
+        >
+        <div class="row">
+          <div class="col-6 text-right">
+             <h5>مجموع الديون :</h5>
+            <!-- <div class="plus-btn-container">
+              <dx-button icon="plus" class="rounded-circle bg-default" (click)="add()"></dx-button>
+            </div> -->
+            <div class="input-count">
+              <label
+                
+                width="40px"
+               
+              
+              >{{Debit}} ر.ع</label>
+          </div>
+        </div>
+              
+      
+                
+                <div class="col-6 text-left">
+                 
+                             <dx-button (onClick)="debitExcel()"
+                             text="Excel"
+                             class="default-btn"></dx-button>
+                             <dx-button (onClick)="debitPDF()"
+                             text="PDF"
+                             class="default-btn"></dx-button>
+                             <dx-button (onClick)="showPopUpDepit()"
+                             text="تعديل"
+                             class="default-btn"></dx-button>
+                </div>
+              </div>
+        
+          <!-- <div class="plus-btn-container">
+            <dx-button icon="plus" class="rounded-circle bg-default" (click)="add()"></dx-button>
+          </div> -->
+         
+          <!-- <div class="minus-btn-container">
+            <dx-button icon="minus" class="rounded-circle bg-default"(click)="delete()"></dx-button>
+          </div> -->
+        </div>
+          <div class="container-fluid py-2 website-bg">
+            <dx-data-grid #gridRef
+                          [dataSource]="Debits"
+                          width="100%"
+                          keyExpr="id"
+                          [showBorders]="false"
+                          [rtlEnabled]="true"
+                          width="100%"
+                          [focusedRowEnabled]="true"
+                          [columnAutoWidth]="true"
+                          [noDataText]="'لايوجد بيانات'">
+
+              <dxi-column dataType="string"
+                          [caption]="'المبلغ'"
+                          dataField="amount">
+              </dxi-column>
+              <dxi-column dataType="date"
+                          [caption]="'التاريخ'"
+                          dataField="date">
+              </dxi-column>
+              <dxi-column dataType="date"
+                          [caption]="'تاريخ المعاملة الفعلي'"
+                          dataField="created_at">
+              </dxi-column>
+              <dxi-column dataType="string" [caption]="'اسم المورد'" dataField="supplier.name">
+              </dxi-column>
+
+              <dxi-column dataType="string"
+                          [caption]="'رقم الفاتوره'"
+                          dataField="invoice_id">
+             </dxi-column>
+              <!-- <dxi-column dataType="string"
+              [caption]="'النوع'"
+              dataField="type">
+              </dxi-column>  -->
+
+
+
+              <!-- <dxi-column type="string" [caption]="'الملاحطه'"dataField="note"> -->
+                <!-- <div *dxTemplate="let cell of 'cellTemplate'">
+                  <div class="btn-group"
+                       role="group"
+                       style="direction: ltr"
+                       aria-label="Basic example">
+                    <button (click)="showDeletePopUp.emit(gridRef.focusedRowKey)" type="button" class="btn btn-light">
+                      <i class="far fa-trash-alt text-danger"></i>
+                    </button>
+                    <button (click)="getMainDataById.emit(gridRef.focusedRowKey)" type="button" class="btn btn-light">
+                      <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+                    </button>
+                  </div>
+                </div> -->
+              <!-- </dxi-column> -->
+              <dxo-paging [pageSize]="5"></dxo-paging>
+              <dxo-pager [showPageSizeSelector]="true"
+                         [allowedPageSizes]="[5, 10]"
+                         [showInfo]="false">
+              </dxo-pager>
+            </dx-data-grid>
+          </div>
+
+         </fieldset>
+      </div>
+        </div>
+      <div class="row">
+        <div class="col-md-12 mt-3">
+
+
+
+          <fieldset>
+            <legend> الحركه الماليه العامه </legend>
+            <div class="container-fluid py-2 website-bg">
+              <div class="row">
+                <div class="col-6 text-right">
+                 
+                  <!-- <div class="plus-btn-container">
+                    <dx-button icon="plus" class="rounded-circle bg-default" (click)="add()"></dx-button>
+                  </div> -->
+                  
+                  
+              </div>
+                    
+            
+                      
+                      <div class="col-6 text-left">
+                        <dx-button (onClick)="trackerExcel()"
+                        text="Excel"
+                        class="default-btn"></dx-button>
+                        <dx-button (onClick)="trackerPDF()"
+                        text="PDF"
+                        class="default-btn"></dx-button>
+          
+                        <dx-button 
+                                   [text]="sumation"
+                                   class="default-btn"></dx-button>
+                                   
+                                
+                      </div>
+                    </div>
+              <dx-data-grid #gridRef
+                            [dataSource]="trackers"
+                            width="100%"
+                            keyExpr="id"
+                            [showBorders]="false"
+                            [rtlEnabled]="true"
+                            width="100%"
+                            [focusedRowEnabled]="true"
+                            [columnAutoWidth]="true"
+                            [noDataText]="'لايوجد بيانات'">
+
+                <!-- <dxi-column dataType="string"
+                            [caption]="'المبلغ'"
+                            dataField="cost">
+                </dxi-column> -->
+                <dxi-column dataType="date"
+                            [caption]="'التاريخ'"
+                            dataField="date">
+                </dxi-column>
+                <dxi-column dataType="date"
+                            [caption]="'تاريخ المعاملة الفعلي'"
+                            dataField="created_at">
+                </dxi-column>
+                <dxi-column dataType="string" [caption]="'المبلغ المتوفر'" dataField="cost">
+                </dxi-column>
+
+                <dxi-column dataType="string"
+                            [caption]="'المستخدم'"
+                            dataField="user.Fname">
+                </dxi-column>
+                <dxi-column dataType="string"
+                [caption]="'النوع'"
+                dataField="type">
+                </dxi-column>
+                <dxi-column dataType="string"
+                [caption]="'المشرف'"
+                dataField="admin_name">
+                </dxi-column>
+
+
+
+                <dxi-column type="string" [caption]="'الملاحطه'"  dataField="note">
+
+                  <!-- <div *dxTemplate="let cell of 'cellTemplate'">
+                    <div class="btn-group"
+                         role="group"
+                         style="direction: ltr"
+                         aria-label="Basic example">
+                      <button (click)="showDeletePopUp.emit(gridRef.focusedRowKey)" type="button" class="btn btn-light">
+                        <i class="far fa-trash-alt text-danger"></i>
+                      </button>
+                      <button (click)="getMainDataById.emit(gridRef.focusedRowKey)" type="button" class="btn btn-light">
+                        <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+                      </button>
+                    </div>
+                  </div> -->
+                </dxi-column>
+                <dxo-paging [pageSize]="5"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true"
+                           [allowedPageSizes]="[5, 10]"
+                           [showInfo]="false">
+                </dxo-pager>
+              </dx-data-grid>
+            </div>
+
+           </fieldset>
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+
+  </section>
+  <dx-popup [visible]="isAdminPopupVisible"
+  [shading]="true"
+  [title]="title"
+  shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true"
+  [rtlEnabled]="true"
+  [maxWidth]="600"
+  height="auto"
+  dragEnabled="true"
+  (onHiding)="hidePopUp()">
+<div *dxTemplate="let data of 'content'">
+
+
+
+
+<div class="row mt-2">
+<div class="col-md-2 mt-1">
+<div class="dx-field-label"> الكمية </div>
+</div>
+<div class="col-md-10 mt-1">
+  <dx-number-box placeholder="ادخل الكمية"
+  [rtlEnabled]="true" [(value)]="amount" >
+  <dx-validator>
+    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+  </dx-validator>
+</dx-number-box>
+</div>
+
+
+
+
+</div>
+<div class="row mt-2">
+<div class="col-md-2 mt-1">
+<div class="dx-field-label">الملاحطه</div>
+</div>
+<div class="col-md-10 mt-1">
+<dx-text-box placeholder="ادخل الملاحطه"
+[rtlEnabled]="true" [(value)]="note" >
+
+</dx-text-box>
+</div>
+
+
+
+
+
+</div>
+<!-- <div class="row mt-2">
+  <div class="col-md-2 mt-1">
+  <div class="dx-field-label">التاريخ</div>
+  </div>
+  <div class="col-md-10 mt-1">
+  <dx-date-box placeholder="ادخل التاريخ"
+  [rtlEnabled]="true" [(value)]="date" >
+  <dx-validator>
+    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+  </dx-validator>
+  </dx-date-box>
+  </div>
+  
+  
+  
+  
+  
+  </div> -->
+<div class="row mt-2">
+<div class="col-md-3 col-sm-4 mx-auto mt-3">
+<dx-button class="dilvery-list-add-btn" (onClick)=" editAmount()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+</div>
+</div>
+</div>
+</dx-popup>
+<dx-popup [visible]="UpdateDepit"
+[shading]="true"
+[title]="title"
+shadingColor="rgba(0, 0, 0, 0.2)"
+[closeOnOutsideClick]="true"
+[rtlEnabled]="true"
+[maxWidth]="600"
+height="auto"
+dragEnabled="true"
+(onHiding)="hidePopUp()">
+<div *dxTemplate="let data of 'content'">
+
+
+
+
+<div class="row mt-2">
+<div class="col-md-2 mt-1">
+<div class="dx-field-label"> الكمية </div>
+</div>
+<div class="col-md-10 mt-1">
+<dx-number-box placeholder="ادخل الكمية"
+[rtlEnabled]="true" [(value)]="amount" >
+<dx-validator>
+  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+</dx-validator>
+</dx-number-box>
+</div>
+
+
+
+
+</div>
+
+<!-- <div class="row mt-2">
+<div class="col-md-2 mt-1">
+<div class="dx-field-label">التاريخ</div>
+</div>
+<div class="col-md-10 mt-1">
+<dx-date-box placeholder="ادخل التاريخ"
+[rtlEnabled]="true" [(value)]="date" >
+<dx-validator>
+  <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+</dx-validator>
+</dx-date-box>
+</div>
+
+
+
+
+
+</div> -->
+<div class="row mt-2">
+<div class="col-md-3 col-sm-4 mx-auto mt-3">
+<dx-button class="dilvery-list-add-btn" (onClick)=" UpdateDepitt()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+</div>
+</div>
+</div>
+</dx-popup>
+
+

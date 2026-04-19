@@ -1,0 +1,191 @@
+<div class="container-fluid mt-2 website-bg">
+    <div class="container-fluid">
+      <dx-data-grid #gridRef
+                    [dataSource]="bills"
+                    width="100%"
+                    keyExpr="id"
+                    [showBorders]="false"
+                    [rtlEnabled]="true"
+                    width="100%"
+                    [focusedRowEnabled]="false"
+                    [columnAutoWidth]="true"
+                    [noDataText]="'لايوجد بيانات'">
+      
+  
+       
+                    <dxo-search-panel [visible]="true" [placeholder]="''"> </dxo-search-panel>
+  
+        <dxi-column dataType="ID"
+                    [caption]="'ID'"
+                    dataField="id">
+        </dxi-column>
+        <!-- <dxi-column dataType="string"
+                    [caption]="'المورد'"
+                    dataField="supplier_id">
+        </dxi-column> -->
+        <dxi-column dataType="date"
+                    [caption]="'التاريخ'"
+                    dataField="date">
+        </dxi-column>
+        <dxi-column dataType="string"
+        [caption]="'الملاحظه'"
+        dataField="note">
+        
+        
+</dxi-column>
+        <dxi-column dataField="amount" dataType="string" [caption]="'الكلي'">
+           
+          </dxi-column>
+  
+        <dxi-column type="buttons"
+                    cellTemplate="cellTemplate"
+                    [caption]="'التحكم'">
+          <div *dxTemplate="let cell of 'cellTemplate'">
+            <div class="btn-group"
+                 role="group"
+                 style="direction: ltr"
+                 aria-label="Basic example">
+              <!-- <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+                <i class="far fa-trash-alt text-danger"></i>
+              </button> -->
+              <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+                <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+              </button>
+              <button type="button" class="btn btn-light" (click)="showDetalPopup (cell.row.data.id)">
+                <i  class="fas fa-eye" ></i>
+              </button>
+
+            </div>
+          </div>
+        </dxi-column>
+        <dxo-paging [pageSize]="4"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true"
+                   [allowedPageSizes]="[4, 6]"
+                   [showInfo]="false">
+        </dxo-pager>
+      </dx-data-grid>
+    </div>
+  </div>
+  <dx-popup [visible]="showPopup"
+  [shading]="true"
+  [title]="popTitle"
+  shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true"
+  [rtlEnabled]="true"
+  [maxWidth]="600"
+  height="auto"
+  dragEnabled="true"
+  (onHiding)="hidePopUp()">
+  <div class="container-fluid mt-2 website-bg">
+    <div class="container-fluid">
+      <dx-data-grid #gridRef
+                    [dataSource]="details_bill"
+                    width="100%"
+                    
+                    [showBorders]="false"
+                    [rtlEnabled]="true"
+                    width="100%"
+                    [focusedRowEnabled]="false"
+                    [columnAutoWidth]="true"
+                    [noDataText]="'لايوجد بيانات'">
+      
+  
+       
+  
+  
+        <dxi-column dataType="string"
+                    [caption]="'اسم المنتج'"
+                    dataField="product_name">
+        </dxi-column>
+        <dxi-column dataType="string"
+                    [caption]="'التفاصيل'"
+                    dataField="values">
+        </dxi-column>
+        <dxi-column dataType="string"
+                    [caption]="'الكميه'"
+                    dataField="quantity">
+        </dxi-column>
+        <dxi-column dataType="string"
+        [caption]="'السعر'"
+        dataField="price">
+      </dxi-column>
+        <dxi-column dataType="string"
+        [caption]="'اجمالي التكلفه'"
+        dataField="cost_price">
+        
+        
+</dxi-column>
+        
+  
+      
+       
+      </dx-data-grid>
+
+    </div>
+  </div>
+
+</dx-popup>
+<dx-popup [visible]="isAdminPopupVisibleEdit"
+          [shading]="true"
+          [title]= "popEdit"
+          shadingColor="rgba(0, 0, 0, 0.2)"
+          [closeOnOutsideClick]="true"
+          [rtlEnabled]="true"
+          [maxWidth]="600"
+          height="auto"
+          dragEnabled="true"
+          (onHiding)="hidePopUpEdit()">
+  <div *dxTemplate="let data of 'content'">
+  
+    <!-- <div class="row mt-2">
+      <div class="col-md-3 mt-1">
+        <div class="dx-field-label">اسم المورد</div>
+      </div>
+      <div class="col-md-9 mt-1">
+        <dx-select-box [placeholder]="''"  [items]="suppliers" displayExpr="name" [(value)]="supplierID" valueExpr="id" [rtlEnabled]="true">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
+      
+      </div>
+
+    </div> -->
+    <div class="row mt-2">
+      <div class="col-md-3 mt-1">
+        <div class="dx-field-label"> التاريخ</div>
+      </div>
+      <div class="col-md-9 mt-1">
+        <dx-date-box [rtlEnabled]="true" [(value)]="dateBill">
+
+                   
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+        </dx-validator>
+    </dx-date-box>
+      </div>
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-3 mt-1">
+          <div class="dx-field-label">  الملاحظه </div>
+        </div>
+        <div class="col-md-9 mt-1">
+          <dx-text-box [rtlEnabled]="true"  [(value)] ="note">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+          </dx-text-box>
+        </div>
+  
+      </div>
+ 
+
+    
+    <div class="row mt-2">
+      <div class="col-md-3 col-sm-4 mx-auto mt-3">
+        <dx-button class="dilvery-list-add-btn" (onClick)="editbill()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>

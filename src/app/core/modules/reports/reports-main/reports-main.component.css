@@ -1,0 +1,144 @@
+::ng-deep #pie {
+    height: 440px;
+    margin-top: 20px;
+}
+::ng-deep .list-container {
+    height: 440px;
+  }
+  ::ng-deep .product {
+    height: 65px;
+  }
+  .list-product {
+    border-bottom: 1px solid gainsboro;
+  }
+  ::ng-deep .product > img {
+    height: 100%;
+    float: right;
+  }
+  ::ng-deep .product > div {
+    padding-right: 10px;
+    vertical-align: top;
+    font-size: 15px;
+    float: right;
+  }
+  ::ng-deep .product > div:after {
+    clear: both;
+  }
+  ::ng-deep .product > div.product-details {
+    float: left;
+    font-size: 18px;
+  }
+  ::ng-deep .product > div.product-details::after {
+    clear: both;
+  }
+  
+  .product-item {
+    position: relative;
+  }
+  .product-item > span {
+    position: absolute;
+    top: 21px;
+    right: 12px;
+  }
+  
+  .customer-item-info,
+  .customer-item-state {
+    padding: 10px 26px 10px 0;
+    text-align: center;
+    background-color: #fff;
+  }
+  .customer-item-info.total-price {
+    padding: 14px 23px 2px;
+    text-align: center;
+    background-color: rgba(28, 187, 178, 0.3);
+    border-radius: 26%;
+  }
+  .customer-item-info > span {
+    font-size: 12px;
+    background-color: #1cbbb2;
+    padding: 9px;
+    border-radius: 35%;
+    position: absolute;
+    right: 23px;
+    top: 27%;
+  }
+  .customer-item-state > span {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .customer-item-info > h6 {
+    position: relative;
+    font-size: 12px;
+    color: gray;
+  }
+  .customer-item-info > p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .customer-item-info > h6 > i {
+    position: absolute;
+    right: -12px;
+    top: 6px;
+    padding: 11px;
+    border-radius: 16%;
+  }
+  .customer-item-info > h6 > i.fa-shopping-cart {
+    color: #0664a4;
+    background-color: #deeef9;
+  }
+  .customer-item-info > h6 > i.fa-user {
+    color: #ebca0e;
+    background-color: #fbf6d1;
+  }
+  .customer-item-info > h6 > i.fa-folder-plus {
+    color: #1cbbb2;
+    background-color: #e7f8f7;
+  }
+  .customer-item-info > h6 > i.fa-check-double {
+    background-color: #fbe4ee;
+    color: #db1c74;
+  }
+  .customer-item-info > h6 > i.fa-eye {
+    background-color: #f9ecde;
+    color: #f2a11f;
+  }
+  .customer-info-buttons
+    > .default-btn
+    > .dx-button-content
+    > i.dx-icon-download {
+    color: #fff;
+  }
+  
+  .heading-items {
+    box-sizing: border-box;
+    width: 75%;
+    text-align: center;
+    margin:auto;
+  }
+  @media (max-width: 1185px) {
+    .heading-items {
+      width: 30%;
+    }
+  }
+  @media (max-width: 700px) {
+    .heading-items {
+      width: 48%;
+      margin: 5px 1%;
+    }
+  }
+  @media (max-width: 500px) {
+    .heading-items {
+      width: 98%;
+      margin: 5px 1%;
+    }
+  }
+  .pro-title{
+    margin: 0;
+    padding: 12px 15px;
+    background: white;
+    text-align: right;
+    font-size: 14px;
+    height: 41px;
+    font-weight: 600;
+  }

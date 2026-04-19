@@ -1,0 +1,230 @@
+<div class="container-fluid py-2 mb-1" style="background-color: #f8f8f8">
+  <div class="row">
+    <div class="heading-items">
+      <div class="customer-item-info">
+        <h6><i class="far fa-shopping-cart"></i>إجمالي المستخدمين</h6>
+        <p>{{insights?.AllUsers}}</p>
+      </div>
+    </div>
+    <div class="heading-items">
+      <div class="customer-item-info">
+        <h6><i class="fas fa-user"></i>المستخدمين الجدد</h6>
+        <p>{{insights?.NewUser}}</p>
+      </div>
+    </div>
+    <div class="heading-items">
+      <div class="customer-item-info">
+        <h6><i class="fas fa-folder-plus"></i>الطلبات الجديدة</h6>
+        <p>{{insights?.NewOrders}}</p>
+      </div>
+    </div>
+    <div class="heading-items">
+      <div class="customer-item-info">
+        <h6><i class="fas fa-check-double"></i>الطلبات المنتهية</h6>
+        <p>{{insights?.CompleteOrders}}</p>
+
+      </div>
+    </div>
+    <div class="heading-items">
+      <div class="customer-item-info">
+        <h6><i class="far fa-eye"></i>الزيارات</h6>
+        <p>{{insights?.AllVisitors}}</p>
+      </div>
+    </div>
+    <div class="heading-items">
+      <div class="customer-item-info">
+        <h6><i class="far fa-eye"></i>الطلبات المراد ارجاعها</h6>
+        <p>{{review}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="container-fluid py-1 mt-1" style="background-color: #f8f8f8">
+  <div class="row">
+    <div class="col-md-4 clearfix">
+      <div class="pro-title"><p>أصناف وصلت للحد الادني</p></div>
+      <div class="list-container py-3 bg-white" >
+        <dx-list [items]="products" height="100%"  [noDataText]="'لاتوجد منتجات وصلت إلي الحد الأدني بعد'">
+          
+          
+          <div *dxTemplate="let item of 'item'" class="list-product">
+            <div class="product">
+              <img src={{item.product.image.image}} />
+              <div class="product-item">
+              <div>  {{item.product.name_ar}} </div> 
+               <div>{{ item.discount_price }}</div>
+                <div >   {{ item.price_sale }}ر.ع</div>
+              </div>
+
+              <div class="product-details">
+                <dx-button (onClick)="showDetails(item.product.id)" class="text-default bg-default-transparent"
+                  >التفاصيل</dx-button
+                >
+              </div>
+            </div>
+          </div>
+          
+        </dx-list>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="home-chart" style="background-color: #fff">
+        <dx-tab-panel
+          #tabPanel
+          class="col-12"
+          [dataSource]="dataSource"
+          [selectedIndex]="0"
+          [loop]="true"
+          [animationEnabled]="true"
+          [showNavButtons]="false"
+          [rtlEnabled]="true"
+          height="100%"
+          width="100%"
+        >
+          <div *dxTemplate="let item of 'title'">
+            <dx-button
+              text="{{ item.text }}"
+              [rtlEnabled]="true"
+              type="normal"
+              stylingMode="text"
+              style="padding: 0"
+            ></dx-button>
+          </div>
+
+          <div *dxTemplate="let item of 'item'">
+            <div
+              class="tabpanel-item"
+              [class.hidden]="tabPanel.selectedIndex !== 0"
+            >
+              <dx-chart
+                id="chart"
+                title=""
+                [dataSource]="reportPerOfWeek"
+                (onPointClick)="onPointClick($event)"
+              >
+                <dxi-series
+                  color="blue"
+                  valueField="year1998"
+                  name="الارباح"
+                ></dxi-series>
+                <dxi-series
+                  color="#1cbbb2"
+                  valueField="year2001"
+                  name="مبيعات"
+                ></dxi-series>
+                <dxo-common-series-settings
+                  argumentField="state"
+                  type="bar"
+                  hoverMode="allArgumentPoints"
+                  selectionMode="allArgumentPoints"
+                >
+                  <dxo-label
+                    [visible]="true"
+                    [format]="{
+                      type: 'fixedPoint',
+                      precision: '0'
+                    }"
+                  >
+                  </dxo-label>
+                </dxo-common-series-settings>
+                <dxo-legend
+                  verticalAlignment="top"
+                  horizontalAlignment="center"
+                >
+                </dxo-legend>
+                <dxo-export [enabled]="true"></dxo-export>
+              </dx-chart>
+            </div>
+
+            <div
+              class="tabpanel-item"
+              [class.hidden]="tabPanel.selectedIndex !== 1"
+            >
+              <dx-chart
+                id="chart"
+                title=""
+                [dataSource]="reportPerOfMonth"
+                (onPointClick)="onPointClick($event)"
+              >
+                <dxi-series
+                  color="blue"
+                  valueField="year1998"
+                  name="الارباح"
+                ></dxi-series>
+                <dxi-series
+                  color="#1cbbb2"
+                  valueField="year2001"
+                  name="مبيعات"
+                ></dxi-series>
+                <dxo-common-series-settings
+                  argumentField="state"
+                  type="bar"
+                  hoverMode="allArgumentPoints"
+                  selectionMode="allArgumentPoints"
+                >
+                  <dxo-label
+                    [visible]="true"
+                    [format]="{
+                      type: 'fixedPoint',
+                      precision: '0'
+                    }"
+                  >
+                  </dxo-label>
+                </dxo-common-series-settings>
+                <dxo-legend
+                  verticalAlignment="top"
+                  horizontalAlignment="center"
+                >
+                </dxo-legend>
+                <dxo-export [enabled]="true"></dxo-export>
+              </dx-chart>
+            </div>
+            <div
+              class="tabpanel-item"
+              [class.hidden]="tabPanel.selectedIndex !== 2"
+            >
+              <dx-chart
+                id="chart"
+                title=""
+                [dataSource]="reportPerOfYear"
+                (onPointClick)="onPointClick($event)"
+              >
+                <dxi-series
+                  color="blue"
+                  valueField="year1998"
+                  name="الارباح"
+                ></dxi-series>
+                <dxi-series
+                  color="#1cbbb2"
+                  valueField="year2001"
+                  name="مبيعات"
+                ></dxi-series>
+                <dxo-common-series-settings
+                  argumentField="state"
+                  type="bar"
+                  hoverMode="allArgumentPoints"
+                  selectionMode="allArgumentPoints"
+                >
+                  <dxo-label
+                    [visible]="true"
+                    [format]="{
+                      type: 'fixedPoint',
+                      precision: '0'
+                    }"
+                  >
+                  </dxo-label>
+                </dxo-common-series-settings>
+                <dxo-legend
+                  verticalAlignment="top"
+                  horizontalAlignment="center"
+                >
+                </dxo-legend>
+                <dxo-export [enabled]="true"></dxo-export>
+              </dx-chart>
+            </div>
+          </div>
+        </dx-tab-panel>
+      </div>
+    </div>
+  </div>
+</section>

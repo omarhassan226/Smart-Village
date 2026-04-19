@@ -1,0 +1,303 @@
+<section class="container-fluid py-2" style="background-color: #f8f8f8">
+  <div class="row">
+    <div class="col-md-6 mt-3">
+      <div class="setting-item">
+        <div class="common-questions">
+          <div class="row">
+            <div class="col-6 text-right">
+              <p class="font-weight-bold">الأسئلة الشائعة</p>
+            </div>
+            <div class="col-6 text-left">
+              <dx-button (onClick)="showPopUp('أضافة سوال', null)"
+                         icon="plus"
+                         class="rounded-circle default-btn"></dx-button>
+            </div>
+          </div>
+
+          <div id="accordion">
+            <dx-accordion #accordion
+                          [dataSource]="Questions"
+                          [collapsible]="true"
+                          [multiple]="true"
+                          [animationDuration]="300"
+                          itemTitleTemplate="title"
+                          itemTemplate="item">
+              <div style="height: 200px;">
+                <div *dxTemplate="let company of 'title'">
+                  <div class="row">
+                    <div class="col-8">
+                      <h1>{{ company.question_ar }}</h1>
+                    </div>
+                    <div class="col-4">
+                      <dx-button (onClick)="showPopUp('تعديل السوال',company.id);"
+                                 text="تعديل"
+                                 class="border-none text-success bg-transparent">
+                      </dx-button>
+                      <dx-button text="حذف"
+                                 class="border-none text-danger bg-transparent"
+                                 (onClick)="showDeletePopup(company.id,1)"></dx-button>
+                    </div>
+                  </div>
+                </div>
+                <div *dxTemplate="let company of 'item'">
+                  <p>
+                    {{company.answer_ar}}
+                  </p>
+                </div>
+              </div>
+
+            </dx-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-3" style="background-color: #fff">
+      <div class="setting-item">
+        <div class="text-right">
+          <p class="font-weight-bold">إضافة الشركات المنتجة</p>
+        </div>
+        <div class="row">
+          <div class="col-3">
+
+            <div class="image-upload-lg">
+              <label for="file-input">
+                <div class="col-3 text-right">
+                  <img [src]="imgSrc"
+                       height="80px"
+                       width="100px"
+                       alt="" />
+                </div>
+                <!-- <dx-button icon="far fa-camera" class="btn-light btn-block">
+              </dx-button> -->
+              </label>
+
+
+              <input #companyImg (change)="showPreview($event)" accept="image/*" id="file-input" type="file" />
+            </div>
+          </div>
+          <div class="col-7 p-0">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box placeholder="اسم الشركة باللغة العربية"
+                             [rtlEnabled]="true"
+                             [(value)]="name_ar">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+              </div>
+            </div>
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box placeholder="اسم الشركة باللغة الانجليزية"
+                             [rtlEnabled]="true"
+                             [(value)]="name_en">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <dx-button icon="far fa-plus-circle"
+                       class="btn-light btn-block bg-default text-white"
+                       [useSubmitBehavior]="true"
+                       (onClick)="submitCompany()">
+            </dx-button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12" style="height: 200px; overflow: auto;">
+        <div class="row mt-2" *ngFor="let item of Companies">
+          <div class="col-3">
+            <img src="https://smartvillageapp.com/app/{{item.logo}}"
+                 width="110px"
+                 height="38px"
+                 alt="" />
+          </div>
+          <div class="col-9">
+            <div class="row" style="padding-left: 16px">
+              <div class="col-6" style="background-color: #f2f2f2">
+                <h6 class="text-right" style="padding: 8px 0 0 0">{{item.name_ar}}</h6>
+              </div>
+              <div class="col-6 text-left" style="background-color: #f2f2f2">
+                <dx-button text="تعديل"
+                           class="border-none text-success bg-transparent"
+                           (onClick)="getCompanyById(item.id)">
+                </dx-button>
+                <dx-button text="حذف"
+                           class="border-none text-danger bg-transparent"
+                           (onClick)="showDeletePopup(item.id,2)"></dx-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="setting-item">
+        <h6 class="font-weight-bold text-right">الضمان والارجاع</h6>
+        <div class="cancel-order-textarea">
+          <dx-text-area (onValueChanged)="savequality()"
+                        [(value)]="quality"
+                        placeholder="يمكنك الكتابة هنا"
+                        height="300"></dx-text-area>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-3">
+      <div class="setting-item">
+        <div class="text-right">
+          <p class="font-weight-bold">الروابط الخارجية</p>
+        </div>
+        <div class="row mt-2">
+          <div class="col-1">
+            <div class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="facebookLink" (onValueChanged)="activeSaveSocila = true" [rtlEnabled]="true"></dx-text-box>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-1">
+            <div class="social-icon">
+              <i class="fab fa-youtube"></i>
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="youtubeLink" (onValueChanged)="activeSaveSocila = true" [rtlEnabled]="true"></dx-text-box>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-1">
+            <div class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="instgramLink" (onValueChanged)="activeSaveSocila = true" [rtlEnabled]="true"></dx-text-box>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-1">
+            <div class="social-icon">
+              <i class="fab fa-twitter"></i>
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="twitterLink" (onValueChanged)="activeSaveSocila = true" [rtlEnabled]="true"></dx-text-box>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-1">
+            <div class="social-icon">
+              <i class="fab fa-whatsapp-square"></i>
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="whatsupLink" (onValueChanged)="activeSaveSocila = true" [rtlEnabled]="true"></dx-text-box>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-1">
+            <div class="social-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="dx-field">
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="phoneNumber" (onValueChanged)="activeSaveSocila = true" [rtlEnabled]="true"></dx-text-box>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-1">
+          <dx-button [disabled]="!activeSaveSocila"
+                     class="default-btn btn"
+                     (onClick)="EditSocialLinks()">
+            حفظ التعديلات
+          </dx-button>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6 mt-3">
+      <div class="setting-item">
+        <h6 class="font-weight-bold text-right">الشحن والتوصيل</h6>
+        <div class="cancel-order-textarea">
+          <ckeditor  class="heightextarea" [editor]="Editor"   [(ngModel)]="shipping" [config]='config' style="height: 300px;" ></ckeditor> 
+          <!-- <angular-editor  class="heightextarea" [placeholder]="' ادخل سياسه الخصوصيه '"     [(ngModel)]="shipping"  style="height: 300px;"   ></angular-editor>
+     -->
+          <!-- <dx-text-area (onValueChanged)="saveshipping()"
+                        [(value)]="shipping"
+                        placeholder="يمكنك الكتابة هنا"
+                        height="300"></dx-text-area> -->
+        </div>
+      </div>
+      
+      <div class="text-right mt-4">
+        <dx-button text="حفظ"  class="btn py-0 default-btn" (click)="saveshipping()"> </dx-button>
+      </div>
+    
+    </div>
+    <div class="col-md-6 mt-3">
+      <div class="setting-item">
+        <h6 class="font-weight-bold text-right">شروط الاستخدام</h6>
+        
+        <div class="cancel-order-textarea">
+        
+
+          <ckeditor  class="heightextarea" [editor]="Editor"   [(ngModel)]="terms_of_use"  style="height: 300px;" ></ckeditor> 
+          <!-- <dx-text-area (onValueChanged)="saveUse()"
+                        [(value)]="terms_of_use"
+                        placeholder="يمكنك الكتابة هنا"
+                        height="300"></dx-text-area> -->
+        </div>
+      </div>
+      <div class="text-right mt-4">
+        <dx-button text="حفظ"  class="btn py-0 default-btn" (click)="saveUse()"> </dx-button>
+      </div>
+    
+    </div>
+  </div>
+</section>
+<app-setting-pop
+  #popup
+  [isSettingsPopupVisible]="isSettingsPopupVisible"
+  (OnHiding)="hidePopUp()"
+  (addQuestion)="addQuestion($event)"
+  (EditQuestion) ="editQuestion($event)"
+  [popTitle]="popTitle"
+></app-setting-pop>
+<app-delete-pop-up
+(whenPopupConfirm)="whenDeletePopupConfirm($event)"
+(whenPopupHide)="hideDeletePopup()"
+[isDeletePopupVisible]="isConfirmDeletePopupVisible"
+
+>
+</app-delete-pop-up>

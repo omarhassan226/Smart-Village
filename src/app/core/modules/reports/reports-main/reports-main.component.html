@@ -1,0 +1,867 @@
+
+<div class="row px-2">
+    <div class="col-md-12 mb-3" style="margin-top: 19px;
+    background-color: #fff;
+    height: 144px;">
+      <h6 class="text-right">البيانات الأساسية</h6>
+      <div class="line-border"></div>
+      <div class="row">
+        <!-- <div class="col-lg-2 col-md-12 mt-3">
+            <h6 class="text-right mt-2"> تاريخ التقرير</h6> -->
+          <!-- <div class="image-upload-lg">
+            <label for="file-input">
+              <img [src]="imgSrc" style="    max-height: 90px;
+              "/>
+            </label>
+            <div class="text-center">صورة المنتج</div>
+  
+            <input (change)="showPreview($event)"  id="file-input" type="file" multiple/>
+          </div> -->
+        <!-- </div> -->
+        <div class="col-lg-3 col-md-12 mt-1">
+          <div class="dx-field-label"> تاريخ البداء  </div>
+          <div class="dx-field">
+          
+                <div class="dx-field-value">
+                  <dx-date-box  [rtlEnabled]="true" [(value)]="start">
+                    <dx-validator>
+                      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+                  </dx-date-box>
+                </div>
+            
+          </div>
+        
+        </div>
+    
+        <div  class="col-lg-3 col-md-12 mt-1">
+        <div class="dx-field-label">تاريخ الانتهاء</div>
+        <div class="dx-field">
+            
+                <div class="dx-field-value">
+                  <dx-date-box  [rtlEnabled]="true" [(value)]="end">
+                    <dx-validator>
+                      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+          
+                  </dx-date-box>
+                </div>
+              
+    </div>
+      </div>
+      <!-- <div *ngIf="valueRadio=='البائعين الاكثر مبيعا'"class="col-lg-3 col-md-12 mt-1">
+        <div class="dx-field-label">  البائع  </div>
+        <div class="dx-field">
+        
+          <div class="dx-field-value">
+            <dx-select-box [placeholder]="''" [(value)]="seller_Id" [items]="sellers" displayExpr="name" valueExpr="id" [rtlEnabled]="true"  (onValueChanged)="showReport()">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-select-box>
+          </div>
+          
+        </div>
+      
+      </div> -->
+      <div class="col-lg-3 col-md-12 mt-1">
+        <div >
+          <dx-button (click)="showReport()" class="dilvery-list-add-btn"  [useSubmitBehavior]="true" text="عرض التقرير" click="showReport()"> </dx-button>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <div class="col-md-12" style="height:250px;;
+  background-color: #fff;">
+    <h6 class="text-right px-2">نوع التقرير</h6>
+    <div class="line-border px-2"></div>
+    <div class="row">
+      <div class=" col-md-12 mt-1">
+        <div class="dx-field">
+            <!-- <div class="dx-field-label">Horizontal layout</div> -->
+            <div class="dx-field-value ">
+                <dx-radio-group
+                    [items]="priorities"
+                    [(value)]="valueRadio"
+                    layout="horizontal"
+                    
+                    (onValueChanged)="showReport()">
+                    <dx-validator>
+                      <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-radio-group>
+            </div>
+        
+        <!-- <div class="dx-field-label">القسم الأساسي</div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-drop-down-box
+            
+            [(value)] ="mainCategoryList"
+            valueExpr="id"
+            [deferRendering]="false"
+            displayExpr="category_ar"
+            [showClearButton]="false"
+            [rtlEnabled]="true"
+            [dataSource]="maincategory"
+
+               (onValueChanged)="getMinCatergories ()"
+                              >
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+            <div *dxTemplate="let data of 'content'">
+              <dx-data-grid
+                #gridRef
+                [dataSource]="maincategory"
+                keyExpr="id"
+                [(selectedRowKeys)]="mainCategoryList"
+                [columnAutoWidth]="true"
+                [showBorders]="false"
+                [rtlEnabled]="true"
+                height="100%"
+                [paging]="{ enabled: false }">
+  
+                <dxo-search-panel
+                  [visible]="true"
+                  width="95%"
+                  [placeholder]="'Search'"
+                ></dxo-search-panel>
+  
+                <dxo-selection
+                  selectAllMode="allPages"
+                  showCheckBoxesMode="onClick"
+                  mode="multiple"
+                ></dxo-selection>
+  
+                <dxi-column
+                  dataField="category_ar"
+                  caption=" "
+                ></dxi-column>
+  
+              </dx-data-grid>
+             
+            </div>
+          </dx-drop-down-box>
+           
+          </div>
+        </div>
+        <div class="dx-field-label">القسم الفرعي</div> -->
+        <!-- <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-drop-down-box
+            
+            [(value)] ="categoryList"
+            valueExpr="id"
+            [deferRendering]="false"
+            displayExpr="category_ar"
+            [showClearButton]="false"
+            [rtlEnabled]="true"
+            [dataSource]="minCategoryList">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+            <div *dxTemplate="let data of 'content'">
+              <dx-data-grid
+                #gridRef
+                [dataSource]="minCategoryList"
+                keyExpr="id"
+                [(selectedRowKeys)]="categoryList"
+                [columnAutoWidth]="true"
+                [showBorders]="false"
+                [rtlEnabled]="true"
+                height="100%"
+                [paging]="{ enabled: false }">
+  
+                <dxo-search-panel
+                  [visible]="true"
+                  width="95%"
+                  [placeholder]="'Search'"
+                ></dxo-search-panel>
+  
+                <dxo-selection
+                  selectAllMode="allPages"
+                  showCheckBoxesMode="onClick"
+                  mode="multiple"
+                ></dxo-selection>
+  
+                <dxi-column
+                  dataField="category_ar"
+                  caption=" "
+                ></dxi-column>
+               
+              </dx-data-grid>
+              
+            </div>
+          </dx-drop-down-box>
+        
+          </div>
+        </div> -->
+      </div>
+    
+      <!-- <div class="col-lg-4 text-center col-md-12 mt-4">
+        <dx-button text="أضافة" class="btn py-0 default-btn"> </dx-button>
+      </div> -->
+     
+    </div>
+    <div *ngIf="valueRadio=='البائعين الاكثر مبيعا'"class="col-lg-3 col-md-12 mt-1">
+      <div class="dx-field-label">  البائع  </div>
+      <div class="dx-field">
+      
+        <div class="dx-field-value">
+          <dx-select-box [placeholder]="''" [(value)]="seller_Id" [items]="sellers" displayExpr="name" valueExpr="id" [rtlEnabled]="true"  (onValueChanged)="showReport()">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+        </div>
+        
+      </div>
+    
+    </div>
+  </div>
+</div>
+  
+  <!-- <div class="row mt-2 px-2">
+    <div class="col-12">
+      <h6 class="text-right">السعر والكمية</h6>
+      <div class="line-border"></div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">السعر</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box format="$ #,##0.##" [(value)]="price" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">السعر بعد التخفيض</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box format="$ #,##0.##" [(value)]="discount_price" [rtlEnabled]="true">
+  
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">سعر التكلفة</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box format="$ #,##0.##" [(value)]="cost" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-1">
+      <div class="dx-field-label">موعد بداية التخفيض</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-date-box [(value)]="start_discount" [rtlEnabled]="true">
+  
+          </dx-date-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-1">
+      <div class="dx-field-label">موعد نهاية التخفيض</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-date-box [(value)]="end_discount" [rtlEnabled]="true">
+  
+          </dx-date-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">الرمز</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-box [(value)]="symbol" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">الكمية</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box [min]="1" step="1" [(value)]="stock" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">العدد</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box [min]="1" step="1" [(value)]="unit_number" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">الوحدة</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [placeholder]="''" [(value)]="product_unit" [items]="units" displayExpr="unit_ar" valueExpr="id" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 mt-1">
+      <div class="dx-field-label">البائع</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [placeholder]="''" [(value)]="seller_Id" [items]="suppliers" displayExpr="name" valueExpr="id" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-1">
+      <div class="dx-field-label">الوزن</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box [(value)]="weight" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-1">
+      <div class="dx-field-label">الحد الأدني للكمية</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box [min]="1" [(value)]="min_quantity" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-1">
+      <div class="dx-field-label">الشركة المصنعة</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [placeholder]="''" [(value)]="company_manfacure" valueExpr="id" displayExpr="name_ar" [items]="companies" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+  
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-1">
+      <div class="dx-field-label">أضافة ضمان</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [placeholder]="''" [rtlEnabled]="true" [items]="secures" [(value)]="secure" displayExpr="duration_ar" valueExpr="id">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+  
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mt-1">
+      <div class="dx-field-label">نوع البنر</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [placeholder]="''" [rtlEnabled]="true" [(value)]="blanner_type" [items]="banners" valueExpr="banner_type" displayExpr="banner_type">
+  
+          </dx-select-box>
+        </div>
+      </div>
+    </div>
+  </div>
+   -->
+  <!-- <div class="row mt-2 px-2">
+
+    <div class="col-12">
+      <h6 class="text-right">وصف المنتج</h6>
+      <div class="line-border"></div>
+    </div>
+    <div class="col-md-4">
+      <div class="dx-field-label">الوصف باللغة العربية</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-area
+           [(value)]="content_ar" [height]="90">
+           <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+        </dx-validator>
+          </dx-text-area>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="dx-field-label">الوصف باللغة الأنجليزية</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-area
+            [(value)]="content_en"
+            [height]="90" >
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+          </dx-text-area>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 text-center">
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="show_app" text="عدم إظهار في المتجر">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+          </dx-check-box>
+        </div>
+      </div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <div *ngIf="addState;then content else other_content"></div>
+          <ng-template #content><dx-button [useSubmitBehavior]="true" (click)="handleProductData()" class="btn py-0 default-btn"
+             text="أضافة المنتج">
+  </dx-button></ng-template>
+          <ng-template #other_content><dx-button [useSubmitBehavior]="true" (click)="handleProductData()" class="btn py-0 default-btn"
+             text="تعديل المنتج">
+             </dx-button>
+          </ng-template>
+          
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div *ngIf="internetLanguages.length>0">
+  <dx-pie-chart
+    id="pie"
+    type="doughnut"
+    title="الطلبات حسب الولايه"
+    palette="Soft Pastel"
+    [dataSource]="internetLanguages">
+    <dxo-export [enabled]="true"></dxo-export>
+    <dxo-legend
+        horizontalAlignment="center"
+        verticalAlignment="bottom"></dxo-legend>
+    <dxi-series        
+        argumentField="language"
+        valueField="percent">
+        <dxo-small-values-grouping
+            mode="topN"
+            [topCount]="3"></dxo-small-values-grouping>
+        <dxo-label
+            [visible]="true"
+            format="fixedPoint"
+            [customizeText]="customizeLabel">
+            <dxo-connector
+                [visible]="true"
+                [width]="1"></dxo-connector>
+        </dxo-label>
+    </dxi-series>
+</dx-pie-chart>
+</div>
+<div class="line-border"></div>
+<div *ngIf="internetLanguages2.length>0">
+<dx-pie-chart
+id="pie"
+type="doughnut"
+title="الطلبات حسب شركات الشحن"
+palette="Soft Pastel"
+[dataSource]="internetLanguages2">
+<dxo-export [enabled]="true"></dxo-export>
+<dxo-legend
+    horizontalAlignment="center"
+    verticalAlignment="bottom"></dxo-legend>
+<dxi-series        
+    argumentField="language"
+    valueField="percent">
+    <dxo-small-values-grouping
+        mode="topN"
+        [topCount]="3"></dxo-small-values-grouping>
+    <dxo-label
+        [visible]="true"
+        format="fixedPoint"
+        [customizeText]="customizeLabel">
+        <dxo-connector
+            [visible]="true"
+            [width]="1"></dxo-connector>
+    </dxo-label>
+</dxi-series>
+</dx-pie-chart>
+</div>
+<div *ngIf="words.length>0" class="container-fluid mt-2 website-bg">
+  <h6 class="text-right px-2">  الكلمات الاكثر بحثا  </h6>
+  <div class="container-fluid">
+    <dx-data-grid #gridRef
+                  [dataSource]="words"
+                  width="100%"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+  
+
+      <dxi-column dataField="name" dataType="string" [caption]="'الكلمه'">
+       </dxi-column>
+
+
+      <dxi-column dataType="number"
+                  [caption]="'عدد التكرار'"
+                  dataField="count">
+      </dxi-column>
+   
+      <!-- <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column> -->
+      <dxo-paging [pageSize]="4"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[4, 6]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+</div>
+<div *ngIf="user.length>0" class="container-fluid mt-2 website-bg" >
+  <div class="row">
+    <div class="col-6">
+      <h6 class="text-right px-2"> العملا الاكثر طلبا </h6>
+    <dx-data-grid #gridRef
+                  [dataSource]="user"
+                  width="100%"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+  
+
+      <dxi-column dataField="fullName" dataType="string" [caption]="'الاسم بالكامل'">
+       </dxi-column>
+
+
+      <dxi-column dataType="number"
+                  [caption]="'عدد الطلب'"
+                  dataField="count_sales">
+      </dxi-column>
+   
+      <!-- <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column> -->
+      <dxo-paging [pageSize]="4"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[4, 6]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+  <div class="col-6">
+    <h6 class="text-right px-2">العملاء الاكثر دفعا</h6>
+    <dx-data-grid #gridRef
+                  [dataSource]="userPayment"
+                  width="100%"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+  
+
+                  <dxi-column dataField="fullName" dataType="string" [caption]="'الاسم بالكامل'">
+                  </dxi-column>
+
+                  <dxi-column dataType="number"
+                  [caption]="'المبلغ المدفوع'"
+                  dataField="cost_order">
+                      </dxi-column>
+   
+   
+      <!-- <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column> -->
+      <dxo-paging [pageSize]="4"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[4, 6]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+  </div>
+</div>
+<div  *ngIf="product.length>0" class="container-fluid mt-2 website-bg">
+  <h6 class="text-right px-2"> المنتجات الاكثر مبيعا</h6>
+  <div class="container-fluid">
+    <dx-data-grid #gridRef
+                  [dataSource]="product"
+                  width="100%"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+  
+
+      <dxi-column dataField="name_ar" dataType="string" [caption]="'اسم المنتج'">
+       </dxi-column>
+
+
+      <dxi-column dataType="number"
+                  [caption]="'عدد مرات البيع'"
+                  dataField="count_sales">
+      </dxi-column>
+      
+      <dxi-column dataField="total_qty" dataType="string" [caption]="'الكمية المباعة'">
+      </dxi-column>
+      <dxi-column dataField="offer_status" dataType="string" [caption]="'التفصيله'">
+      </dxi-column>
+      <dxi-column dataType="number"
+      [caption]="'اسم البائع'"
+      dataField="salesman.name">
+</dxi-column>
+   
+      <!-- <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column> -->
+      <dxo-paging [pageSize]="4"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[4, 6]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+</div>
+<div *ngIf="showTotalalaes" class="container-fluid mt-2 website-bg"style="  margin-top:23px;">
+  <div class="heading-items">
+    <div class="customer-item-info">
+      <h6><i class="fas fa-check-double"></i> حركه المبيعات</h6>
+      <p>{{totalSalaes}}</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="showTotalZakats" class="container-fluid mt-2 website-bg" style="margin-top: 23px;">
+  <div class="heading-items">
+    <div class="customer-item-info">
+      <h6><i class="fas fa-check-double"></i>  الذكاه في فتره زمنيه معينه </h6>
+      <p>{{returnrReportZakat}}</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="showCosts" class="container-fluid mt-2 website-bg" style="margin-top: 23px;">
+  <div class="heading-items">
+    <div class="customer-item-info">
+      <h6><i class="fas fa-check-double"></i>  التكاليف في فتره زمنيه معينه من :{{start |date}}    الي :{{end |date}}  </h6>
+      <p>{{returnrReportCosts}}</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="showProfits" class="container-fluid mt-2 website-bg" style="margin-top: 23px;">
+  <div class="heading-items">
+    <div class="customer-item-info">
+      <h6><i class="fas fa-check-double"></i>  التكاليف في فتره زمنيه معينه من :{{start |date}}    الي :{{end |date}}  </h6>
+      <p>{{returnrReportProfits}}</p>
+    </div>
+  </div>
+</div>
+<div  *ngIf="productsearch.length>0" class="container-fluid mt-2 website-bg">
+  <h6 class="text-right px-2"> المنتجات الاكثر بحت</h6>
+  <div class="container-fluid">
+    <dx-data-grid #gridRef
+                  [dataSource]="productsearch"
+                  width="100%"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+  
+
+      <dxi-column dataField="name_ar" dataType="string" [caption]="'اسم المنتج'">
+       </dxi-column>
+
+
+      <!-- <dxi-column dataType="number"
+                  [caption]="'عدد مرات البيع'"
+                  dataField="count_sales">
+      </dxi-column>
+      <dxi-column dataType="number"
+      [caption]="'اسم البائع'"
+      dataField="salesman.name">
+</dxi-column> -->
+   
+      <!-- <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column> -->
+      <dxo-paging [pageSize]="4"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[4, 6]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+</div>
+<div  *ngIf="sallers.length>0" class="container-fluid mt-2 website-bg">
+  <h6 class="text-right px-2">      البائعين الاكثر مبيعا</h6>
+  <div class="container-fluid">
+    <dx-data-grid #gridRef
+                  [dataSource]="sallers"
+                  width="100%"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+  
+
+      <dxi-column dataField="name_ar" dataType="string" [caption]="'اسم المنتج'">
+       </dxi-column>
+       <dxi-column dataField="offer_status" dataType="string" [caption]="'التفصيله'">
+      </dxi-column>
+       <dxi-column dataField="count_sales" dataType="string" [caption]="' عدد مرات البيع'">
+      </dxi-column>
+      <dxi-column dataField="total_qty" dataType="string" [caption]="'الكمية المباعة'">
+      </dxi-column>
+  
+      
+
+      <!-- <dxi-column dataType="number"
+                  [caption]="'عدد مرات البيع'"
+                  dataField="count_sales">
+      </dxi-column>
+      <dxi-column dataType="number"
+      [caption]="'اسم البائع'"
+      dataField="salesman.name">
+</dxi-column> -->
+   
+      <!-- <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column> -->
+      <dxo-paging [pageSize]="4"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[4, 6]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+</div>
+   

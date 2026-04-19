@@ -1,0 +1,185 @@
+<div class="container py-2 website-bg">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="dx-field-label">الاسم باللغة العربية</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-box [(value)]="name_ar" [rtlEnabled]="true">
+              <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="dx-field-label">الاسم باللغة الانجليزية</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-box [(value)]="name_en" [rtlEnabled]="true">
+              <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="line-border"></div>
+  <h3 class="delivering-details-heading">تفاصيل الشحن</h3>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="dx-field-label">مدة الشحن</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-text-box [(value)]="duration" [rtlEnabled]="true">
+              <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="dx-field-label">هل تدعم عند الاستلام</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [items]="recevingSupport" [(value)]="support_pay_in_home" displayExpr="value" valueExpr="key" [rtlEnabled]="true">
+              <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+          </dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="dx-field-label">الحد الأدني للطلب بالريال</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-number-box format="#,##0.##" [(value)]="min_cost_order" [rtlEnabled]="true">
+              <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+          </dx-number-box>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="line-border"></div>
+
+  <h3 class="delivering-details-heading">تسعير الشحن</h3>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="dx-field-label">تسعير الشحن</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box [items]="priceShippings" displayExpr="value" valueExpr="key" (onValueChanged)="checkFixedPrice($event)" [(value)]="price_shipping" [rtlEnabled]="true">
+              <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+          </dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="dx-field-label">التكلفة الأساسية</div>
+      <div class="row">
+        <div class="col-2 pt-2 pr-0">
+          <div class="dx-field-label">أول</div>
+        </div>
+        <div class="col-2 p-0" *ngIf = "!fixedPrice">
+          <div class="dx-field-value">
+            <dx-number-box  format="#0.##"  [(value)]="f_qunatity" [rtlEnabled]="true">
+                <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+            </dx-number-box>
+          </div>
+        </div>
+        <div class="col-2 pt-2 pr-0">
+          <div class="dx-field-label">كيلو</div>
+        </div>
+        <div class="col-2 pt-2 pr-0">
+          <div class="dx-field-label">بسعر</div>
+        </div>
+        <div class="col-2 p-0">
+          <div class="dx-field-value">
+            <dx-number-box format="#,##0.##" [(value)]="f_price" [rtlEnabled]="true">
+                <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+            </dx-number-box>
+          </div>
+        </div>
+        <div class="col-2 pt-2 pr-0">
+          <div class="dx-field-label">ريال</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"  *ngIf="!fixedPrice">
+      <div class="dx-field-label">التكلفة الأضافية</div>
+      <div class="row">
+        <div class="col-2 pt-2 pr-0" >
+          <div class="dx-field-label">كل</div>
+        </div>
+        <div class="col-2 p-0" >
+          <div class="dx-field-value">
+            <dx-number-box   format="#0.##" [(value)]="s_qunatity" [rtlEnabled]="true">
+                <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+            </dx-number-box>
+          </div>
+        </div>
+        <div class="col-2 pt-2 pr-0" >
+          <div class="dx-field-label">كيلو</div>
+        </div>
+        <div class="col-2 pt-2 pr-0" >
+          <div class="dx-field-label">بسعر</div>
+        </div>
+        <div class="col-2 p-0" >
+          <div class="dx-field-value">
+            <dx-number-box   format="#,##0.##" [(value)]="s_price" [rtlEnabled]="true">
+                <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+            </dx-number-box>
+          </div>
+        </div>
+        <div class="col-2 pt-2 pr-0" >
+          <div class="dx-field-label">ريال</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="line-border"></div>
+  <h3 class="delivering-details-heading"> ملاحظات</h3>
+  <div class="row">
+    <div class="col-12">
+      <div class="dx-field-value">
+        <dx-text-box [(value)]="notes" [rtlEnabled]="true">
+            <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+        </dx-text-box>
+      </div>
+    </div>
+    <div class="line-border"></div>
+    <h3 class="delivering-details-heading mr-3">  ملاحظات بالانجليزيه</h3>
+    <div class="col-12">
+      <div class="dx-field-value">
+        <dx-text-box [(value)]="notes_en" [rtlEnabled]="true">
+            <dx-validator>
+        <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+    </dx-validator>
+        </dx-text-box>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-4 mx-auto mt-3">
+      <dx-button [useSubmitBehavior]="true" (click)="handleData()" class="btn default-btn btn-block"> حفظ </dx-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="container-fluid py-3">
+  <dx-data-grid
+    #gridRef
+    [dataSource]="products"
+    width="100%"
+    keyExpr="id"
+    [showBorders]="true"
+    [rtlEnabled]="true"
+    width="100%"
+    [focusedRowEnabled]="false"
+    [columnAutoWidth]="true"
+    [noDataText]="'لايوجد بيانات'"
+    (onToolbarPreparing)="onToolbarPreparing($event)"
+  >
+    <dxo-search-panel #dxsearch [visible]="true" [placeholder]="'بحث'">
+    </dxo-search-panel>
+
+    <dxi-column width="70" cellTemplate="cellTemplate1" [caption]="'الصورة'">
+      <div *dxTemplate="let cell of 'cellTemplate1'">
+        <img height="32px"
+             src={{cell.row.data.sliders}} />
+       
+      </div>
+      
+    </dxi-column>
+
+    <dxi-column dataField="name_ar" dataType="string" [caption]="'الاسم'">
+      <dxi-validation-rule type="required" [message]="'Required'"
+        >عرض جميع المنتجات</dxi-validation-rule
+      >
+    </dxi-column>
+
+    <dxi-column dataType="string" [caption]="'الرمز'" dataField="symbol">
+    </dxi-column>
+    <dxi-column dataType="string" [caption]="'السعر'" dataField="price">
+    </dxi-column>
+
+    <!--<dxi-column dataType="string" [caption]="'الكمية'" dataField="quantity">
+    </dxi-column>-->
+
+    <dxi-column type="buttons" cellTemplate="cellTemplate" [caption]="''">
+      <div *dxTemplate="let cell of 'cellTemplate'">
+        <dx-button *ngIf="cell.row.data.updated_at"
+                   id="{{cell.row.data.id}}"
+                   (onClick)="showPopUp.emit(cell.row.data.id)"
+                   text="أضافة للسلة"
+                   class="btn btn-light py-0">
+        </dx-button>
+        <dx-button  *ngIf="cell.row.data.created_at"
+                   style="    background-color:#27c7bf;color: #fff "  id="{{cell.row.data.id}}"
+                   (onClick)="showPopUp.emit(cell.row.data.id)"
+                   text="مضاف للسله"
+                   class="btn btn-light py-0">
+        </dx-button>
+      </div>
+    </dxi-column>
+
+    <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[5, 10]"
+      [showInfo]="false"
+    >
+    </dxo-pager>
+  </dx-data-grid>
+</div>

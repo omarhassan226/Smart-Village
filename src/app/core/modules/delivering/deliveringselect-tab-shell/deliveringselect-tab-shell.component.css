@@ -1,0 +1,28 @@
+.dx-tabpanel > .dx-tabpanel-tabs .dx-tabs {
+  box-shadow: unset !important;
+}
+
+.nav-pills .nav-link.active {
+  color: #333;
+  background-color: #fff;
+  position: relative;
+}
+
+.nav-link {
+  color: #c7bfbf;
+  font-weight: 500;
+}
+
+  .nav-link.active {
+    color: #333;
+  }
+
+.nav-pills .nav-link.active::after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  top: 41px;
+  left: 0;
+  height: 2px;
+  background-color: #1cbbb2;
+}

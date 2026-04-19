@@ -1,0 +1,13 @@
+<div [class.hidden]="showtabs == true">
+  <app-products-list #list  [ProductsList]="ProductsList" (showDeletePopUp)="showDeletePopUp($event)" (showTabs)="showTabs($event)"></app-products-list>
+</div>
+<div [class.hidden]="showtabs !== true">
+  <app-products-tab-shell  (saveDetails)="saveDetails($event)" (saveAdvanced)="saveAdvanced($event)" #tab (addProduct)="handleProductData($event)" [addState]="addState"></app-products-tab-shell>
+</div>
+
+<app-delete-pop-up
+(whenPopupConfirm)="whenDeletePopupConfirm($event)"
+(whenPopupHide)="hideDeletePopup()"
+[isDeletePopupVisible]="isConfirmDeletePopupVisible"
+>
+</app-delete-pop-up>

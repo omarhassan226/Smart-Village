@@ -1,0 +1,41 @@
+/* .dx-fileuploader-input-wrapper {
+  padding: 10px 10px;
+  height: 150px;
+  border: 3px solid#f8f8f8;
+  text-align: center;
+}
+
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button,
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button:focus,
+.dx-rtl .dx-fileuploader .dx-fileuploader-button,
+.dx-rtl.dx-fileuploader .dx-fileuploader-button:hover {
+  float: none;
+  border: none;
+  margin: 30px 0;
+  height: 70px;
+  width: 35%;
+  background-color: unset;
+
+  background-size: 100% 100%;
+} */
+
+.image-upload > input,
+.image-upload-lg > input {
+  display: none;
+}
+.image-upload {
+  text-align: center;
+  height: 110px;
+  width: 110px;
+  padding: 20px;
+  background-color: #fff;
+}
+.image-upload-lg {
+  width: 100%;
+  text-align: center;
+  padding-top: 10%;
+  height: 100%;
+  background-color: #fff;
+}

@@ -1,0 +1,471 @@
+<div class="container p-3 bg-white mt-2 website-bg">
+    <div class="order-details-header">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-2 col-sm-6">
+              <div class="customer-item-info">
+                <h6>رقم الطلب</h6>
+                <p class="font-weight-bold">{{order?.id}}</p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="customer-item-info">
+                <h6><i class="fas fa-user"></i>اسم العميل</h6>
+                <p>{{order?.user?.Fname}} {{order?.user?.Lname}}</p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="customer-item-info">
+                <h6><i class="fas fa-phone"></i>هاتف العميل</h6>
+                <p>{{order?.user?.phone}}</p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="customer-item-info">
+                <h6><i class="far fa-envelope"></i>البريد الالكتروني</h6>
+                <p>{{order?.user?.email}}</p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="customer-item-info">
+                <h6> مرفق بالبنك</h6>
+                <a *ngIf="order.file" href="https://smartvillageapp.com/app/{{order?.file}}" download="https://smartvillageapp.com/app/{{order.file}}"><dx-button class="btn p-0 default-btn w-50" icon="download"></dx-button> </a>
+                <p *ngIf="!order.file">لايوجد ملفات</p>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="customer-item-info">
+                <h6> عرض مرفق </h6>
+  
+                <div *ngIf="order.file" class="image-upload">
+                  <label>
+                    <img src="https://smartvillageapp.com/app/{{order?.file}}" style="width: 100%; height: 100%;" (click)="showImage()" />
+                  </label>
+  
+  
+                </div>
+                <p *ngIf="!order.file">لايوجد صوره لعرضها</p>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="customer-item-info">
+                <h6> العنوان</h6>
+                <p>{{order.created_at}}</p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="customer-item-info">
+                <h6><i class="fas fa-phone"></i>هاتف المستلم</h6>
+                <p>{{order?.shipping_address?.phone_number}}</p>
+              </div>
+            </div>
+            <div *ngIf="order.message" class="col-md-12 col-sm-6">
+              <div class="customer-item-info" style="direction:ltr">
+  
+                <p style="float:right; "> :سبب الالغاء</p>
+                <h6 style="float:right">{{order?.message}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-center customer-info-buttons">
+            <dx-button class="btn notPrint btn-light p-0 circle-side-button"
+                       icon="print"
+                       text="طباعة"
+                       (onClick)="print()">
+            </dx-button>
+            <dx-button class="btn default-btn notPrint p-0 circle-side-button"
+                       icon="download"
+                       text="تحميل في ملف"
+                       (onClick)="exportGrid()"></dx-button>
+          </div>
+          <div class="text-center customer-info-buttons">
+            <div *ngIf="order?.pay_status=='pending';then content else other_content"></div>
+            <ng-template #content>
+              <dx-button class="btn btn-light ml-1 p-0 circle-side-button"
+                         text="لم يتم الدفع"
+                         (onClick)="paymentStatus(order.id)">
+              </dx-button>
+            </ng-template>
+            <ng-template #other_content>
+              <dx-button class="btn btn-light ml-2 p-0 circle-side-button"
+                         text="تم الدفع"
+                         (onClick)="notpaymentStatus(order.id)">
+              </dx-button>
+            </ng-template>
+  
+            <dx-button class="btn default-btn p-0"
+                       text="تغير حاله الطلب"
+                       (onClick)="showEditPopup(order.id,order.status)"></dx-button>
+          </div>
+        </div>
+      </div>
+      <div class="line-border"></div>
+      <div class="row">
+        <div class="col-md-2 p-0 col-sm-6">
+          <div class="customer-item-info total-price text-center">
+            <span>ر.ع</span>
+            <h6>إجمالي سعر الطلب</h6>
+            <p>{{order?.cost}} ريال عماني</p>
+          </div>
+        </div>
+        <div class="col-md-2 p-0 col-sm-6">
+          <div class="customer-item-info text-left">
+            <h6>طريقة الدفع</h6>
+            <p> {{order?.way_pay}}</p>
+          </div>
+        </div>
+        <div class="col-md-2 p-0 col-sm-6">
+          <div class="customer-item-info text-center">
+            <h6>وسيلة الشحن</h6>
+            <p> {{order?.shipping_company?.name_ar}}</p>
+          </div>
+        </div>
+        <div class="col-md-6 p-0">
+          <div class="row pb-0 mt-0">
+            <div class="customer-item-info text-right" style="margin-top: 10px">
+              <h6 class="py-0 my-0">حالة الطلب</h6>
+            </div>
+          </div>
+          <div class="row py-0 my-0">
+            <div class="col p-0 m-0">
+              <div class="customer-item-state">
+                <span class="{{new}}">جديد</span>
+              </div>
+            </div>
+            <div class="col p-0 m-0">
+              <div class="customer-item-state">
+                <span class="{{process}}">تم التجهيز</span>
+              </div>
+            </div>
+            <div class="col p-0 m-0">
+              <div class="customer-item-state">
+                <span class="{{delivery}}">قسم التوصيل</span>
+              </div>
+            </div>
+            <div class="col p-0 m-0">
+              <div class="customer-item-state">
+                <span class="{{complete}}">مكتمل</span>
+              </div>
+            </div>
+            <div class="col p-0 m-0">
+              <div class="customer-item-state">
+                <span class="{{cancel}}">الغاء الطلب</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="line-border"></div>
+  
+    <div class="container-fluid" id="divIdToPrint">
+      <dx-data-grid #gridRef
+                    [dataSource]="products"
+                    width="100%"
+                    keyExpr="id"
+                    [showBorders]="false"
+                    [rtlEnabled]="true"
+                    width="100%"
+                    [focusedRowEnabled]="false"
+                    [columnAutoWidth]="true"
+                    [noDataText]="'لايوجد بيانات'">
+        <dxo-search-panel [visible]="true" [placeholder]="'بحث'">
+        </dxo-search-panel>
+  
+        <dxi-column width="70" cellTemplate="cellTemplate1" [caption]="'الصورة'">
+          <div *dxTemplate="let cell of 'cellTemplate1'">
+  
+            <img height="32px"
+                 src={{cell?.row?.data?.product?.image?.image}} />
+          </div>
+        </dxi-column>
+  
+        <dxi-column dataField="product.name_ar" dataType="string" [caption]="'الاسم'">
+          <dxi-validation-rule type="required" [message]="'Required'">عرض جميع المنتجات</dxi-validation-rule>
+        </dxi-column>
+  
+        <dxi-column dataType="string" [caption]="'code'" dataField="detail.parcode">
+        </dxi-column>
+        <dxi-column dataType="string" [caption]="'price'" dataField="productTotalPrice">
+        </dxi-column>
+        <dxi-column dataType="string" [caption]="'خيارات المنتج'" dataField="selectedOptions">
+        </dxi-column>
+        <dxi-column dataType="string"
+                    [caption]="'التصنيفات'"
+                    dataField="product.categories[0].category_ar">
+        </dxi-column>
+        <dxi-column dataType="string" [caption]="'الكمية'" dataField="quantity">
+        </dxi-column>
+  
+        <!--<dxi-column
+          type="buttons"
+          cellTemplate="cellTemplate"
+          [caption]="'التحكم'"
+        >
+          <div *dxTemplate="let cell of 'cellTemplate'">
+            <div
+              class="btn-group"
+              role="group"
+              style="direction: ltr"
+              aria-label="Basic example"
+            >
+              <button type="button" class="btn btn-light">
+                <i class="far fa-eye-slash text-danger"></i>
+              </button>
+              <button type="button" class="btn btn-light">
+                <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+              </button>
+            </div>
+          </div>
+        </dxi-column>-->
+  
+        <dxo-paging [pageSize]="5"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true"
+                   [allowedPageSizes]="[5, 10]"
+                   [showInfo]="false">
+        </dxo-pager>
+      </dx-data-grid>
+    </div>
+    <div class="line-border"></div>
+   
+    <div *ngIf="ReturnProducts.length>0" class="container-fluid" id="divIdToPrint">
+      <h6 class="text-right px-2">العناصر المراد ارجاعها</h6>
+      <dx-data-grid #gridRef
+                    [dataSource]="ReturnProducts"
+                    width="100%"
+                    keyExpr="id"
+                    [showBorders]="false"
+                    [rtlEnabled]="true"
+                    width="100%"
+                    [focusedRowEnabled]="false"
+                    [columnAutoWidth]="true"
+                    [noDataText]="'لايوجد بيانات'">
+     
+  
+        <dxi-column width="70" cellTemplate="cellTemplate1" [caption]="'الصورة'">
+          <div *dxTemplate="let cell of 'cellTemplate1'">
+  
+            <img height="32px"
+                 src={{cell?.row?.data?.product?.image?.image}} />
+          </div>
+        </dxi-column>
+  
+        <dxi-column dataField="product.name_ar" dataType="string" [caption]="'الاسم'">
+          <dxi-validation-rule type="required" [message]="'Required'">عرض جميع المنتجات</dxi-validation-rule>
+        </dxi-column>
+  
+        <dxi-column dataType="string" [caption]="'code'" dataField="detail.parcode">
+        </dxi-column>
+        <dxi-column dataType="string" [caption]="'price'" dataField="productTotalPrice">
+        </dxi-column>
+        <dxi-column dataType="string" [caption]="'خيارات المنتج'" dataField="selectedOptions">
+        </dxi-column>
+        <dxi-column dataType="string"
+                    [caption]="'التصنيفات'"
+                    dataField="product.categories[0].category_ar">
+        </dxi-column>
+        <dxi-column dataType="string" [caption]="'الكمية'" dataField="quantity">
+        </dxi-column>
+     
+        <dx-button text="ارجاع" [useSubmitBehavior]="true" class="btn py-0 default-btn" style="background-color:#1cbbb2;" ></dx-button> 
+    
+        <dxi-column
+          type="buttons"
+          cellTemplate="cellTemplate"
+          [caption]="'التحكم'"
+        >
+          <div *dxTemplate="let cell of 'cellTemplate'">
+            <div
+              class="btn-group"
+              role="group"
+              style="direction: ltr"
+              aria-label="Basic example"
+            >
+            <dx-button text="ارجاع" [useSubmitBehavior]="true" class="btn py-0 default-btn" style="background-color:#1cbbb2;" (click)="showDeletePopup(cell.row.data.id)"></dx-button> 
+    
+    
+              <!-- <button type="button" class="btn btn-light">
+                <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+              </button> -->
+            </div>
+          </div>
+        </dxi-column>
+  
+        <dxo-paging [pageSize]="5"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true"
+                   [allowedPageSizes]="[5, 10]"
+                   [showInfo]="false">
+        </dxo-pager>
+      </dx-data-grid>
+      <!-- <div class="text-left mt-4">
+        <dx-button text="لتاكيد الارجاع اضقط هنا" [useSubmitBehavior]="true" class="btn py-0 default-btn" style="background-color:#1cbbb2;" ></dx-button> 
+      </div> -->
+    </div>
+    
+  </div>
+  <dx-popup [visible]="isAdminPopupVisible"
+            [shading]="true"
+            [title]="popTitle2"
+            shadingColor="rgba(0, 0, 0, 0.2)"
+            [closeOnOutsideClick]="true"
+            [rtlEnabled]="true"
+            [maxWidth]="600"
+            height="auto"
+            dragEnabled="true"
+            (onHiding)="hidePopUp()">
+    <div *dxTemplate="let data of 'content'">
+  
+  
+  
+  
+      <div class="row mt-2">
+        <div class="col-md-2 mt-1">
+          <div class="dx-field-label">حاله الطب</div>
+        </div>
+        <div class="col-md-10 mt-1">
+          <dx-select-box [rtlEnabled]="true"
+                         placeholder="حاله الطب"
+                         [dataSource]="statusOrder3"
+                         displayExpr="key"
+                         valueExpr="value"
+                         [(value)]="statusCurrentOrder">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+        </div>
+  
+  
+  
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-2 mt-1">
+        <div class="dx-field-label">السبب</div>
+        </div>
+        <div class="col-md-10 mt-1">
+        <dx-text-box placeholder="ادخل السبب"
+        [rtlEnabled]="true" [(value)]="deleteMessage2" >
+        
+        </dx-text-box>
+        </div>
+        
+        
+        
+        
+        </div>
+      
+      <div class="row mt-2">
+        <div class="col-md-3 col-sm-4 mx-auto mt-3">
+          <dx-button class="dilvery-list-add-btn" (onClick)=" editStatusOdrer()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+        </div>
+      </div>
+    </div>
+  </dx-popup>
+  <dx-popup [visible]="imageVisible"
+            [shading]="true"
+            [title]="popImage"
+            shadingColor="rgba(0, 0, 0, 0.2)"
+            [closeOnOutsideClick]="true"
+            [rtlEnabled]="true"
+            [maxWidth]="600"
+            height="auto"
+            dragEnabled="true"
+            (onHiding)="hidenPopUp()">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <img src="https://smartvillageapp.com/app/{{order?.file}}" style="width: 100%; height: 300px;" />
+  
+  
+  
+  
+  
+    <div class="row mt-2">
+      <div class="col-md-3 col-sm-4 mx-auto mt-3">
+        <dx-button class="dilvery-list-add-btn" (onClick)=" hidenPopUp()" text="حفظ"> </dx-button>
+      </div>
+    </div>
+  
+  </dx-popup>
+  <script src="  https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script src="  https://unpkg.com/html2canvas@1.0.0-rc.5/dist/html2canvas.js"></script>
+  <script>
+        const input = document.getElementById('divIdToPrint');
+  html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          pdf.addImage(imgData, 'PNG', 0, 0);
+          pdf.save("download.pdf");
+    });
+  </script>
+  <dx-popup [visible]="isAdminPopupVisibleReturn"
+  [shading]="true"
+  [title]="popTitle3"
+  shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true"
+  [rtlEnabled]="true"
+  [maxWidth]="600"
+  height="auto"
+  dragEnabled="true"
+  (onHiding)="hidePopUp()">
+  <div *dxTemplate="let data of 'content'">
+  
+  
+  
+  
+  <div class="row mt-2">
+  <div class="col-md-2 mt-1">
+  <div class="dx-field-label">حاله الطب</div>
+  </div>
+  <div class="col-md-10 mt-1">
+  <dx-select-box [rtlEnabled]="true"
+               placeholder="حاله الطب"
+               [dataSource]="statusOrder3"
+               displayExpr="key"
+               valueExpr="value"
+               [(value)]="statusCurrentOrder">
+  <dx-validator>
+    <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+  </dx-validator>
+  </dx-select-box>
+  </div>
+  
+  
+  
+  
+  </div>
+  <div class="row mt-2">
+  <div class="col-md-2 mt-1">
+  <div class="dx-field-label">السبب</div>
+  </div>
+  <div class="col-md-10 mt-1">
+  <dx-text-box placeholder="ادخل السبب"
+  [rtlEnabled]="true" [(value)]="deleteMessage" >
+  
+  </dx-text-box>
+  </div>
+  
+  
+  
+  
+  </div>
+  <div class="row mt-2">
+  <div class="col-md-3 col-sm-4 mx-auto mt-3">
+  <dx-button class="dilvery-list-add-btn" (onClick)=" editStatusOdrer2()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+  </div>
+  </div>
+  </div>
+  </dx-popup>
+  
+  

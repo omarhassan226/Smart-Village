@@ -1,0 +1,665 @@
+<div class="container-fluid website-bg p-3">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 mt-2">
+      <div class="dx-field-label">اسم الصلاحيه</div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+
+          <dx-text-box placeholder="ادخل الاسم" [(value)]="role_name" [rtlEnabled]="true">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+    </div>
+
+
+    
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center">  المنتجات</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="product" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center"> التكاليف</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="cost" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center"> المشرفين</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="admin" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center"> الاعدادت</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="setting" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center"> الصلاحيات</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="role" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center"> التوصيل</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="delivery" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center"> البنرات</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="baner" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center"> العملاء</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="user" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center">الطلبات </h5>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-12 mt-2">
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="order" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center">التصنفات </h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="category" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="    text-align: center">المحفظه </h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="budget" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="text-align:center">  التقرير</h5>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="report" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+
+
+        <div class="dx-field-value mt-2">
+          <h5 style="text-align:center">  القواتير</h5>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 mt-2">
+
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-check-box [(value)]="bill" text="منحه الصلاحيه">
+
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-4">
+    <dx-button text="أضافة" [useSubmitBehavior]="true" class="btn py-0 default-btn" (click)="addRole()" > </dx-button>
+  </div>
+</div>
+<div class="container-fluid mt-2 website-bg">
+  <div class="container-fluid">
+    <dx-data-grid #gridRef
+                  [dataSource]="roles"
+                  width="100%"
+                  keyExpr="id"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  width="100%"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لايوجد بيانات'">
+
+
+
+
+      <dxi-column dataType="string"
+                  [caption]="'الصلاحيات'"
+                  dataField="name">
+      </dxi-column>
+
+      <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <div class="btn-group"
+               role="group"
+               style="direction: ltr"
+               aria-label="Basic example">
+            <button type="button" class="btn btn-light" (click)=" showDeletePopup(cell.row.data.id)">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+            <button type="button" class="btn btn-light" (click)="showEditPopup (cell.row.data.id)">
+              <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+            </button>
+          </div>
+        </div>
+      </dxi-column>
+      <dxo-paging [pageSize]="3"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[3,5]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+</div>
+<app-delete-pop-up (whenPopupConfirm)="whenDeletePopupConfirm($event)"
+                   (whenPopupHide)="hideDeletePopup()"
+                   [isDeletePopupVisible]="isConfirmDeletePopupVisible">
+</app-delete-pop-up>
+<!--<app-delete-pop-up (whenPopupConfirm)="whenDeletePopupConfirm($event)"
+                   (whenPopupHide)="hideDeletePopup()"
+                   [isDeletePopupVisible]="isConfirmDeletePopupVisible">
+</app-delete-pop-up>-->
+<dx-popup [visible]="isEditPopupVisible"
+          [shading]="true"
+          [title]="popTitle"
+          shadingColor="rgba(0, 0, 0, 0.2)"
+          [closeOnOutsideClick]="true"
+          [rtlEnabled]="true"
+          [maxWidth]="600"
+          height="auto"
+          dragEnabled="true"
+          (onHiding)="hideDeletePopup()">
+  <div class="container-fluid website-bg p-3">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 mt-2">
+        <div class="dx-field-label">اسم الصلاحيه</div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+
+            <dx-text-box placeholder="ادخل الاسم" [(value)]="editrole_name" [rtlEnabled]="true">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center">  المنتجات</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editproduct" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center"> التكاليف</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editcost" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center"> المشرفين</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editadmin" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center"> الاعدادت</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editsetting" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center"> الصلاحيات</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editrole" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center"> التوصيل</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editdelivery" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center"> البنرات</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editbaner" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center"> العملاء</h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="edituser" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center">الطلبات </h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-12 mt-2">
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editorder" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center">التصنفات </h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editcategory" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+
+
+          <div class="dx-field-value mt-2">
+            <h5 style="text-align:center">  التقرير</h5>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editreport" text="منحه الصلاحيه">
+
+            </dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+  
+  
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center">المحفظه </h5>
+          </div>
+  
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+  
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editbudget" text="منحه الصلاحيه">
+  
+            </dx-check-box>
+          </div>
+        </div>
+  
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+
+        <div class="dx-field">
+  
+  
+          <div class="dx-field-value mt-2">
+            <h5 style="    text-align: center">الفواتير </h5>
+          </div>
+  
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12 mt-2">
+  
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-check-box [(value)]="editbill" text="منحه الصلاحيه">
+  
+            </dx-check-box>
+          </div>
+        </div>
+  
+      </div>
+      
+      
+    </div>
+    <div class="text-center mt-4">
+      <dx-button text="تعديل" [useSubmitBehavior]="true" class="btn py-0 default-btn" (click)="editRole()"> </dx-button>
+    </div>
+  </div>
+
+</dx-popup>

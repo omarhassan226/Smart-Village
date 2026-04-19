@@ -1,0 +1,48 @@
+<div class="container-fluid py-2 website-bg">
+  <dx-data-grid #gridRef
+                [dataSource]="shippingList"
+                width="100%"
+                keyExpr="id"
+                [showBorders]="false"
+                [rtlEnabled]="true"
+                width="100%"
+                [focusedRowEnabled]="true"
+                [columnAutoWidth]="true"
+                [noDataText]="'لايوجد بيانات'">
+    <dxi-column dataField="name_ar" dataType="string" [caption]="'الاسم'">
+      <dxi-validation-rule type="required" [message]="'Required'">عرض جميع المنتجات</dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column dataType="string"
+                [caption]="'الحد الأدني للطلب'"
+                dataField="min_cost_order">
+    </dxi-column>
+    <dxi-column dataType="string" [caption]="'مدة الشحن'" dataField="duration">
+    </dxi-column>
+    <dxi-column dataType="string"
+                [caption]="'المناطق التي يشملها الشحن'"
+                dataField="category">
+    </dxi-column>
+
+    <dxi-column type="buttons" cellTemplate="cellTemplate" [caption]="'التحكم'">
+      <div *dxTemplate="let cell of 'cellTemplate'">
+        <div class="btn-group"
+             role="group"
+             style="direction: ltr"
+             aria-label="Basic example">
+          <button (click)="showDeletePopUp.emit(gridRef.focusedRowKey)" type="button" class="btn btn-light">
+            <i class="far fa-trash-alt text-danger"></i>
+          </button>
+          <button (click)="getMainDataById.emit(gridRef.focusedRowKey)" type="button" class="btn btn-light">
+            <i class="far fa-edit" style="transform: rotate(270deg)"></i>
+          </button>
+        </div>
+      </div>
+    </dxi-column>
+    <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="true"
+               [allowedPageSizes]="[5, 10]"
+               [showInfo]="false">
+    </dxo-pager>
+  </dx-data-grid>
+</div>

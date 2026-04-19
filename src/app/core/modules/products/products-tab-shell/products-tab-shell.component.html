@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <ul class="nav nav-pills mt-3 py-2 bg-white" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        id="pills-home-tab"
+        data-toggle="pill"
+        href="#pills-home"
+        role="tab"
+        aria-controls="pills-home"
+        aria-selected="true"
+        >البيانات الأساسية</a
+      >
+    </li>
+    <li class="nav-item" role="presentation"  [class.hidden]="addState">
+      <a
+        class="nav-link"
+        id="pills-profile-tab"
+        data-toggle="pill"
+        href="#pills-profile"
+        role="tab"
+        aria-controls="pills-profile"
+        aria-selected="false"
+        >خيارات متقدمة</a
+      >
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="pills-home"
+      role="tabpanel"
+      aria-labelledby="pills-home-tab"
+    >
+      <app-products-main-data-form [addState]="addState" #mainDataForm (addProduct)="addProduct.emit($event)" [companies]="companies"[categories]="categories" [suppliers]="suppliers" [maincategory]="maincategory" [banners]="banners"></app-products-main-data-form>
+    </div>
+    <div
+      [class.hidden]="addState"
+      class="tab-pane fade"
+      id="pills-profile"
+      role="tabpanel"
+      aria-labelledby="pills-profile-tab"
+    >
+      <app-advanced-choices (saveDetails)="saveDetails.emit($event)" (saveAdvanced)="saveAdvanced.emit($event)" #advancedChoices ></app-advanced-choices>
+    </div>
+  </div>
+</div>

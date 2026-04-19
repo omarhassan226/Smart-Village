@@ -1,0 +1,116 @@
+.with-icon {
+  padding-right: 24px;
+}
+.input-with-icon {
+  text-align: right;
+}
+.input-with-icon > i {
+  position: relative;
+  top: 28px;
+  right: 10px;
+}
+.advanced-choice-header {
+  text-align: right;
+  padding: 3px 15px 1px;
+  background-color: #1cbbb2;
+  color: #fff;
+}
+.advanced-choice-header > p {
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+::ng-deep #accordion h1 {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+::ng-deep #accordion h1,
+::ng-deep #accordion p {
+  margin: 0;
+  text-align: right;
+  padding-top: 11px;
+}
+
+::ng-deep
+  .dx-theme-material
+  #accordion
+  .dx-accordion-item-opened
+  .dx-accordion-item-title {
+  display: flex;
+}
+
+::ng-deep .dx-theme-material #accordion .dx-accordion-item-opened h1 {
+  align-self: right;
+}
+
+.setting-item {
+  padding: 10px;
+  background-color: #fff;
+}
+.common-questions p {
+  padding-top: 16px;
+}
+
+span {
+  cursor: pointer;
+}
+.number {
+  margin: 100px;
+}
+.minus,
+.plus {
+  width: 20px;
+  height: 20px;
+  background: #f2f2f2;
+  border-radius: 4px;
+  padding: 8px 5px 8px 5px;
+  border: 1px solid #ddd;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
+input {
+  height: 34px;
+  width: 100px;
+  text-align: center;
+  font-size: 26px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.product-pop-count h6,
+.plus-btn-container,
+.minus-btn-container,
+.input-count {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.image-upload > input,
+.image-upload-lg > input {
+  display: none;
+}
+
+.image-upload-lg {
+  width: 100%;
+  text-align: center;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border: 1px solid gainsboro;
+}.image-upload {
+  text-align: center;
+  height: 110px;
+  width: 110px;
+  padding: 20px;
+  background-color: #fff;
+}
+.image-upload-lg {
+  width: 100%;
+  text-align: center;
+  padding-top: 10%;
+  height: 100%;
+  background-color: #fff;
+}
+

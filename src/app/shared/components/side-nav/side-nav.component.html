@@ -1,0 +1,51 @@
+<dx-drawer
+  *ngIf="showNavigation.showSideNav$ | async"
+  [openedStateMode]="selectedOpenMode"
+  [position]="'right'"
+  [revealMode]="selectedRevealMode"
+  [rtlEnabled]="true"
+  template="template"
+  [(opened)]="menuOpened"
+  [closeOnOutsideClick]="false"
+>
+  <div *dxTemplate="let data of 'template'"
+       style="width: 200px; height: 100% ; overflow-y:scroll" 
+       class="border-left bg-white">
+
+    <div class="logo-conatiner">
+      <img class="logo-img img-fluid"
+           src="../../../../assets/images/Screen Shot 2020-12-13 at 8.14.15 PM.png" />
+      <span>
+        القرية الذكيــة <br />
+        smartVilage
+      </span>
+    </div>
+    <div>
+      <dx-tree-view class="panel-list text-right"
+                    (onItemClick)="onItemClick($event)"
+                    [items]="navigation"
+                    [rtlEnabled]="true"
+                    [selectByClick]="true"
+                    [hoverStateEnabled]="true"
+                    [activeStateEnabled]="true"
+                    [focusStateEnabled]="true"
+                    [selectionMode]="'single'">
+      </dx-tree-view>
+
+    </div>
+  </div>
+
+  <dx-scroll-view>
+    <div id="content " class="py-2 container-fluid">
+      
+        <app-header [menuToggleEnabled]="true"
+                    (menuToggle)="menuOpened = !menuOpened"
+                    [title]="''">
+        </app-header>
+
+          <div [ngClass]="{ 'dx-rtl': true }">
+            <router-outlet></router-outlet>
+          </div>
+</div>
+  </dx-scroll-view>
+</dx-drawer>

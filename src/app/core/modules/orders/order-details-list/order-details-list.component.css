@@ -1,0 +1,68 @@
+.customer-item-info,
+.customer-item-state {
+  padding: 9px 0px 10px 23px;
+  text-align: center;
+}
+.customer-item-info.total-price {
+  padding: 0px 23px 2px 0;
+  margin: 10px 0;
+  text-align: center;
+  background-color: rgba(28, 187, 178, 0.3);
+  border-radius: 10px;
+}
+.customer-item-info > span {
+  font-size: 12px;
+  background-color: #1cbbb2;
+  padding: 11px;
+  border-radius: 35%;
+  position: absolute;
+  right: 6px;
+  top: 29%;
+}
+.customer-item-state > span {
+  font-size: 10px;
+  font-weight: 600;
+}
+.customer-item-info > h6 {
+  position: relative;
+  font-size: 11px;
+  color: gray;
+}
+.customer-item-info > p {
+  font-size: 11px;
+  font-weight: 600;
+  padding-right: 18px;
+}
+
+.customer-item-info > h6 > i {
+  position: absolute;
+  right: -10px;
+  top: 11px;
+}
+
+.customer-info-buttons
+  > .default-btn
+  > .dx-button-content
+  > i.dx-icon-download {
+  color: #fff;
+}
+.custom-raduis-top {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.custom-raduis-bottom {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.order-details-header {
+  border-radius: 20px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+@media print {
+  .notPrint  {
+    display: none !important;
+  }
+
+}

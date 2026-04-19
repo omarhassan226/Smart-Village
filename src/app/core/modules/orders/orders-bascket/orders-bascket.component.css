@@ -1,0 +1,66 @@
+::ng-deep .product {
+  height: 55px;
+}
+::ng-deep .product > img {
+  height: 100%;
+  width: 55px;
+  float: right;
+}
+::ng-deep .product > .product-name {
+  padding-right: 10px;
+  font-size: 15px;
+  float: right;
+  position: relative;
+}
+::ng-deep .product > div.remove {
+  float: left;
+  font-size: 18px;
+}
+.product-size {
+  position: absolute;
+}
+.product-price {
+  position: absolute;
+  left: 0;
+}
+.list-container > h6 {
+  padding: 23px;
+  font-size: 16px;
+  font-weight: 400;
+}
+.order-cost > span {
+  font-size: 15px;
+  font-weight: 500;
+}
+.order-cost,
+.delivery-cost,
+.total-cost {
+  text-align: right;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px;
+}
+.order-cost :last-child,
+.delivery-cost :last-child,
+.total-cost :last-child {
+  float: left;
+}
+
+.customer-info {
+  padding: 8px 15px;
+  height: 57px;
+  border-bottom: 1px solid gainsbor;
+}
+.noData {
+  text-align: center;
+  margin-top: 30px;
+}
+.noData > p {
+  font-weight: 500;
+  padding: 10px 40px;
+  font-size: 18px;
+}
+h6 {
+  padding: 6px 8px 5px !important;
+  font-size: 20px !important;
+}

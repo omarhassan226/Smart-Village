@@ -1,0 +1,3 @@
+::ng-deep .dx-rtl .dx-treeview-node-container .dx-treeview-node, .dx-rtl .dx-treeview-node-container .dx-treeview-node.dx-treeview-item-with-checkbox .dx-treeview-item, .dx-rtl .dx-treeview-node-container:first-child > .dx-treeview-node {
+  margin-top: 6px;
+}

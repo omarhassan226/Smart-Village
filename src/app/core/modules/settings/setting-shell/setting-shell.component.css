@@ -1,0 +1,53 @@
+::ng-deep #accordion h1 {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+::ng-deep #accordion h1,
+::ng-deep #accordion p {
+  margin: 0;
+  text-align: right;
+  padding-top: 11px;
+}
+
+::ng-deep
+  .dx-theme-material
+  #accordion
+  .dx-accordion-item-opened
+  .dx-accordion-item-title {
+  display: flex;
+}
+
+::ng-deep .dx-theme-material #accordion .dx-accordion-item-opened h1 {
+  align-self: right;
+}
+
+.setting-item {
+  padding: 10px;
+  background-color: #fff;
+}
+.common-questions p {
+  padding-top: 16px;
+}
+
+.social-icon {
+  padding-top: 5px;
+  text-align: center;
+}
+.social-icon > i {
+  font-size: 27px;
+  color: #1cbbb2;
+}
+
+.image-upload > input,
+.image-upload-lg > input {
+  display: none;
+}
+
+.image-upload-lg {
+  width: 100%;
+  text-align: center;
+  height: 100%;
+  background-color: #fff;
+}
+
