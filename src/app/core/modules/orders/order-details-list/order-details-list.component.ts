@@ -16,18 +16,18 @@ import html2canvas from 'html2canvas';
 export class OrderDetailsListComponent implements OnInit {
   @ViewChild('gridRef') gridRef: DxDataGridComponent;
   @Input() orderId: boolean;
-  popTitle3='ارجاع'
+  popTitle3 = 'ارجاع'
   statusOrder3 =
     [
-   { value: 'accepted', key: 'قبول' }
+      { value: 'accepted', key: 'قبول' }
       ,
-      { value: 'Rejected', key: 'رفض'},
+      { value: 'Rejected', key: 'رفض' },
 
 
     ]
-    productid:any ;
+  productid: any;
   products: any[];
-  ReturnProducts :any[];
+  ReturnProducts: any[];
   order: any;
   new = '';
   delivery = ''
@@ -35,26 +35,26 @@ export class OrderDetailsListComponent implements OnInit {
   process = ''
   complete = ''
   statuslabel = '';
-  deleteMessage='';
-  isAdminPopupVisible =false
-  isAdminPopupVisibleReturn=false;
+  deleteMessage = '';
+  isAdminPopupVisible = false
+  isAdminPopupVisibleReturn = false;
   statusCurrentOrder: any
-  statusCurrentOrderId:any
+  statusCurrentOrderId: any
   imageVisible = false
   popImage = "مرفق البنك"
   hidenPopUp() {
-    debugger
+
     this.imageVisible = false
   }
 
-  datasource = [ 
-    {id:1, name: 'Apple Watch series4 ساعة آبل الاًصدار الرابع', code: 'K345', price: '10$', category: 'أكسسوارات', quantity: 6,image: ''},
-    {id:2, name: 'Apple Watch series4 ساعة آبل الاًصدار الرابع', code: 'K345', price: '4$', category: 'الكترونيات', quantity: 6,image: ''},
-    {id:3, name: 'Apple Watch series4 ساعة آبل الاًصدار الرابع', code: 'K345', price: '9$', category: 'أكسسوارات', quantity: 6,image: ''},
-  
+  datasource = [
+    { id: 1, name: 'Apple Watch series4 ساعة آبل الاًصدار الرابع', code: 'K345', price: '10$', category: 'أكسسوارات', quantity: 6, image: '' },
+    { id: 2, name: 'Apple Watch series4 ساعة آبل الاًصدار الرابع', code: 'K345', price: '4$', category: 'الكترونيات', quantity: 6, image: '' },
+    { id: 3, name: 'Apple Watch series4 ساعة آبل الاًصدار الرابع', code: 'K345', price: '9$', category: 'أكسسوارات', quantity: 6, image: '' },
+
   ]
   exportGrid() {
-    //debugger;
+    //;
     //const input = document.getElementById('gridRef');
     //html2canvas(input)
     //  .then((canvas) => {
@@ -65,8 +65,8 @@ export class OrderDetailsListComponent implements OnInit {
     //    pdf.save("download.pdf");
     //  });
     //https://smartvillageapp.com/app/admin/invoice/pdf/25
-    window.open("https://smartvillageapp.com/app/admin/invoice/pdf/"+this.order?.id, "_blank");
-    
+    window.open("https://smartvillageapp.com/app/admin/invoice/pdf/" + this.order?.id, "_blank");
+
   }
   showEditPopup(id, status) {
     this.isAdminPopupVisible = true
@@ -93,12 +93,12 @@ export class OrderDetailsListComponent implements OnInit {
 
   }
   showImage() {
-    debugger
+
     this.imageVisible = true
   }
   hidePopUp() {
     this.isAdminPopupVisible = false
-    this.isAdminPopupVisibleReturn=false;
+    this.isAdminPopupVisibleReturn = false;
 
   }
   popTitle2 = "تغير  حاله الطلب"
@@ -111,15 +111,31 @@ export class OrderDetailsListComponent implements OnInit {
       , { value: 'complete', key: 'مكتمل' }
 
     ]
-print = () => {
-  window.print();
+  print = () => {
+    window.print();
   }
 
-
+  downloadFile(fileUrl: string) {
+    fetch(fileUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileUrl.substring(fileUrl.lastIndexOf('/') + 1) || 'download';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(err => {
+        window.open(fileUrl, '_blank');
+      });
+  }
 
   constructor(private dataservice: DataService, private toaster: ToasterService) { }
   editStatusOdrer() {
-    debugger
+
     let updateOrder = { order_id: this.statusCurrentOrderId, status: this.statusCurrentOrder }
     this.dataservice.updaterderStatus(updateOrder).subscribe
 
@@ -128,11 +144,11 @@ print = () => {
 
         res => {
           console.log(res)
-        
+
           this.toaster.showSuccessToast('تم بنجاح')
 
           this.isAdminPopupVisible = false;
-         
+
 
 
         },
@@ -157,9 +173,9 @@ print = () => {
         console.log(res)
 
         this.toaster.showSuccessToast('تم بنجاح')
-        this.order.pay_status='pay ok'
+        this.order.pay_status = 'pay ok'
 
-   
+
 
 
 
@@ -171,7 +187,7 @@ print = () => {
           }
 
         }
-)
+      )
 
   }
   notpaymentStatus(id) {
@@ -179,7 +195,7 @@ print = () => {
     this.dataservice.updatePaymentPending(id).subscribe
       (res => {
         console.log(res)
-        debugger
+
         this.toaster.showSuccessToast('تم بنجاح')
         this.order.pay_status = 'pending'
 
@@ -202,73 +218,66 @@ print = () => {
     this.dataservice.getDetailsOrder(this.orderId).subscribe
       (
         res => {
-         debugger
+
           this.order = res.order
           if (this.order.way_pay == 'Pay on receipt') {
-            this.order.way_pay ='دفع عند الأستلام'
+            this.order.way_pay = 'دفع عند الأستلام'
           }
           if (this.order.way_pay == 'Transfer via Bank') {
             this.order.way_pay = 'تحويل عبر البنك'
           }
-          this.products = res.order.products
-          this.ReturnProducts=res.order.return_products
+          if (res.order.products) {
+            res.order.products.forEach(item => {
+              if (item.product && item.product.image && item.product.image.image) {
+                item.product.image.image = 'https://smartvillageapp.com/app/' + item.product.image.image;
+              }
+              if (Array.isArray(item.selectedOptions)) {
+                item.selectedOptions = item.selectedOptions.map(x => x.name_ar || x.name_en || '').filter(Boolean).join(" - ");
+              } else if (item.selectedOptions && typeof item.selectedOptions === 'object') {
+                item.selectedOptions = item.selectedOptions.name_ar || item.selectedOptions.name_en || '';
+              }
+            });
+            this.products = [...res.order.products];
+          }
+
+          if (res.order.return_products) {
+            res.order.return_products.forEach(item => {
+              if (item.product && item.product.image && item.product.image.image) {
+                item.product.image.image = 'https://smartvillageapp.com/app/' + item.product.image.image;
+              }
+              if (Array.isArray(item.selectedOptions)) {
+                item.selectedOptions = item.selectedOptions.map(x => x.name_ar || x.name_en || '').filter(Boolean).join(" - ");
+              } else if (item.selectedOptions && typeof item.selectedOptions === 'object') {
+                item.selectedOptions = item.selectedOptions.name_ar || item.selectedOptions.name_en || '';
+              }
+            });
+            this.ReturnProducts = [...res.order.return_products];
+          }
+
           if (this.order.status == 'process') {
-            this.process = 'text-default'
+            this.process = 'text-default';
           }
           if (this.order.status == 'delivering') {
-            this.delivery = 'text-default'
+            this.delivery = 'text-default';
           }
-
           if (this.order.status == 'complete') {
-            this.complete = 'text-default'
+            this.complete = 'text-default';
           }
           if (this.order.status == 'new') {
-            this.new = 'text-default'
+            this.new = 'text-default';
           }
           if (this.order.status == 'cancel') {
-            this.cancel = "text-default"
+            this.cancel = "text-default";
           }
-          this.order.created_at =this.order.shipping_address.governorate.state_ar +"-"+this.order.shipping_address.state.city_ar+"-"+this.order.shipping_address.village.village_ar
- 
-          this.order.products.forEach(item => {
-          item.product.image.image ='https://smartvillageapp.com/app/'+ item.product.image.image
+          if (this.order.shipping_address && this.order.shipping_address.governorate) {
+            this.order.created_at = this.order.shipping_address.governorate.state_ar + "-" + this.order.shipping_address.state.city_ar + "-" + this.order.shipping_address.village.village_ar;
+          }
 
-          })
-      
-         
-          this.order.products.forEach(item => {
-            let optionName =item.selectedOptions.map(x=>x.name_ar).join("-");
-            // item.selectedOptions.forEach(element => {
-            //   optionName=optionName+element.name_ar+"-"
 
-              
-            // });
-           item .selectedOptions=optionName
 
-           optionName =''
-              })
-              this.order.return_products.forEach(item => {
-                let optionName ='';
-                item.selectedOptions.forEach(element => {
-                  optionName=optionName+element.name_ar+"-"
-    
-                  
-                });
-               item .selectedOptions=optionName
-    
-               optionName =''
-                  })
-              
-              this.order.return_products.forEach(item => {
-                item.product.image.image ='https://smartvillageapp.com/app/'+ item.product.image.image
-      
-                })
-            
-               
-            
-            
-                    debugger
-                   
+
+
+
           console.log(res)
           console.log(this.order)
         }
@@ -276,27 +285,25 @@ print = () => {
       )
 
   }
-  showDeletePopup(id)
-  {
-   this. isAdminPopupVisibleReturn=true;
-   this.productid=id
+  showDeletePopup(id) {
+    this.isAdminPopupVisibleReturn = true;
+    this.productid = id
 
   }
-  editStatusOdrer2()
-  {
+  editStatusOdrer2() {
 
-let product = this.ReturnProducts.find(a=>a.id=this.productid)
+    let product = this.ReturnProducts.find(a => a.id = this.productid)
 
-    let updateOrder = { order_id: this.orderId, product_id: product.product.id, detail_id:this.productid,status: this.statusCurrentOrder ,message:this.deleteMessage}
+    let updateOrder = { order_id: this.orderId, product_id: product.product.id, detail_id: this.productid, status: this.statusCurrentOrder, message: this.deleteMessage }
     this.dataservice.productReturn(updateOrder).subscribe
       (
         res => {
           console.log(res)
-      this.productid='';
-          this.deleteMessage=''
+          this.productid = '';
+          this.deleteMessage = ''
           this.toaster.showSuccessToast('تم بنجاح')
           this.isAdminPopupVisible = false;
-         
+
         },
         arr => {
           for (const [key, value] of Object.entries(arr.error.errors)) {
@@ -304,7 +311,7 @@ let product = this.ReturnProducts.find(a=>a.id=this.productid)
             this.toaster.showErrorToast(`${value}`)
           }
         }
-    )
+      )
   }
 
 }

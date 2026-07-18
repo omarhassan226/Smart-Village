@@ -14,9 +14,9 @@ import { ProductsTabShellComponent } from '../products-tab-shell/products-tab-sh
   templateUrl: './products-shell.component.html',
   styleUrls: ['./products-shell.component.css'],
 })
-export class ProductsShellComponent implements OnInit , OnDestroy{
-  @ViewChild('list') list : ProductsListComponent;
-  @ViewChild('tab') tab : ProductsTabShellComponent;
+export class ProductsShellComponent implements OnInit, OnDestroy {
+  @ViewChild('list') list: ProductsListComponent;
+  @ViewChild('tab') tab: ProductsTabShellComponent;
   options;
   isOrdersPopupVisible = false;
   showtabs = false;
@@ -24,7 +24,7 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
   ProductsList;
   selectedId;
   addState;
-  isConfirmDeletePopupVisible =false;
+  isConfirmDeletePopupVisible = false;
   deletedId;
 
   ngOnInit(): void {
@@ -34,12 +34,12 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
     });
     this.getProductsList();
     this.dataService.$productDetails.subscribe(res => {
-      if(res) {
+      if (res) {
         this.showTabs(res);
       }
     });
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subs.unsubscribe();
   }
   getProductsList = (): void => {
@@ -52,42 +52,42 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
       this.handleError(err);
     });
   }
-  
+
   addProduct = (body) => {
 
     this.showLoading();
     console.log(body)
 
     this.subs.sink = this.dataService.addProduct(body).subscribe(res => {
- 
-      if(res['status']== "true") {
+
+      if (res['status'] == "true") {
         this.getProductsList();
         this.tab.mainDataForm.resetProduct();
         this.tab.mainDataForm.clearDxValidators();
         this.toaster.showSuccessToast('تم الأضافة بنجاح');
         this.hideTabs();
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
       this.handleError(err);
     });
   }
-  editProduct = (body,id) => {
+  editProduct = (body, id) => {
 
     this.showLoading();
 
-    this.subs.sink = this.dataService.editProduct(body,id).subscribe(res => {
- 
-      if(res['status']== "true") {
+    this.subs.sink = this.dataService.editProduct(body, id).subscribe(res => {
+
+      if (res['status'] == "true") {
         this.getProductsList();
         this.tab.mainDataForm.resetProduct();
         this.tab.mainDataForm.clearDxValidators();
         this.toaster.showSuccessToast('تم التعديل بنجاح');
         this.hideTabs();
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -97,20 +97,18 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
   getProductByID = (id) => {
     this.showLoading();
     this.subs.sink = this.dataService.getProductById(id).subscribe(res => {
-      debugger
-      this.tab.mainDataForm.patchProduct(res.product) ;
+
+      this.tab.mainDataForm.patchProduct(res.product);
       res.product.details.forEach(element => {
-        if (element.report_status=="yes")
-        {
-          element.report_status=true 
+        if (element.report_status == "yes") {
+          element.report_status = true
         }
-        else
-        {
-          element.report_status=false 
+        else {
+          element.report_status = false
         }
-        
+
       });
-      this.tab.advancedChoices.patchOptions(res.product.options,res.product.details,true)
+      this.tab.advancedChoices.patchOptions(res.product.options, res.product.details, true)
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -120,11 +118,11 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
   deleteProduct = (id) => {
     this.showLoading();
     this.subs.sink = this.dataService.deleteProduct(id).subscribe(res => {
-      if(res.status) {
+      if (res.status) {
         this.toaster.showSuccessToast(res['message']);
         this.getProductsList();
-       }
-         
+      }
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -132,17 +130,17 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
     });
   }
   saveAdvanced = (body) => {
-  
+
     this.showLoading();
-    this.subs.sink = this.dataService.saveAdvanced(body,this.selectedId).subscribe(res => {
-   
-      if(res['status']== true) {
+    this.subs.sink = this.dataService.saveAdvanced(body, this.selectedId).subscribe(res => {
+
+      if (res['status'] == true) {
         this.getProductsList();
         this.toaster.showSuccessToast('تم التعديل بنجاح');
         this.hideTabs();
         this.addState = true;
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -150,17 +148,17 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
     });
   }
   saveDetails = (body) => {
-  
+
     this.showLoading();
-    this.subs.sink = this.dataService.saveDetails(body,this.selectedId).subscribe(res => {
-   
-      if(res['status']== true) {
+    this.subs.sink = this.dataService.saveDetails(body, this.selectedId).subscribe(res => {
+
+      if (res['status'] == true) {
         this.getProductsList();
         this.toaster.showSuccessToast('تم التعديل بنجاح');
         this.hideTabs();
         this.addState = true;
       }
-      
+
       this.hideLoading();
     }, err => {
       for (const [key, value] of Object.entries(err.error.errors)) {
@@ -170,12 +168,12 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
       this.hideLoading();
     });
   }
-   
+
   handleProductData = (body) => {
-    if(this.addState) {
+    if (this.addState) {
       this.addProduct(body);
     } else {
-      this.editProduct(body,this.selectedId);
+      this.editProduct(body, this.selectedId);
       this.hideTabs();
       this.addState = true;
     }
@@ -185,12 +183,12 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
     if (e) {
       this.filterDataSourceByRow(this.list.gridRef.dataSource, 'id', this.list.gridRef);
       this.deleteProduct(this.deletedId);
-        
-        this.hideDeletePopup();
-      }
-      else {
-        this.hideDeletePopup();
-      }
+
+      this.hideDeletePopup();
+    }
+    else {
+      this.hideDeletePopup();
+    }
   }
 
   filterDataSourceByRow = (
@@ -209,7 +207,7 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
     }
     return;
   };
- 
+
   hidePop = () => (this.isOrdersPopupVisible = false);
   showPop = () => (this.isOrdersPopupVisible = true);
   showLoading = () => this.loading.showLoading();
@@ -217,10 +215,10 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
   handleError = (error: any) => this.errorService.handleError(error);
 
 
-  showDeletePopUp = (id) =>{ this.isConfirmDeletePopupVisible = true; this.deletedId = id}
+  showDeletePopUp = (id) => { this.isConfirmDeletePopupVisible = true; this.deletedId = id }
   hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
   showTabs = (id) => {
-    if(id == 'add') {
+    if (id == 'add') {
       this.addState = true;
       this.showtabs = true;
     } else {
@@ -229,7 +227,7 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
       this.getProductByID(id);
       this.selectedId = id;
     }
-    
+
   };
   hideTabs = () => this.showtabs = false;
   constructor(
@@ -238,5 +236,5 @@ export class ProductsShellComponent implements OnInit , OnDestroy{
     public dataService: DataService,
     private errorService: ErrorHandlerService,
     private toaster: ToasterService
-  ) {}
+  ) { }
 }

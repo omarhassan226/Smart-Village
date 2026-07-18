@@ -1,0 +1,136 @@
+<div class="container-fluid text-right py-2" *ngIf="showCompleteOrder">
+  <div class="btn-group flex-wrap" role="group" aria-label="Button group with nested dropdown">
+    <!-- Day filter -->
+    <button type="button" class="btn circle-right-side" style="background-color: #f2f0f0; border: 1px solid #f8f8f8">
+      <img src="../../../../../assets/images/cbe3d3ea-b022-4fab-9373-0f694afff02e.jpg" />
+    </button>
+    <div class="btn-group" role="group">
+      <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle"
+        style="background-color: #f2f0f0; border: 1px solid #f8f8f8" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        خيارات العرض : كل الأيام
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+        <dx-select-box [dataSource]="days" [(value)]="day" displayExpr="key" (onValueChanged)="showDay($event)"
+          valueExpr="value" [rtlEnabled]="true" placeholder="الصلاحيه">
+        </dx-select-box>
+      </div>
+    </div>
+
+    <!-- Entry Type filter (Notification vs Pay Order) -->
+    <div class="btn-group" role="group">
+      <button id="btnGroupDrop4" type="button" class="btn dropdown-toggle"
+        style="background-color: #f2f0f0; border: 1px solid #f8f8f8" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        نوع الدخول : {{ selectedEntryType === 'notifications' ? 'الاشعارات - ' + unreadCount : 'أمر الدفع' }}
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop4">
+        <dx-select-box [dataSource]="entryTypes" [(value)]="selectedEntryType" displayExpr="key" valueExpr="value"
+          [rtlEnabled]="true" placeholder="نوع الدخول">
+        </dx-select-box>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-group flex-wrap" role="group" aria-label="Button group with nested dropdown" style="float: left;">
+    <dx-button class="btn notPrint btn-light p-0 circle-side-button ml-2" style="direction: ltr;" icon="print"
+      text="طباعة" (onClick)="print()"></dx-button>
+  </div>
+
+  <div class="mt-2">
+    <span *ngIf="daylabel" style="padding: 3px 5px;">اليوم:{{daylabel}} </span>
+    <span *ngIf="paylabel" style="padding: 3px 5px;">طريقة الدفع:{{paylabel}}</span>
+    <span *ngIf="statuslabel" style="padding: 3px 5px;">الحالة: {{statuslabel}}</span>
+  </div>
+</div>
+
+<!-- Notifications list (if الاشعارات selected) -->
+<div class="container-fluid website-bg p-3"
+  *ngIf="showCompleteOrder && selectedEntryType === 'notifications' && notifications.length > 0">
+  <div class="card mb-2" *ngFor="let notif of notifications" style="border: 1px solid #ddd; border-radius: 5px;">
+    <div class="card-body d-flex justify-content-between align-items-center py-2 px-3">
+      <span class="font-weight-bold" style="font-size: 16px;">
+        قام المستخدم <span class="text-danger">{{ notif.user_name }}</span> بارجاع الطلب رقم : <span
+          class="text-danger">{{ notif.order_id }}</span>
+      </span>
+      <button class="btn btn-outline-danger btn-sm" (click)="viewDetails(notif.order_id)">عرض التفاصيل</button>
+    </div>
+  </div>
+</div>
+
+<!-- Returned orders list grid -->
+<div class="container-fluid" *ngIf="showCompleteOrder">
+  <dx-data-grid #gridRef [dataSource]="orders" width="100%" keyExpr="id" [showBorders]="false" [rtlEnabled]="true"
+    [focusedRowEnabled]="false" [columnAutoWidth]="true" [noDataText]="'لايوجد بيانات'">
+    <dxi-column dataType="number" [caption]="'رقم الطلب'" dataField="id"></dxi-column>
+    <dxi-column dataField="user.full_name" dataType="string" [caption]="'اسم العميل'"></dxi-column>
+    <dxi-column dataType="date" [caption]="'تاريخ الطلب'" dataField="created_at"></dxi-column>
+    <dxi-column dataType="date" [caption]="'تاريخ اخر إجراء'" dataField="updated_at"></dxi-column>
+    <dxi-column dataType="string" [caption]="'التوصيل'" dataField="shipping_company.name_ar"></dxi-column>
+    <dxi-column dataType="string" [caption]="'طريقة الدفع'" dataField="way_pay"></dxi-column>
+    <dxi-column dataField="status" cellTemplate="statusTemplate" [caption]="'الحالة'"></dxi-column>
+
+    <div *dxTemplate="let cell of 'statusTemplate'">
+      <span class="badge badge-warning p-2" *ngIf="cell.text === 'مرتجع'">{{ cell.text }}</span>
+      <span class="badge badge-success p-2" *ngIf="cell.text === 'تم القبول'">{{ cell.text }}</span>
+      <span class="badge badge-danger p-2" *ngIf="cell.text === ' تم الرفض'">{{ cell.text }}</span>
+      <span class="badge badge-secondary p-2"
+        *ngIf="cell.text !== 'مرتجع' && cell.text !== 'تم القبول' && cell.text !== ' تم الرفض'">{{ cell.text }}</span>
+    </div>
+
+    <dxi-column type="buttons" cellTemplate="actionsTemplate" [caption]="'التحكم'">
+      <div *dxTemplate="let cell of 'actionsTemplate'">
+        <div class="btn-group" role="group" style="direction: ltr">
+          <dx-button (onClick)="showDetailsPage2(cell.row.data.id)" type="button"
+            class="btn btn-light btn-sm ml-1">التفاصيل</dx-button>
+          <button type="button" class="btn btn-light btn-sm"
+            (click)="showEditPopup(cell.row.data.id, cell.row.data.status)" title="تعديل الحالة">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+      </div>
+    </dxi-column>
+
+    <dxo-paging [pageSize]="10"></dxo-paging>
+  </dx-data-grid>
+</div>
+
+<!-- Embedded Order Details view -->
+<div class="container-fluid mt-3" *ngIf="showOrderDetails">
+  <button class="btn btn-secondary mb-3" (click)="showCompleteOrder = true; showOrderDetails = false;">عودة
+    للقائمة</button>
+  <app-order-details-list-review [orderId]="orderId"></app-order-details-list-review>
+</div>
+
+<!-- Edit Status Popup -->
+<dx-popup [visible]="isAdminPopupVisible" [shading]="true" [title]="popTitle2" shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true" [rtlEnabled]="true" [maxWidth]="600" height="auto" (onHiding)="hidePopUp()">
+  <div *dxTemplate="let data of 'content'">
+    <div class="container-fluid website-bg p-3">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 mt-2">
+          <div class="dx-field-label">الحالة</div>
+          <div class="dx-field">
+            <div class="dx-field-value">
+              <dx-select-box [dataSource]="statusOrder2" [(value)]="statusCurrentOrder" displayExpr="key"
+                valueExpr="value" [rtlEnabled]="true" placeholder="الحالة">
+              </dx-select-box>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 mt-2">
+          <div class="dx-field-label">الرسالة / السبب</div>
+          <div class="dx-field">
+            <div class="dx-field-value">
+              <dx-text-area [(value)]="deleteMessage" placeholder="السبب..." height="100"></dx-text-area>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <dx-button text="حفظ" [useSubmitBehavior]="true" class="btn py-0 default-btn"
+          (onClick)="editStatusOdrer()"></dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>

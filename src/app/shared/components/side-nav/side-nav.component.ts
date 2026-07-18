@@ -16,7 +16,7 @@ import { ConstantPool } from '@angular/compiler';
   styleUrls: ['./side-nav.component.css'],
 })
 export class SideNavComponent implements OnInit {
-  
+
   @ViewChild(DxDrawerComponent, { static: false }) drawer: DxDrawerComponent;
   @ViewChild(DxScrollViewComponent, { static: true })
   scrollView: DxScrollViewComponent;
@@ -33,55 +33,61 @@ export class SideNavComponent implements OnInit {
     icon: 'home-icon',
     route: 'home'
   },
-  
-    {
-      id: '14',
-      text: 'السياسات',
-      icon: '../../../../assets/images/padlock.svg',
-      route: 'policy'
-    } ,
-    {
-      id: '15',
-      text: 'الموردين ',
-      icon: '../../../../assets/images/supplier.svg',
-      route: 'supplier'
-    }  ,
-    
-    {
-     
-      id: '19',
-      text: 'البائعين',
-      icon: '../../../../assets/images/supplier.svg',
-      route: 'seller'
-    } ,
-    {
-      id: '20',
-      text: 'الكلمات الدالة',
-      icon: 'assets/images/keywords.svg',
-      items: [
-     
-        {
-          id: '8_9',
-          text: 'كل الكلمات ',
-          route: 'Keywords',
-        },
-        {
-          id: '9_8',
-          text: ' اضافة كلمات ',
-          route: 'Keywords-add',
-        },
-       
-      ],
-    },
-    {
-      id: '21',
-      text: 'اعدادت العرض',
-      icon: 'home-icon',
-      route: 'OfferSetting'
-    },
-  
-     ]
-    
+
+  {
+    id: '14',
+    text: 'السياسات',
+    icon: '../../../../assets/images/padlock.svg',
+    route: 'policy'
+  },
+  {
+    id: '15',
+    text: 'الموردين ',
+    icon: '../../../../assets/images/supplier.svg',
+    route: 'supplier'
+  },
+
+  {
+
+    id: '19',
+    text: 'البائعين',
+    icon: '../../../../assets/images/supplier.svg',
+    route: 'seller'
+  },
+  {
+    id: '20',
+    text: 'الكلمات الدالة',
+    icon: 'assets/images/keywords.svg',
+    items: [
+
+      {
+        id: '8_9',
+        text: 'كل الكلمات ',
+        route: 'Keywords',
+      },
+      {
+        id: '9_8',
+        text: ' اضافة كلمات ',
+        route: 'Keywords-add',
+      },
+
+    ],
+  },
+  {
+    id: '21',
+    text: 'اعدادت العرض',
+    icon: 'home-icon',
+    route: 'OfferSetting'
+  },
+  {
+    id: '22',
+    text: 'البنوك',
+    icon: 'fas fa-university',
+    route: 'banks'
+  }
+
+  ]
+
 
   navigation = this.ProjectRoutes2;
   text: string;
@@ -102,20 +108,19 @@ export class SideNavComponent implements OnInit {
     },
   ];
 
- async ngOnInit() {
-   await this.dataservice.authAdmins().subscribe(
+  async ngOnInit() {
+    await this.dataservice.authAdmins().subscribe(
       res => {
-        debugger
+
         localStorage.setItem('roles', JSON.stringify(res.admin.roles));
-     
-     
-        console.log (res.admin.roles.permissions);
-        res.admin.roles.forEach(element=>
-        {
-         
-          
+
+
+        console.log(res.admin.roles.permissions);
+        res.admin.roles.forEach(element => {
+
+
           element.permissions.forEach(item => {
-            if (item.name=='user') {
+            if (item.name == 'user') {
 
               this.ProjectRoutes2.push({
                 id: '4',
@@ -134,7 +139,7 @@ export class SideNavComponent implements OnInit {
                     text: ' عناوبن العملاء',
                     route: 'customers-address',
                   },
-                
+
                 ],
               })
 
@@ -161,6 +166,11 @@ export class SideNavComponent implements OnInit {
                     id: '6_6',
                     text: ' الطلبات المرتجعه',
                     route: 'orders-review',
+                  },
+                  {
+                    id: '6_7',
+                    text: 'منتجات تم ارجاعها',
+                    route: 'return-orders',
                   },
                 ],
               })
@@ -193,7 +203,7 @@ export class SideNavComponent implements OnInit {
                     text: 'التقارير ',
                     route: 'reports',
                   },
-                
+
                 ]
               })
 
@@ -306,28 +316,27 @@ export class SideNavComponent implements OnInit {
                       text: ' دفع فواتير  ',
                       route: 'PayBills',
                     },
-            
-            
-                   
+
+
+
                   ],
                 })
 
             }
-            if(item.name=='budget')
-            {
+            if (item.name == 'budget') {
               this.ProjectRoutes2.push({
-     
+
                 id: '17',
                 text: 'المحفظة',
                 icon: '../../../../assets/images/budget.svg',
                 route: 'budget'
-              } )
+              })
 
 
             }
 
 
-            
+
 
 
 
@@ -347,8 +356,8 @@ export class SideNavComponent implements OnInit {
             text: 'الاشعارات',
             icon: '../../../../assets/images/notification.svg',
             route: 'Notification'
-          } )
-         
+          })
+
         this.ProjectRoutes2.sort(function (a, b) {
           return a.id - b.id;
         });
@@ -356,7 +365,7 @@ export class SideNavComponent implements OnInit {
       }
 
     )
-    
+
     this.menuOpened = this.screen.sizes['screen-large'];
     this.ProjectRoutes2
 
@@ -374,10 +383,10 @@ export class SideNavComponent implements OnInit {
     public showNavigation: NavigationService,
     private screen: ScreenService,
     private router: Router,
-    private dataservice:DataService,
+    private dataservice: DataService,
     public toaster: ToasterService,
     private cookieService: CookieService
-  ) {}
+  ) { }
 
   get hideMenuAfterNavigation() {
     return this.selectedOpenMode === 'overlap' || this.temporaryMenuOpened;

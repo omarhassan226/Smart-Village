@@ -39,6 +39,11 @@ export const ProjectRoutes = [
         text: 'كل الطلبات',
         route: 'orders-status',
       },
+      {
+        id: '2_3',
+        text: 'منتجات تم ارجاعها',
+        route: 'return-orders',
+      },
     ],
   },
   {

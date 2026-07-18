@@ -11,19 +11,19 @@ import { OrdersBascketComponent } from '../orders-bascket/orders-bascket.compone
   templateUrl: './orders-shell.component.html',
   styleUrls: ['./orders-shell.component.css'],
 })
-export class OrdersShellComponent implements OnInit , OnDestroy{
+export class OrdersShellComponent implements OnInit, OnDestroy {
   @ViewChildren(DxValidatorComponent) validatorViewChildren: QueryList<DxValidatorComponent>;
-  @ViewChild('tab') tab : OrdersBascketComponent;
- 
-  
+  @ViewChild('tab') tab: OrdersBascketComponent;
+
+
   addresslist;
   isAdminPopupVisibleupload = false
   isOrdersPopupVisible = false;
   products = [];
-  titlefile= "ارفاق ملف"
+  titlefile = "ارفاق ملف"
   showform = false
   productCard: any[] = [];
-  cost_prict:any
+  cost_prict: any
   productSelected: any
   slider: any[]
   colors: any[]
@@ -31,32 +31,33 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
   users: any[]
   body: any
   values: any[] = []
-  way_pay:any
+  way_pay: any
   customerInfo = {};
   showOrderList = true;
   showCompleteOrder = false;
   totalprice = 0;
   costShipping = 0;
-  productsListOrder:any[]
+  productsListOrder: any[]
   showOrderDetails = false;
   ishidden: boolean;
   popTitle: string;
   companyId = 0
   userId: any
-  addressId :any ;
+  addressId: any;
   Shippings: any[];
   cost_shipping = 0;
   selectedOptions: any[] = []
   file: any
   imgSrc2 = "../../../../../assets/images/upload.png"
   savefile() {
-    this.isAdminPopupVisibleupload = false}
+    this.isAdminPopupVisibleupload = false
+  }
   hidePopUp() {
 
     this.imgSrc2 = "../../../../../assets/images/upload.png";
 
-   
-    this.isAdminPopupVisibleupload=false
+
+    this.isAdminPopupVisibleupload = false
   }
   showPreview1 = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -73,17 +74,17 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
     }
   }
   deleteUser() {
-    debugger
+
     this.tab.resetForm();
     this.customerInfo = {}
     this.userId = null
     this.ishidden = false;
-    this.addressId=null;
-    this.addresslist=[];
-    this.Shippings=[];
-    this.companyId=null;
-    this.costShipping=0
-    
+    this.addressId = null;
+    this.addresslist = [];
+    this.Shippings = [];
+    this.companyId = null;
+    this.costShipping = 0
+
 
 
   }
@@ -93,48 +94,46 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
     })
   }
   addProduct = (event) => {
-    debugger;
+    // ;
     this.values = []
-    debugger
-    if (event.sizeId != null)
-    {
+
+    if (event.sizeId != null) {
       const addkey = { randam_key1: event.sizeId }
       this.values.push(event.sizeId)
     }
-    if (event.colorId !=null) {
+    if (event.colorId != null) {
       const addkey = { randam_key2: event.colorId }
       this.values.push(event.colorId)
     }
     if (event.imagId != null) {
-      debugger
+
       const addkey = { randam_key3: event.imagId }
-      this.values.push(event.imagId )
+      this.values.push(event.imagId)
     }
 
-   
-    if (this.values.length == 3) {
-     this.body = { product_id: event.id, values: { randam_key1: this.values[0], randam_key2: this.values[1], randam_key3: this.values[2] } }
-    } 
 
-      
+    if (this.values.length == 3) {
+      this.body = { product_id: event.id, values: { randam_key1: this.values[0], randam_key2: this.values[1], randam_key3: this.values[2] } }
+    }
+
+
 
     else if (this.values.length == 2) {
       this.body = { product_id: event.id, values: { randam_key1: this.values[0], randam_key2: this.values[1] } }
     }
     else if (this.values.length == 1) {
-      this.body= { product_id: event.id, values: { randam_key1: this.values[0] } }
+      this.body = { product_id: event.id, values: { randam_key1: this.values[0] } }
     }
-    else
-    {
-      this. body = { product_id: event.id, values: {  } }
+    else {
+      this.body = { product_id: event.id, values: {} }
     }
 
 
-  
+
 
     if (this.slider != null) {
       this.slider.forEach(item => {
-        debugger
+
         if (item.randam_key == event.imagId) {
           this.selectedOptions.push({ display_value: item.display_value, name_ar: item.name_ar, name_en: item.name_en })
         }
@@ -145,7 +144,7 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
     }
     if (this.sizes != null) {
       this.sizes.forEach(item => {
-        debugger
+
         if (item.randam_key == event.sizeId) {
           this.selectedOptions.push({ display_value: item.display_value, name_ar: item.name_ar, name_en: item.name_en })
         }
@@ -156,7 +155,7 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
     }
     if (this.colors != null) {
       this.colors.forEach(item => {
-        debugger
+
         if (item.randam_key == event.colorId) {
           this.selectedOptions.push({ display_value: item.display_value, name_ar: item.name_ar, name_en: item.name_en })
         }
@@ -170,78 +169,72 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
         res => {
           this.totalprice = 0
 
-          console.log("dfdf",res)
-          if ( res.detail.discount_price !=0 && res.detail.discount_price) {
+          console.log("dfdf", res)
+          if (res.detail.discount_price != 0 && res.detail.discount_price) {
 
 
             this.cost_prict = res.detail.discount_price;
           }
           else {
-            this.cost_prict =res.detail.price_sale ;
+            this.cost_prict = res.detail.price_sale;
           }
-      /////   
-     
-          const newproduct = { detail_id:res.detail.id, product_id: this.productSelected.id, quantity: event.quantity, productTotalPrice: parseFloat(this.cost_prict) * parseInt(event.quantity), selectedOptions: this.selectedOptions }
+          /////   
+
+          const newproduct = { detail_id: res.detail.id, product_id: this.productSelected.id, quantity: event.quantity, productTotalPrice: parseFloat(this.cost_prict) * parseInt(event.quantity), selectedOptions: this.selectedOptions }
           console.log(newproduct
           )
-          if(event.quantity>res.detail.quantity)
-          {
-            debugger
-            this.toaster.showWarningToast(res.detail.quantity +"الكميه غير متاح  المتاح هو ") ;
-           return
-          }
-          if(this.productCard.find(a=>a.detail_id==res.detail.id))
-          {
-            debugger
-            let edit_product =this.productCard.find(a=>a.detail_id==res.detail.id);
-          let  total_countity= edit_product.quantity+event.quantity
-          if (total_countity>res.detail.quantity)
-          {
-            debugger
-                       this.toaster.showWarningToast(res.detail.quantity +"الكميه غير متاح  المتاح هو ") ;
-           return
-          }
-          else
-          {
-            this.productCard.forEach(element => {
-              if (element.detail_id==res.detail.id)
-              {
-                debugger
-                element.quantity=total_countity;
-                element.productTotalPrice= parseFloat(this.cost_prict) * parseInt(total_countity)
+          if (event.quantity > res.detail.quantity) {
 
-
-              }
-              
-            });
-            this.products.forEach(element => {
-              if (element.detail_id==res.detail.id)
-              {
-                debugger
-                element.quantity=total_countity;
-                element.Price= parseFloat(this.cost_prict) * parseInt(total_countity)
-                element.weight=parseInt(this.productSelected.weight) * parseInt(total_countity)
-
-
-              }
-              
-            });
-            this.products.forEach(item => {
-              this.totalprice = this.totalprice+item.Price
-            })
-            if (this.companyId !== 0) {
-              this.callweight(this.companyId)
-            }
-            
+            this.toaster.showWarningToast(res.detail.quantity + "الكميه غير متاح  المتاح هو ");
             return
-
           }
+          if (this.productCard.find(a => a.detail_id == res.detail.id)) {
+
+            let edit_product = this.productCard.find(a => a.detail_id == res.detail.id);
+            let total_countity = edit_product.quantity + event.quantity
+            if (total_countity > res.detail.quantity) {
+
+              this.toaster.showWarningToast(res.detail.quantity + "الكميه غير متاح  المتاح هو ");
+              return
+            }
+            else {
+              this.productCard.forEach(element => {
+                if (element.detail_id == res.detail.id) {
+
+                  element.quantity = total_countity;
+                  element.productTotalPrice = parseFloat(this.cost_prict) * parseInt(total_countity)
+
+
+                }
+
+              });
+              this.products.forEach(element => {
+                if (element.detail_id == res.detail.id) {
+
+                  element.quantity = total_countity;
+                  element.Price = parseFloat(this.cost_prict) * parseInt(total_countity)
+                  element.weight = parseInt(this.productSelected.weight) * parseInt(total_countity)
+
+
+                }
+
+              });
+              this.products.forEach(item => {
+                this.totalprice = this.totalprice + item.Price
+              })
+              if (this.companyId !== 0) {
+                this.callweight(this.companyId)
+              }
+
+              return
+
+            }
 
           }
           this.productCard.push(newproduct)
           this.products.push({
             ID: this.productSelected.id,
-            detail_id:res.detail.id,
+            detail_id: res.detail.id,
             Name: this.productSelected.name_ar,
             Price: parseFloat(this.cost_prict) * parseInt(event.quantity),
             product_price: this.cost_prict,
@@ -252,15 +245,15 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
             Manufacturing: 10,
             weight: parseInt(this.productSelected.weight) * parseInt(event.quantity),
             Category: 'Video Players',
-            ImageSrc: 'https://smartvillageapp.com/app/' +this.productSelected.sliders[0].image,
+            ImageSrc: 'https://smartvillageapp.com/app/' + this.productSelected.sliders[0].image,
           });
           this.products.forEach(item => {
-            this.totalprice = this.totalprice+item.Price
+            this.totalprice = this.totalprice + item.Price
           }
           )
           this.productsListOrder.forEach(item => {
-            if (item.id ==this.productSelected.id) {
-              
+            if (item.id == this.productSelected.id) {
+
               item.updated_at = false
               item.created_at = true
 
@@ -270,7 +263,7 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
 
           })
           if (this.companyId !== 0) {
-            debugger
+
             this.callweight(this.companyId)
           }
           this.selectedOptions = []
@@ -279,26 +272,25 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
           this.sizes = null;
           this.slider = null;
           this.showform = false
-       
-         
+
+
         }
 
 
-    )
-   
-  
-    
+      )
+
+
+
     this.isOrdersPopupVisible = false;
   };
-  deleteProduct(event)
-  {
-    debugger
+  deleteProduct(event) {
+
     let id = this.products[event].ID
-    this.totalprice=0
+    this.totalprice = 0
     this.productCard.splice(event, 1);
     this.products.splice(event, 1)
     if (this.companyId !== 0) {
-     this. callweight(this.companyId) 
+      this.callweight(this.companyId)
     }
     this.products.forEach(item => {
       this.totalprice = this.totalprice + item.Price
@@ -317,9 +309,9 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
 
   }
   callweight(event) {
-    debugger
+
     let total = 0;
-    this.companyId=event
+    this.companyId = event
     this.products.forEach(item => {
       total = total + item.weight
     })
@@ -327,62 +319,24 @@ export class OrdersShellComponent implements OnInit , OnDestroy{
       (res => { console.log(this.costShipping = res.cost) })
 
   }
-  addressUser(event)
-  {
-    this.Shippings=[];
-debugger
-this.addressId=event
-if (this.way_pay != undefined &&this.addressId!='') {
-  const shipingsUser ={  status:this.way_pay ,address_id:this.addressId,order_cost: this.totalprice }
-  this.dataservice.shipingsUser(shipingsUser).subscribe(
-    res => {
-      debugger
-      this.Shippings=[];
-      this.Shippings = res.shipping;
-    },
-    arr => {
-   
+  addressUser(event) {
+    this.Shippings = [];
 
-      this.toaster.showErrorToast(arr.error.message)
-      
-      this.Shippings = [];
-      //for (const [key, value] of Object.entries(arr.error.errors)) {
-      //  console.log(`${key}: ${value}`);
-      //  this.toaster.showErrorToast(`${value}`)
-      //}
-    }
-  )
-}
-
-  }
-
-
-
-  way_Payment(event)
-  {
-    this.Shippings=[];
-    this.way_pay = event
-    if (this.way_pay == 'Transfer via Bank') {
-
-      this.isAdminPopupVisibleupload = true
-    }
-    else {
-      this.file=null
-    }
-    console.log(event)
-    if (this.addressId != undefined && this.addressId != null) {
-      const shipingsUser ={  status:this.way_pay ,address_id:this.addressId,order_cost: this.totalprice }
- 
+    this.addressId = event
+    if (this.way_pay != undefined && this.addressId != '') {
+      const shipingsUser = { status: this.way_pay, address_id: this.addressId, order_cost: this.totalprice }
       this.dataservice.shipingsUser(shipingsUser).subscribe(
         res => {
-          debugger
-          this.Shippings=[];
+
+          this.Shippings = [];
           this.Shippings = res.shipping;
         },
         arr => {
-          console.log(arr)
+
+
           this.toaster.showErrorToast(arr.error.message)
-          this.Shippings=[]
+
+          this.Shippings = [];
           //for (const [key, value] of Object.entries(arr.error.errors)) {
           //  console.log(`${key}: ${value}`);
           //  this.toaster.showErrorToast(`${value}`)
@@ -393,40 +347,75 @@ if (this.way_pay != undefined &&this.addressId!='') {
 
   }
 
-  getAddressUser ()
-  {
-   this.dataservice.getAddressUser(this.userId)
-    .subscribe(res => {
-      res.address. forEach(element => {
-        element.created_at=element?.governorate?.name_ar +" : "+element?.state?.name_ar+" : "+element?.village?.name_ar
-      });
 
-      this. addresslist = res.address;
-    }, err => {
-    });
-   }
+
+  way_Payment(event) {
+    this.Shippings = [];
+    this.way_pay = event
+    if (this.way_pay == 'Transfer via Bank') {
+
+      this.isAdminPopupVisibleupload = true
+    }
+    else {
+      this.file = null
+    }
+    console.log(event)
+    if (this.addressId != undefined && this.addressId != null) {
+      const shipingsUser = { status: this.way_pay, address_id: this.addressId, order_cost: this.totalprice }
+
+      this.dataservice.shipingsUser(shipingsUser).subscribe(
+        res => {
+
+          this.Shippings = [];
+          this.Shippings = res.shipping;
+        },
+        arr => {
+          console.log(arr)
+          this.toaster.showErrorToast(arr.error.message)
+          this.Shippings = []
+          //for (const [key, value] of Object.entries(arr.error.errors)) {
+          //  console.log(`${key}: ${value}`);
+          //  this.toaster.showErrorToast(`${value}`)
+          //}
+        }
+      )
+    }
+
+  }
+
+  getAddressUser() {
+    this.dataservice.getAddressUser(this.userId)
+      .subscribe(res => {
+        res.address.forEach(element => {
+          element.created_at = element?.governorate?.name_ar + " : " + element?.state?.name_ar + " : " + element?.village?.name_ar
+        });
+
+        this.addresslist = res.address;
+      }, err => {
+      });
+  }
 
 
   addCustomer = (event) => {
     console.log(event)
     this.customerInfo = {
-      id:event.id,
+      id: event.id,
       name: event.Fname,
       phone: event.phone,
     };
-    debugger
+
     this.userId = event.id
-    this.addressId=null
+    this.addressId = null
     // if (this.way_pay != undefined && this.userId != null) {
     //   this.dataservice.shipingsUser(this.userId, this.way_pay, this.totalprice).subscribe(
     //     res => {
     //       this.Shippings = res.shipings
     //     },
     //     arr => {
-       
+
 
     //       this.toaster.showErrorToast(arr.error.message)
-          
+
     //       this.Shippings = []
     //       //for (const [key, value] of Object.entries(arr.error.errors)) {
     //       //  console.log(`${key}: ${value}`);
@@ -435,8 +424,8 @@ if (this.way_pay != undefined &&this.addressId!='') {
     //     }
     //   )
     // }
-   this. getAddressUser ();
-    
+    this.getAddressUser();
+
     this.isOrdersPopupVisible = false;
     this.ishidden = true;
   };
@@ -444,29 +433,30 @@ if (this.way_pay != undefined &&this.addressId!='') {
     this.showCompleteOrder = false;
     this.showOrderDetails = true;
   };
-  constructor(private navigationHeaderService: NavigationHeaderService, private dataservice: DataService ,private toaster: ToasterService) {}
+  constructor(private navigationHeaderService: NavigationHeaderService, private dataservice: DataService, private toaster: ToasterService) { }
 
   ngOnInit(): void {
     this.navigationHeaderService.headerObject$.next({
       headericon: 'far fa-shopping-cart',
       headerTitle: 'الطلبات',
     });
-    this.getProduct() 
+    this.getProduct()
   }
-ngOnDestroy() {
-  
-}
+  ngOnDestroy() {
+
+  }
   OnHiding = () => {
     this.isOrdersPopupVisible = false
-    this.popTitle=null
+    this.popTitle = null
     this.colors = null;
     this.sizes = null;
     this.slider = null;
-    this.showform = false };
+    this.showform = false
+  };
   showBascketPopUp = (e) => {
     this.isOrdersPopupVisible = true;
     this.popTitle = 'قم بأختيار العميل';
-    this.users = e; 
+    this.users = e;
   };
   showListPopUp = (e) => {
     this.dataservice.getProductById(e).subscribe(
@@ -475,7 +465,7 @@ ngOnDestroy() {
         this.sizes = null;
         this.slider = null;
         this.showform = true
-        console.log( this.productSelected = res.product)
+        console.log(this.productSelected = res.product)
         this.productSelected.options.forEach(element => {
           if (element.type == 'Color') {
             this.colors = element.values
@@ -507,18 +497,18 @@ ngOnDestroy() {
         this.isOrdersPopupVisible = true;
         this.popTitle = this.productSelected.name_ar;
       }
-   ) 
+    )
   };
   showCancelOrderPopUp = (e) => {
-    debugger
+
     this.isOrdersPopupVisible = true;
     this.popTitle = e;
   };
   showCompleteOrderPage = () => {
-    debugger
+
     if (!this.userId || this.companyId == 0 || !this.way_pay) { return }
     else {
-      console.log( this.productCard)
+      console.log(this.productCard)
       if (this.file == null) {
         const addorder = {
           user_id: this.userId,
@@ -569,7 +559,7 @@ ngOnDestroy() {
           }
         )
       }
-       }
+    }
   }
   getProduct() {
     this.dataservice.getProducts().subscribe(res => {
@@ -579,7 +569,7 @@ ngOnDestroy() {
       this.productsListOrder.forEach(item => {
         item.sliders = 'https://smartvillageapp.com/app/' + item.sliders[0].image
         item.updated_at = true
-        item.created_at=false
+        item.created_at = false
         console.log(item.sliders)
       })
       console.log(this.productsListOrder)

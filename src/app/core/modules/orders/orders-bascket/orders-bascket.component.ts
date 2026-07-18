@@ -18,17 +18,17 @@ export class OrdersBascketComponent implements OnInit {
   @Input() products = [];
   @Input() customerInfo;
   @Input() totalprice;
-  @Input() addresslist=[];
+  @Input() addresslist = [];
 
   @Input() costShipping
   @Input() Shippings: any[];
   @Input() ishidden = false;
   payments: any[];
-  companyId='';
-  addressId='';
-  way_Pay:any
+  companyId = '';
+  addressId = '';
+  way_Pay: any
 
-  users:any []
+  users: any[]
 
   //   products =  [{
   //     ID: 1,
@@ -106,13 +106,12 @@ export class OrdersBascketComponent implements OnInit {
   // ImageSrc: "images/products/3.png"
   // }];
 
-  constructor(private dataservice: DataService) {}
-  resetForm = () =>
-  {
-    debugger
-    this.companyId='';
-    this.addressId='';
-   
+  constructor(private dataservice: DataService) { }
+  resetForm = () => {
+
+    this.companyId = '';
+    this.addressId = '';
+
 
   }
 
@@ -130,13 +129,12 @@ export class OrdersBascketComponent implements OnInit {
       }
 
     )
-    
+
 
   }
   getShopping() {
 
-    this.dataservice.getShippings().subscribe(res =>
-    {
+    this.dataservice.getShippings().subscribe(res => {
       console.log(res)
       this.Shippings = res.shipping.data;
 
@@ -145,7 +143,7 @@ export class OrdersBascketComponent implements OnInit {
   getUsers() {
     this.dataservice.getUsers().subscribe(res => {
       console.log(res.users.data)
-      this.users=res.users.data
+      this.users = res.users.data
     })
   }
 }

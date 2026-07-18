@@ -10,6 +10,8 @@ import { FollowOrderListComponent } from './follow-order-list/follow-order-list.
 import { OrderDetailsListComponent } from './order-details-list/order-details-list.component';
 import { ReviewOrderListComponent } from './review-order-list/review-order-list.component';
 import { OrderDetailsListReviewComponent } from './order-details-list copy/order-details-list-review.component';
+import { ReturnOrdersComponent } from './return-orders/return-orders.component';
+import { UserNotificationComponent } from './user-notification/user-notification.component';
 
 const OrdersRoutes: Routes = [
   {
@@ -24,6 +26,14 @@ const OrdersRoutes: Routes = [
     path: 'orders-review',
     component: ReviewOrderListComponent,
   },
+  {
+    path: 'return-orders',
+    component: ReturnOrdersComponent,
+  },
+  {
+    path: 'userNotification/:id',
+    component: UserNotificationComponent,
+  },
 ];
 
 @NgModule({
@@ -36,6 +46,8 @@ const OrdersRoutes: Routes = [
     OrderDetailsListComponent,
     ReviewOrderListComponent,
     OrderDetailsListReviewComponent,
+    ReturnOrdersComponent,
+    UserNotificationComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(OrdersRoutes), DxSharedModule],
 })

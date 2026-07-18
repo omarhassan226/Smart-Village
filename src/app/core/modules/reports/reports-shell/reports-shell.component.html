@@ -22,7 +22,7 @@
     </div>
 
     <div *dxTemplate="let item of 'item'">
-      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 0">
+      <div class="tabpanel-item" *ngIf="item.id === 0">
         <div id="chart-demo">
           <dx-chart [dataSource]="reportOfCosts" title="">
             <dxi-series valueField="cnstl" name="Cnstl"></dxi-series>
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 1">
+      <div class="tabpanel-item" *ngIf="item.id === 1">
         <div id="chart-demo">
           <dx-chart palette="violet" [dataSource]="reportForsearchProduct" title="">
             <dxi-series valueField="cnstl" name="Cnstl"></dxi-series>
@@ -83,7 +83,7 @@
           </dx-chart>
         </div>
       </div>
-      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 2">
+      <div class="tabpanel-item" *ngIf="item.id === 2">
         <div id="chart-demo">
           <dx-chart palette="violet" [dataSource]="reportPopularProduct" title="">
             <dxi-series valueField="cnstl" name="Cnstl"></dxi-series>
@@ -113,7 +113,7 @@
           </dx-chart>
         </div>
       </div>
-      <div class="tabpanel-item" [class.hidden]="tabPanel.selectedIndex !== 3">
+      <div class="tabpanel-item" *ngIf="item.id === 3">
         <div id="chart-demo">
           <div id="chart-demo">
             <dx-chart

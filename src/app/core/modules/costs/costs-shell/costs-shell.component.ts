@@ -14,9 +14,9 @@ import { CostsListComponent } from '../costs-list/costs-list.component';
   templateUrl: './costs-shell.component.html',
   styleUrls: ['./costs-shell.component.css'],
 })
-export class CostsShellComponent implements OnInit , OnDestroy{
+export class CostsShellComponent implements OnInit, OnDestroy {
   @ViewChild('costForm') costForm: CostsFormComponent;
-  @ViewChild('list')list: CostsListComponent;
+  @ViewChild('list') list: CostsListComponent;
   private subs = new SubSink();
   isConfirmDeletePopupVisible = false;
   deletedId;
@@ -31,58 +31,58 @@ export class CostsShellComponent implements OnInit , OnDestroy{
     });
     this.getCosts();
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subs.unsubscribe();
   }
-submitForm = (body) => {
-  if(this.editState) {
-    this.editCost(body);
-  } else {
-    this.addCost(body);
-  }
-}
-  editCost = (body) => {
-    debugger;
-  this.showLoading();
-  this.subs.sink = this.dataService.editCost(body,this.selectedId).subscribe(res => {
-    if(res['status']== true) {
-      this.getCosts();
-      this.costForm.resetForm();
-      this.costForm.clearDxValidators();
-      this.toaster.showSuccessToast('تم التعديل بنجاح');
-      this.costForm.costfile.nativeElement.value = ''
+  submitForm = (body) => {
+    if (this.editState) {
+      this.editCost(body);
+    } else {
+      this.addCost(body);
     }
-    this.editState = false;
-    this.hideLoading();
-  }, err => {
-    this.hideLoading();
-    this.handleError(err);
-  });
-}
-filterCosts = (query): void => {
-  this.showLoading();
-  this.subs.sink = this.dataService.filterCosts(query).subscribe(res => {
-    this.Costs = res.costs;
-    this.hideLoading();
-  }, err => {
-    this.hideLoading();
-    this.handleError(err);
-  });
-}
+  }
+  editCost = (body) => {
+    // ;
+    this.showLoading();
+    this.subs.sink = this.dataService.editCost(body, this.selectedId).subscribe(res => {
+      if (res['status'] == true) {
+        this.getCosts();
+        this.costForm.resetForm();
+        this.costForm.clearDxValidators();
+        this.toaster.showSuccessToast('تم التعديل بنجاح');
+        this.costForm.costfile.nativeElement.value = ''
+      }
+      this.editState = false;
+      this.hideLoading();
+    }, err => {
+      this.hideLoading();
+      this.handleError(err);
+    });
+  }
+  filterCosts = (query): void => {
+    this.showLoading();
+    this.subs.sink = this.dataService.filterCosts(query).subscribe(res => {
+      this.Costs = res.costs;
+      this.hideLoading();
+    }, err => {
+      this.hideLoading();
+      this.handleError(err);
+    });
+  }
   addCost = (body) => {
 
     this.showLoading();
 
     this.subs.sink = this.dataService.addCost(body).subscribe(res => {
- 
-      if(res['status']== true) {
+
+      if (res['status'] == true) {
         this.getCosts();
         this.costForm.resetForm();
-         this.costForm.clearDxValidators();
-         this.toaster.showSuccessToast('تم الأضافة بنجاح');
-         this.costForm.costfile.nativeElement.value = ''
+        this.costForm.clearDxValidators();
+        this.toaster.showSuccessToast('تم الأضافة بنجاح');
+        this.costForm.costfile.nativeElement.value = ''
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -102,11 +102,11 @@ filterCosts = (query): void => {
   deleteCost = (id) => {
     this.showLoading();
     this.subs.sink = this.dataService.deleteCost(id).subscribe(res => {
-      if(res['status']== true) {
+      if (res['status'] == true) {
         this.getCosts();
         this.toaster.showSuccessToast("تم الحذف بنجاح")
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -117,8 +117,8 @@ filterCosts = (query): void => {
     this.showLoading();
     this.subs.sink = this.dataService.getCostById(id).subscribe(res => {
       this.selectedId = id;
-      this.costForm.patchForm(res.cost) ;
-      this.editState = true;    
+      this.costForm.patchForm(res.cost);
+      this.editState = true;
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -142,19 +142,19 @@ filterCosts = (query): void => {
     }
     return;
   };
-showDeletePopup = (id) =>{ this.isConfirmDeletePopupVisible = true; this.deletedId = id}
-hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
+  showDeletePopup = (id) => { this.isConfirmDeletePopupVisible = true; this.deletedId = id }
+  hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
   whenDeletePopupConfirm = (e) => {
     if (e) {
       this.filterDataSourceByRow(this.list.gridRef.dataSource, 'id', this.list.gridRef);
       this.deleteCost(this.deletedId);
       this.Costs = this.list.gridRef.dataSource;
-        
-        this.hideDeletePopup();
-      }
-      else {
-        this.hideDeletePopup();
-      }
+
+      this.hideDeletePopup();
+    }
+    else {
+      this.hideDeletePopup();
+    }
   }
 
   showLoading = () => this.loading.showLoading();
@@ -163,6 +163,6 @@ hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
   constructor(
     private dataService: DataService,
     private navigationHeaderService: NavigationHeaderService,
-     private loading: LoadingService,private errorService: ErrorHandlerService,
-      private toaster:ToasterService) {}
+    private loading: LoadingService, private errorService: ErrorHandlerService,
+    private toaster: ToasterService) { }
 }

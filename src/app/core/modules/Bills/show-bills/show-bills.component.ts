@@ -12,32 +12,32 @@ import { ToasterService } from 'src/app/shared/services/toaster/toaster.service'
 })
 export class ShowBillsComponent implements OnInit {
   @ViewChildren(DxValidatorComponent) validatorViewChildren: QueryList<DxValidatorComponent>;
-  isAdminPopupVisibleEdit=false
-  visiable=true ;
-  returnBill=false;
-  bills:any[]
-  details_bill=[]
-  foundedAdd=false
-  dateBill ='';
-  note="";
-  suppliers=[]
+  isAdminPopupVisibleEdit = false
+  visiable = true;
+  returnBill = false;
+  bills: any[]
+  details_bill = []
+  foundedAdd = false
+  dateBill = '';
+  note = "";
+  suppliers = []
 
-  constructor(private navigationHeaderService:NavigationHeaderService ,private dataService :DataService,private toaster :ToasterService) { }
+  constructor(private navigationHeaderService: NavigationHeaderService, private dataService: DataService, private toaster: ToasterService) { }
 
-  showPopup=false ;
-  isConfirmDeletePopupVisible=false;
-  selectedBill :any ;
-  popTitle="التفاصيل"
-  popEdit="'تعديل البيانات الاساسيه"
-  deletedId:any;
+  showPopup = false;
+  isConfirmDeletePopupVisible = false;
+  selectedBill: any;
+  popTitle = "التفاصيل"
+  popEdit = "'تعديل البيانات الاساسيه"
+  deletedId: any;
   options = [];
-  allvalues=[];
-  details=[];
+  allvalues = [];
+  details = [];
   result = [];
-  supplierID :any ;
-  resultFinal=[];
-  products=[];
-  EditBillId:any;
+  supplierID: any;
+  resultFinal = [];
+  products = [];
+  EditBillId: any;
 
   ngOnInit(): void {
     this.navigationHeaderService.headerObject$.next({
@@ -49,152 +49,148 @@ export class ShowBillsComponent implements OnInit {
     this.getSuppliers();
   }
 
-  getBills()
-  {
+  getBills() {
     this.dataService.GetInvoicesSales().subscribe
-    (res=>{
-      res.salesInvoices.data.forEach(element => {
-        if (element.way_pay==1)
-        element.way_pay="مدفوع"
-        else if (element.way_pay==2)
-        element.way_pay="غير مدفوع"
-        else 
-        element.way_pay="مدفوع جزئيا"
-        
-      });
-      this.bills=res.salesInvoices.data
-      ; console.log(this.bills)})
+      (res => {
+        res.salesInvoices.data.forEach(element => {
+          if (element.way_pay == 1)
+            element.way_pay = "مدفوع"
+          else if (element.way_pay == 2)
+            element.way_pay = "غير مدفوع"
+          else
+            element.way_pay = "مدفوع جزئيا"
+
+        });
+        this.bills = res.salesInvoices.data
+          ; console.log(this.bills)
+      })
   }
-  showEditPopup(id)
-  {
-    this.EditBillId=id;
-    let bill = this.bills.find(i=>i.id==id);
-    this.supplierID=bill.supplier.id
-    this.note=bill.note,
-    this.dateBill=bill.date
-    this.isAdminPopupVisibleEdit=true
+  showEditPopup(id) {
+    this.EditBillId = id;
+    let bill = this.bills.find(i => i.id == id);
+    this.supplierID = bill.supplier.id
+    this.note = bill.note,
+      this.dateBill = bill.date
+    this.isAdminPopupVisibleEdit = true
   }
-  
-  showDetalPopup(id)
-  {
-    debugger
-  
+
+  showDetalPopup(id) {
+
+
     this.dataService.GetsalesInvoicesById(id).subscribe(
 
-      res=>{
-        this.details_bill=[];
-        this.selectedBill=res.salesInvoice.products
-        console.log ("fdfdfdfdfdfdf",res.salesInvoice)
-      console.log("تةىةىة"+this.selectedBill);
-      this.selectedBill.forEach(element => {
-        element.details_invoices.forEach(item => {
-          this.details_bill.push(
+      res => {
+        this.details_bill = [];
+        this.selectedBill = res.salesInvoice.products
+        console.log("fdfdfdfdfdfdf", res.salesInvoice)
+        console.log("تةىةىة" + this.selectedBill);
+        this.selectedBill.forEach(element => {
+          element.details_invoices.forEach(item => {
+            this.details_bill.push(
 
-            {
-              ptoduct_Id:element.id,
-              detailID:item.id,
-              product_name:element.name_ar,
-              cost_price:item.pivot.cost_price,
-              quantity:item.pivot.quantity,
-              r_quantity:item.pivot.r_quantity,
-              values:item.pivot.values,
-              price:item.pivot.cost_price/item.pivot.quantity,
-              min_quantity:item.min_quantity ,
-              staticQuantity:item.pivot.quantity-item.pivot.r_quantity,
-
-
+              {
+                ptoduct_Id: element.id,
+                detailID: item.id,
+                product_name: element.name_ar,
+                cost_price: item.pivot.cost_price,
+                quantity: item.pivot.quantity,
+                r_quantity: item.pivot.r_quantity,
+                values: item.pivot.values,
+                price: item.pivot.cost_price / item.pivot.quantity,
+                min_quantity: item.min_quantity,
+                staticQuantity: item.pivot.quantity - item.pivot.r_quantity,
 
 
-            }
-          )
 
-          
+
+              }
+            )
+
+
+          });
+
         });
-        
-      });
-      
-      ;
-   
-   console.log ("kfjdkjf",this.details_bill)
-   this.showPopup=true
-  
+
+        ;
+
+        console.log("kfjdkjf", this.details_bill)
+        this.showPopup = true
+
       },
-      arr=>{}
+      arr => { }
 
     )
 
 
 
   }
-  showReturnBill(id)
-  {
-    this.deletedId=id
+  showReturnBill(id) {
+    this.deletedId = id
     console.log(this.deletedId)
-    debugger
-  
+
+
     this.dataService.GetsalesInvoicesById(id).subscribe(
 
-      res=>{
-        this.visiable=false;
-        this.returnBill=true;
+      res => {
+        this.visiable = false;
+        this.returnBill = true;
 
-        this.details_bill=[];
-        this.selectedBill=res.salesInvoice.products
-      console.log(this.selectedBill);
-      this.selectedBill.forEach(element => {
-        element.details_invoices.forEach(item => {
-          this.details_bill.push(
+        this.details_bill = [];
+        this.selectedBill = res.salesInvoice.products
+        console.log(this.selectedBill);
+        this.selectedBill.forEach(element => {
+          element.details_invoices.forEach(item => {
+            this.details_bill.push(
 
-            {
-              ptoduct_Id:element.id,
-              detailID:item.id,
-              product_name:element.name_ar,
-              cost_price:item.cost_price,
-              quantity:item.pivot.quantity,
-              quantityReturn:0,
-              values:item.pivot.values,
-              price:item.pivot.cost_price/item.pivot.quantity,
-              min_quantity:item.min_quantity ,
-              discount_price:item.discount_price,
-              staticQuantity:item.pivot.quantity-item.pivot.r_quantity,
-
-
+              {
+                ptoduct_Id: element.id,
+                detailID: item.id,
+                product_name: element.name_ar,
+                cost_price: item.cost_price,
+                quantity: item.pivot.quantity,
+                quantityReturn: 0,
+                values: item.pivot.values,
+                price: item.pivot.cost_price / item.pivot.quantity,
+                min_quantity: item.min_quantity,
+                discount_price: item.discount_price,
+                staticQuantity: item.pivot.quantity - item.pivot.r_quantity,
 
 
-            }
-          )
 
-          
+
+              }
+            )
+
+
+          });
+
         });
-        
-      });
-      
-      ;
-   
-   console.log ("kfjdkjf",this.details_bill)
-  
-  
+
+        ;
+
+        console.log("kfjdkjf", this.details_bill)
+
+
       },
-      arr=>{}
+      arr => { }
 
     )
 
 
 
   }
-  showDeletePopup(id)
-  {this.deletedId=id ;this.isConfirmDeletePopupVisible=true;
+  showDeletePopup(id) {
+    this.deletedId = id; this.isConfirmDeletePopupVisible = true;
   }
-  
-  hidePopUp()
-  {
-    this.showPopup=false;
+
+  hidePopUp() {
+    this.showPopup = false;
   }
 
   whenDeletePopupConfirm = (e) => {
     if (e) {
       this.dataService.deleteAdmin(this.deletedId).subscribe(
-        res=>{
+        res => {
           console.log(res)
           this.hideDeletePopup();
 
@@ -202,218 +198,201 @@ export class ShowBillsComponent implements OnInit {
           this.toaster.showSuccessToast('تم الحذف بنجاح')
         }
       )
-        
-       
 
-      }
-      else {
-        this.hideDeletePopup();
-      }
+
+
+    }
+    else {
+      this.hideDeletePopup();
+    }
   }
 
-  hideDeletePopup()
-  {
+  hideDeletePopup() {
 
-    this.isConfirmDeletePopupVisible=false
+    this.isConfirmDeletePopupVisible = false
   }
- 
-  
-   GetProducts()
-  {
-
-this.dataService.getProducts().subscribe(
-res=>
-
-{this.products=res.products.data ;
-console.log(this.products)
-}
-,arr=>{
 
 
-}
+  GetProducts() {
 
-)
-
-  }
-  addbill()
-   {
-     debugger
-
-      if ( !this.dateBill||  !this.note  ) {
-
-        return
+    this.dataService.getProducts().subscribe(
+      res => {
+        this.products = res.products.data;
+        console.log(this.products)
       }
-      else
-      {
-        let products =[];
-        this.details_bill.forEach( item =>
-          {
-          if(products.length>0)
-          {
-            products.forEach(element=>
-              {
-                if(element.product_id==item.ptoduct_Id)
-                {
+      , arr => {
 
-                  if(item.quantityReturn>0)
-                  {
-              
-                  element.details.push({
-                    id:item.detailID ,
-                
-                min_quantity:item.min_quantity ,
-                price:item.price ,
-                discount_price:item.discount_price,
-                cost_price:item.price *item.quantityReturn,
-               
-               
-                quantity:item. quantityReturn,
-                values:item.values
-                  })
-                  this.foundedAdd=true
-                }
-                }
-  
-  
+
+      }
+
+    )
+
+  }
+  addbill() {
+
+
+    if (!this.dateBill || !this.note) {
+
+      return
+    }
+    else {
+      let products = [];
+      this.details_bill.forEach(item => {
+        if (products.length > 0) {
+          products.forEach(element => {
+            if (element.product_id == item.ptoduct_Id) {
+
+              if (item.quantityReturn > 0) {
+
+                element.details.push({
+                  id: item.detailID,
+
+                  min_quantity: item.min_quantity,
+                  price: item.price,
+                  discount_price: item.discount_price,
+                  cost_price: item.price * item.quantityReturn,
+
+
+                  quantity: item.quantityReturn,
+                  values: item.values
+                })
+                this.foundedAdd = true
               }
-  
-  
-            )
-  
-  
-          
-          
-          }
-          if(this.foundedAdd==false)
-          {
-            if(item.quantityReturn>0)
-            {
-            products.push({
-              product_id:item.ptoduct_Id,
-              details:[{
-                id:item.detailID ,
-                
-                min_quantity:item.min_quantity ,
-                price:item.price ,
-                discount_price:item.discount_price,
-                cost_price:item.price *item.quantityReturn,
-               
-                quantity:item.quantityReturn,
-                values:item.values
-              }]
-  
-  
-            })
-  
-          }
-          }
-          this.foundedAdd=false
-          }
-  
-        )
-        let date =this.formatDate(this.dateBill)
-        const addBill={
-          date:date,
-          note:this.note,
-          type:2,  
-          parent:this.deletedId,
-        
-        
-         
-          products:products
-  
-  
-  
-        }
-        console.log(addBill)
-        this.dataService.AddReturnInvoices(addBill).subscribe(
-          res=>{
-  
-            this.returnBill=false ;
-            this.visiable =true;
-      
-            this.clearDxValidators()
-          
-            this.toaster.showSuccessToast('تم الاضافه بنجاح ')
-          }
-          ,
-          arr=>{
-           
-            for (const [key, value] of Object.entries(arr.error.errors)) {
-              console.log(`${key}: ${value}`);
-              this.toaster.showErrorToast(`${value}`)
             }
+
+
           }
-        )
-  
-        
-  
+
+
+          )
+
+
+
+
+        }
+        if (this.foundedAdd == false) {
+          if (item.quantityReturn > 0) {
+            products.push({
+              product_id: item.ptoduct_Id,
+              details: [{
+                id: item.detailID,
+
+                min_quantity: item.min_quantity,
+                price: item.price,
+                discount_price: item.discount_price,
+                cost_price: item.price * item.quantityReturn,
+
+                quantity: item.quantityReturn,
+                values: item.values
+              }]
+
+
+            })
+
+          }
+        }
+        this.foundedAdd = false
       }
-  
-    
-  
-   }
-   clearDxValidators = () => {
+
+      )
+      let date = this.formatDate(this.dateBill)
+      const addBill = {
+        date: date,
+        note: this.note,
+        type: 2,
+        parent: this.deletedId,
+
+
+
+        products: products
+
+
+
+      }
+      console.log(addBill)
+      this.dataService.AddReturnInvoices(addBill).subscribe(
+        res => {
+
+          this.returnBill = false;
+          this.visiable = true;
+
+          this.clearDxValidators()
+
+          this.toaster.showSuccessToast('تم الاضافه بنجاح ')
+        }
+        ,
+        arr => {
+
+          for (const [key, value] of Object.entries(arr.error.errors)) {
+            console.log(`${key}: ${value}`);
+            this.toaster.showErrorToast(`${value}`)
+          }
+        }
+      )
+
+
+
+    }
+
+
+
+  }
+  clearDxValidators = () => {
     this.validatorViewChildren.toArray().map(ref => {
       ref.instance.reset();
     })
   }
-   formatDate = (date) => {
+  formatDate = (date) => {
     var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
 
     return [year, month, day].join('-');
-}
-getSuppliers ()
-{
-this.dataService.getSuppliers().subscribe(
-  res=>
-  {
-   this.suppliers=res.suppliers.data; 
-   console.log(this.suppliers) ;
+  }
+  getSuppliers() {
+    this.dataService.getSuppliers().subscribe(
+      res => {
+        this.suppliers = res.suppliers.data;
+        console.log(this.suppliers);
+
+      }
+
+
+
+    )
 
   }
+  hidePopUpEdit() {
+    this.isAdminPopupVisibleEdit = false
+  }
+  editbill() {
+    const editBill = { date: this.formatDate(this.dateBill), note: this.note, supplier_id: this.supplierID, invoice_id: this.EditBillId }
 
+    this.dataService.updateBill(editBill).subscribe(
+      res => {
+        console.log(res)
+        this.hidePopUpEdit();
 
-
-)
-
-}
-hidePopUpEdit ()
-{
-  this.isAdminPopupVisibleEdit=false
-}
-editbill()
-{
-  const editBill ={ date:this.formatDate(this.dateBill) ,note :this.note ,supplier_id:this.supplierID , invoice_id:this.EditBillId }
-
-  this.dataService.updateBill(editBill).subscribe(
-    res=>{
-      console.log(res)
-      this.hidePopUpEdit();
-
-      this.getBills()
-      this.toaster.showSuccessToast('تم  التعديل بنجاح')
-    }
-    ,
-    arr=>
-    {
-      this.hidePopUpEdit();
-      
-      for (const [key, value] of Object.entries(arr.error.errors)) {
-        console.log(`${key}: ${value}`);
-        this.toaster.showErrorToast(`${value}`)
+        this.getBills()
+        this.toaster.showSuccessToast('تم  التعديل بنجاح')
       }
-    }
-  )
+      ,
+      arr => {
+        this.hidePopUpEdit();
 
-}
+        for (const [key, value] of Object.entries(arr.error.errors)) {
+          console.log(`${key}: ${value}`);
+          this.toaster.showErrorToast(`${value}`)
+        }
+      }
+    )
+
+  }
 
 }

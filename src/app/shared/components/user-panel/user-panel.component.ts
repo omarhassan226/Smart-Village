@@ -8,18 +8,18 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./user-panel.component.scss']
 })
 export class UserPanelComponent implements OnInit {
- @Input()
+  @Input()
   menuItems: any;
 
   @Input()
   menuMode: string;
 
   @Input()
-  user: { email: string };
+  user: string;
 
-  constructor(private cookieService:CookieService,
-    private router:Router
-    ) { }
+  constructor(private cookieService: CookieService,
+    private router: Router
+  ) { }
   logOut = () => {
     console.log('test');
     this.cookieService.deleteAll();

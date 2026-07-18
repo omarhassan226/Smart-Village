@@ -1,0 +1,170 @@
+<div class="container-fluid website-bg p-3">
+  <dx-validation-group>
+    <!-- Add Bank Form -->
+    <div class="row">
+      <!-- Bank Name in English -->
+      <div class="col-lg-6 col-md-12 mt-2">
+        <h6 class="font-weight-bold text-right">اسم البنك باللغة الانجليزية</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="ادخل اسم البنك باللغة الانجليزية"
+                         [rtlEnabled]="true" 
+                         [(value)]="name_en">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Name in Arabic -->
+      <div class="col-lg-6 col-md-12 mt-2">
+        <h6 class="font-weight-bold text-right">اسم البنك باللغة العربية</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="ادخل اسم البنك باللغة العربية" 
+                         [rtlEnabled]="true" 
+                         [(value)]="name_ar">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Number (Takes full width or right-aligned) -->
+      <div class="col-lg-6 col-md-12 mt-2 ml-auto">
+        <h6 class="font-weight-bold text-right">رقم الحساب</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="ادخل رقم الحساب" 
+                         [rtlEnabled]="true" 
+                         [(value)]="number">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <dx-button text="أضافة" [useSubmitBehavior]="true" class="btn py-0 default-btn" (onClick)="addBank()"> </dx-button>
+    </div>
+  </dx-validation-group>
+</div>
+
+<!-- Banks Grid List -->
+<div class="container-fluid mt-4 website-bg p-3">
+  <div class="container-fluid">
+    <dx-data-grid #gridRef
+                  [dataSource]="banksList"
+                  width="100%"
+                  keyExpr="id"
+                  [showBorders]="false"
+                  [rtlEnabled]="true"
+                  [focusedRowEnabled]="false"
+                  [columnAutoWidth]="true"
+                  [noDataText]="'لا يوجد بيانات'">
+
+      <!-- Bank Name Arabic -->
+      <dxi-column dataType="string"
+                  [caption]="'اسم البنك باللغة العربية'"
+                  dataField="name_ar">
+      </dxi-column>
+
+      <!-- Bank Name English -->
+      <dxi-column dataType="string"
+                  [caption]="'اسم البنك باللغة الانجليزية'"
+                  dataField="name_en">
+      </dxi-column>
+
+      <!-- Account Number -->
+      <dxi-column dataType="string"
+                  [caption]="'رقم الحساب'"
+                  dataField="number">
+      </dxi-column>
+
+      <!-- Actions -->
+      <dxi-column type="buttons"
+                  cellTemplate="cellTemplate"
+                  [caption]="'التحكم'">
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <button type="button" class="btn btn-light border" (click)="showEditPopup(cell.row.data)">
+            <i class="far fa-edit text-dark" style="transform: rotate(270deg)"></i>
+          </button>
+        </div>
+      </dxi-column>
+
+      <dxo-paging [pageSize]="10"></dxo-paging>
+      <dxo-pager [showPageSizeSelector]="true"
+                 [allowedPageSizes]="[5, 10, 20]"
+                 [showInfo]="false">
+      </dxo-pager>
+    </dx-data-grid>
+  </div>
+</div>
+
+<!-- Edit Popup -->
+<dx-popup [visible]="isEditPopupVisible"
+          [shading]="true"
+          [title]="popTitle"
+          shadingColor="rgba(0, 0, 0, 0.2)"
+          [closeOnOutsideClick]="true"
+          [rtlEnabled]="true"
+          [maxWidth]="600"
+          height="auto"
+          [dragEnabled]="true"
+          (onHiding)="hideEditPopup()">
+  <div *dxTemplate="let data of 'content'">
+    <dx-validation-group>
+      <div class="row mt-2">
+        <div class="col-md-4 mt-1">
+          <div class="dx-field-label">اسم البنك باللغة العربية</div>
+        </div>
+        <div class="col-md-8 mt-1">
+          <dx-text-box placeholder="ادخل اسم البنك باللغة العربية" [rtlEnabled]="true" [(value)]="edit_name_ar">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-4 mt-1">
+          <div class="dx-field-label">اسم البنك باللغة الانجليزية</div>
+        </div>
+        <div class="col-md-8 mt-1">
+          <dx-text-box placeholder="ادخل اسم البنك باللغة الانجليزية" [rtlEnabled]="true" [(value)]="edit_name_en">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-4 mt-1">
+          <div class="dx-field-label">رقم الحساب</div>
+        </div>
+        <div class="col-md-8 mt-1">
+          <dx-text-box placeholder="ادخل رقم الحساب" [rtlEnabled]="true" [(value)]="edit_number">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 col-sm-6 mx-auto">
+          <dx-button class="default-btn w-100" (onClick)="editBank()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+        </div>
+      </div>
+    </dx-validation-group>
+  </div>
+</dx-popup>

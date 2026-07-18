@@ -23,11 +23,11 @@ export class ProductsListComponent implements OnInit {
   @Input() ProductsList;
   showProductinList: boolean = false;
 
-  SearchForID=""
-  constructor(public toaster: ToasterService,private loading: LoadingService, public dataService: DataService,) {}
+  SearchForID = ""
+  constructor(public toaster: ToasterService, private loading: LoadingService, public dataService: DataService,) { }
 
   ngOnInit(): void {
-  
+
   }
 
   hideProduct = () => (this.showProductinList = false);
@@ -49,11 +49,13 @@ export class ProductsListComponent implements OnInit {
           },
           icon: 'plus',
           text: 'أضافة منتج جديد',
-          onClick: () => {let obj = {
-            text: 'أضافة منتج جديد',
-            id : this.gridRef.focusedRowKey
-          };
-          this.showTabs.emit('add')} ,
+          onClick: () => {
+            let obj = {
+              text: 'أضافة منتج جديد',
+              id: this.gridRef.focusedRowKey
+            };
+            this.showTabs.emit('add')
+          },
         },
       }
       ,
@@ -65,9 +67,9 @@ export class ProductsListComponent implements OnInit {
         },
         options: {
           placeholder: "ادخل البركود",
-        value: this.SearchForID
+          value: this.SearchForID
         },
-       
+
       },
       {
         location: 'after',
@@ -77,19 +79,20 @@ export class ProductsListComponent implements OnInit {
           elementAttr: {
             id: 'addNewCustomer',
           },
-         
+
           text: 'بحث',
-          onClick: () => {let obj = {
-           
-            id : this.gridRef.focusedRowKey
-          };
-        this.  getProductsList( document.getElementsByTagName('input')[1].value)
-          console.log ( document.getElementsByTagName('input')[1].value)
-          } ,
+          onClick: () => {
+            let obj = {
+
+              id: this.gridRef.focusedRowKey
+            };
+            this.getProductsList(document.getElementsByTagName('input')[1].value)
+            console.log(document.getElementsByTagName('input')[1].value)
+          },
         },
       }
-      
-     
+
+
     );
   }
   onCellClicked = (e): void => {
@@ -97,7 +100,7 @@ export class ProductsListComponent implements OnInit {
       return;
     }
     if (e.column?.caption === 'تعديل') {
-      debugger
+
       console.log(this.ProductsList);
       console.log(this.gridRef.focusedRowKey);
       this.OpenItem.emit(this.gridRef.focusedRowKey);
@@ -106,12 +109,12 @@ export class ProductsListComponent implements OnInit {
   };
   getProductsList = (barcode): void => {
     this.showLoading();
-     this.dataService.filterProductbarcode(barcode).subscribe(res => {
+    this.dataService.filterProductbarcode(barcode).subscribe(res => {
       this.ProductsList = res.products.data;
       this.hideLoading();
     }, err => {
       this.hideLoading();
-    
+
     });
   }
   showLoading = () => this.loading.showLoading();

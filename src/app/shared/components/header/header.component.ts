@@ -22,6 +22,9 @@ export class HeaderComponent implements OnInit{
   title= 'الرئيسية';
 
   user = '';
+  notifications: any[] = [];
+  unreadCount = 0;
+  isNotificationBoxVisible = false;
 
   logOut = () => {
     this.cookiesService.deleteAll();
@@ -50,7 +53,34 @@ this.user = this.cookiesService.get('userName')}
        this.headericon = res.headericon;
        this.headerTitle = res.headerTitle;
    });
+
+    this.getNotifications();
  }
+
+ getNotifications() {
+   this.dataService.getNotifications().subscribe(
+     res => {
+       this.notifications = res.notifications || [];
+       this.unreadCount = res.count || 0;
+     },
+     err => {
+       console.error('Error fetching notifications', err);
+     }
+   );
+ }
+
+  toggleNotificationBox() {
+    this.isNotificationBoxVisible = !this.isNotificationBoxVisible;
+    if (this.isNotificationBoxVisible) {
+      this.unreadCount = 0;
+    }
+  }
+
+ viewDetails(orderId: any) {
+   this.isNotificationBoxVisible = false;
+   this.router.navigate([`/userNotification/${orderId}`]);
+ }
+
   toggleMenu = () => {
     this.menuToggle.emit();
   }

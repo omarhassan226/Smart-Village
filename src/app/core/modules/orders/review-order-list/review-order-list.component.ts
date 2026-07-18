@@ -10,50 +10,50 @@ import { ToasterService } from 'src/app/shared/services/toaster/toaster.service'
 })
 export class ReviewOrderListComponent implements OnInit {
 
- 
+
   @Output() showDetailsPage: EventEmitter<any> = new EventEmitter<any>();
   @Output() canceLOrder: EventEmitter<any> = new EventEmitter<any>();
-  isOrdersPopupVisible:boolean=false
-orders:any[];
-orderId:any;
+  isOrdersPopupVisible: boolean = false
+  orders: any[];
+  orderId: any;
   popTitle: string
-  popTitle2 ="تغير  حاله الطلب"
-  isAdminPopupVisible=false
-showCompleteOrder:boolean=true
+  popTitle2 = "تغير  حاله الطلب"
+  isAdminPopupVisible = false
+  showCompleteOrder: boolean = true
   showOrderDetails: boolean = false
-  day =''
+  day = ''
   status = ''
   payment = ''
   query = '?'
-  daylabel='';
+  daylabel = '';
   paylabel = '';
   statuslabel = '';
-  deleteMessage='';
+  deleteMessage = '';
 
 
   print = () => {
     window.print();
-    }
-  
+  }
+
   showDay = (e) => {
-   this.daylabel =  this.days.find(element => element.value == e.value).key;
-  
+    this.daylabel = this.days.find(element => element.value == e.value).key;
+
   }
-  showPayMethod =(e) => {
-    this.paylabel =  this.payments.find(element => element.value == e.value).key;
+  showPayMethod = (e) => {
+    this.paylabel = this.payments.find(element => element.value == e.value).key;
   }
-  showStatus = (e)=> {
-    this.statuslabel =  this.statusOrder.find(element => element.value == e.value).key;
+  showStatus = (e) => {
+    this.statuslabel = this.statusOrder.find(element => element.value == e.value).key;
   }
   editStatusOdrer() {
-    debugger
-    let updateOrder = { order_id: this.statusCurrentOrderId, status: this.statusCurrentOrder ,message:this.deleteMessage}
+
+    let updateOrder = { order_id: this.statusCurrentOrderId, status: this.statusCurrentOrder, message: this.deleteMessage }
     this.dataservice.ReturnOrder(updateOrder).subscribe
       (
         res => {
           console.log(res)
           this.popTitle = ''
-          this.deleteMessage=''
+          this.deleteMessage = ''
           this.toaster.showSuccessToast('تم بنجاح')
           this.isAdminPopupVisible = false;
           this.getOrders()
@@ -64,26 +64,23 @@ showCompleteOrder:boolean=true
             this.toaster.showErrorToast(`${value}`)
           }
         }
-    )
+      )
   }
   statusCurrentOrder: any
-  statusCurrentOrderId:any
+  statusCurrentOrderId: any
   hidePopUp() {
     this.isAdminPopupVisible = false
 
   }
-showDetailsPage2(id)
+  showDetailsPage2(id) {
+    this.orderId = id
 
-{
-  this.orderId=id
+    this.showCompleteOrder = false;
+    this.showOrderDetails = true
 
-this.showCompleteOrder=false;
-this.showOrderDetails=true
-
-}
-OnHiding()
-{
-  this.isOrdersPopupVisible = false;
+  }
+  OnHiding() {
+    this.isOrdersPopupVisible = false;
 
   }
   cancelOrder(deletedmessage) {
@@ -107,13 +104,12 @@ OnHiding()
         }
       )
   }
-canceLOrder2(e,id)
-{
-this.popTitle=e;
-this.orderId=id;
-this.isOrdersPopupVisible=true
-}
-  payments= [
+  canceLOrder2(e, id) {
+    this.popTitle = e;
+    this.orderId = id;
+    this.isOrdersPopupVisible = true
+  }
+  payments = [
     { value: '', key: 'الكل ' },
     { value: 'Pay on receipt', key: 'دفع عند الأستلام' }
     ,
@@ -131,22 +127,22 @@ this.isOrdersPopupVisible=true
 
   statusOrder2 =
     [
-   { value: 'accepted', key: 'قبول' }
+      { value: 'accepted', key: 'قبول' }
       ,
-      { value: 'Rejected', key: 'رفض'},
+      { value: 'Rejected', key: 'رفض' },
 
 
     ]
-statusOrder=
-  [
-{ value: '', key: 'الكل ' },
-{value:'new', key:'جديد'}
-,
-    { value: 'process', key: 'تم التجهيز'},
-    { value: 'delivering', key: 'قسم التوصيل' }
-,{value:'complete', key:'مكتمل'}
-    , { value: 'cancel', key: 'لاغي' }
-]
+  statusOrder =
+    [
+      { value: '', key: 'الكل ' },
+      { value: 'new', key: 'جديد' }
+      ,
+      { value: 'process', key: 'تم التجهيز' },
+      { value: 'delivering', key: 'قسم التوصيل' }
+      , { value: 'complete', key: 'مكتمل' }
+      , { value: 'cancel', key: 'لاغي' }
+    ]
   operationDescriptions: {
 
     between: 'بين';
@@ -161,7 +157,7 @@ statusOrder=
     notEqual: 'لا يساوي';
     startsWith: 'يبدا ب';
   };
-  
+
   datasource = [
     {
       id: 1,
@@ -238,7 +234,7 @@ statusOrder=
       e.cellElement.classList.add('under-repairing-state');
     }
   };
-  constructor(private navigationHeaderService: NavigationHeaderService, private toaster: ToasterService,private dataservice :DataService) {}
+  constructor(private navigationHeaderService: NavigationHeaderService, private toaster: ToasterService, private dataservice: DataService) { }
 
   ngOnInit(): void {
     this.getOrders()
@@ -253,79 +249,71 @@ statusOrder=
     }
 
     if (status == 'مكتمل') {
-      status = 'complete' 
+      status = 'complete'
     }
     if (status == 'جديد') {
-      status = 'new' 
+      status = 'new'
     }
-    if (status == 'ملغي' ) {
+    if (status == 'ملغي') {
       status = 'cancel'
     }
 
     this.statusCurrentOrder = status
-   this. statusCurrentOrderId=id
-   
-    
+    this.statusCurrentOrderId = id
+
+
   }
-  onCellClicked = (e) => {};
-  getOrders()
-  {
+  onCellClicked = (e) => { };
+  getOrders() {
 
-    this.dataservice.getOrdersReview().subscribe(res =>
-      {let orders=res.orders
-        orders.forEach(element => {
+    this.dataservice.getOrdersReview().subscribe(res => {
+      let orders = res.orders
+      orders.forEach(element => {
 
-          if(element.status=='Rejected')
-          {
-            element.status= ' تم الرفض'
-          }
-          if(element.status=='accepted')
-          {
-            element.status=  'تم القبول'
-          }
-          if(element.status=='process')
-          {
-            element.status= 'تم التجهيز'
-          }
-          if(element.status=='delivering')
-          {
-            element.status = 'قسم التوصيل' 
-          }
-          
-          if(element.status=='complete')
-          {
-            element.status= 'مكتمل'
-          }
-          if(element.status=='new')
-          {
-            element.status= 'جديد'
-          }
-          if (element.status == 'review') {
-            element.status = 'مرتجع'
-          }
-          if (element.way_pay == 'Transfer via Bank') {
-            element.way_pay = 'تحويل عبر البنك'
-          }
-          if (element.way_pay == 'Pay on receipt') {
-            element.way_pay = 'دفع عند الأستلام'
-          }
-    
-          
-        
+        if (element.status == 'Rejected') {
+          element.status = ' تم الرفض'
+        }
+        if (element.status == 'accepted') {
+          element.status = 'تم القبول'
+        }
+        if (element.status == 'process') {
+          element.status = 'تم التجهيز'
+        }
+        if (element.status == 'delivering') {
+          element.status = 'قسم التوصيل'
+        }
 
-          
-          
-        });
+        if (element.status == 'complete') {
+          element.status = 'مكتمل'
+        }
+        if (element.status == 'new') {
+          element.status = 'جديد'
+        }
+        if (element.status == 'review') {
+          element.status = 'مرتجع'
+        }
+        if (element.way_pay == 'Transfer via Bank') {
+          element.way_pay = 'تحويل عبر البنك'
+        }
+        if (element.way_pay == 'Pay on receipt') {
+          element.way_pay = 'دفع عند الأستلام'
+        }
+
+
+
+
+
+
+      });
       this.orders = orders
       this.query = '?'
 
       console.log(this.orders)
-      })
+    })
   }
   filterOrder() {
-    debugger;
-    if (this.day !=='')
-    {
+    // ;
+    if (this.day !== '') {
       console.log(this.day)
       this.query = this.query + 'day=' + this.day + '&'
     }

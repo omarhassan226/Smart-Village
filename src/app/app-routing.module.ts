@@ -180,6 +180,13 @@ export const AppRoutes: Routes = [
         component:OfferSettingComponent,
       
       },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./core/modules/banks/banks.module').then(
+            (m) => m.BanksModule
+          ),
+      },
     ],
   },
 

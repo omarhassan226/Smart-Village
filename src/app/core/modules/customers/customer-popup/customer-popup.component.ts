@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit,Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { DxValidatorComponent } from 'devextreme-angular';
 import { DataService } from '../../../../shared/services/data-service/data.service';
 @Component({
@@ -12,64 +12,64 @@ export class CustomerPopupComponent implements OnInit {
   @Output() OnHiding: EventEmitter<any> = new EventEmitter<any>();
   @Output() AddCustomer: EventEmitter<any> = new EventEmitter<any>();
   @Output() EditCustomer: EventEmitter<any> = new EventEmitter<any>();
-  @Input()Villages;
-  @Input()States;
-  @Input()Cities;
+  @Input() Villages;
+  @Input() States;
+  @Input() Cities;
   @Input() popTitle;
   @Input() addCase = true;
   rules: any;
   Fname = '';
   Lname = '';
   phone = '';
-  city_id='';
+  city_id = '';
   country_id = '';
   village_id = '';
   password = '';
   email = '';
-  filterVillage ()  {
-   
+  filterVillage() {
+
     this.dataService.filterVillage(this.city_id).subscribe(res => {
       this.Villages = res.villages
-     
+
     }, err => {
-      
+
     });
   }
   getCitesbystates() {
-   
-    
-     
-      this.dataService.filterCity(this.country_id).subscribe(res => {
-        this.Cities = res.cities
-       
-      }, err => {
-        
-      });
-    
+
+
+
+    this.dataService.filterCity(this.country_id).subscribe(res => {
+      this.Cities = res.cities
+
+    }, err => {
+
+    });
+
 
   }
   ngOnInit(): void {
   }
   resetForm = () => {
     this.Fname = '';
-  this.Lname = '';
-  this.phone = '';
-  this.city_id='';
-  this.country_id = '';
-  this.village_id = '';
-  this.password = '';
-  this.email = '';
+    this.Lname = '';
+    this.phone = '';
+    this.city_id = '';
+    this.country_id = '';
+    this.village_id = '';
+    this.password = '';
+    this.email = '';
   }
   patchform = (data) => {
     this.clearDxValidators()
     this.Fname = data.Fname;
     this.Lname = data.Lname;
-    debugger
+
     this.phone = data.phone;
-    this.city_id=data.city_id;
+    this.city_id = data.city_id;
     this.country_id = data.country_id;
     this.village_id = data.village_id;
-   
+
     this.email = data.email;
   }
   handleData = () => {
@@ -125,17 +125,17 @@ export class CustomerPopupComponent implements OnInit {
         }
 
 
-       
+
         this.clearDxValidators()
         this.EditCustomer.emit(CustomerObj);
 
         console.log('false')
 
-       
+
 
       }
     }
-   
+
   }
   clearDxValidators = () => {
     this.validatorViewChildren.toArray().map(ref => {
@@ -143,10 +143,10 @@ export class CustomerPopupComponent implements OnInit {
     })
   }
 
-  constructor(private dataService: DataService) { 
+  constructor(private dataService: DataService) {
     this.rules = { "X": /[02-9]/ };
   }
-  
-  
+
+
 
 }

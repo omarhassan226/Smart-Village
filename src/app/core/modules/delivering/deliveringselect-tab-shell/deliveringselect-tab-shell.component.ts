@@ -24,7 +24,7 @@ export class DeliveringselectTabShellComponent implements OnInit {
   @Output() AddDeliveryChoice: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('form') form: DeliveryMainDataFormComponent;
   @ViewChild('deliveryArea') deliveryArea: DeliveringAreaComponent;
-  selectAll:any;
+  selectAll: any;
   States;
   Cities;
   Villages;
@@ -39,23 +39,23 @@ export class DeliveringselectTabShellComponent implements OnInit {
   state_id: any
   state_ar: any
   shipping: any
-  shippingedit=true
+  shippingedit = true
   village_en: any
   village_ar: any
   city_id: any
   city_en: any
   city_ar: any
-  selectAllCities=false
-  selectAllVillages=false
+  selectAllCities = false
+  selectAllVillages = false
   setData(data) {
-    this.shippingedit=false
+    this.shippingedit = false
     console.log("data", data)
-    console.log( this.shipping = data)
-   
+    console.log(this.shipping = data)
+
 
   }
 
- 
+
   selectState(event) { }
   saveArea() {
 
@@ -86,9 +86,8 @@ export class DeliveringselectTabShellComponent implements OnInit {
       })
   }
   selectCity(event) { }
-  selectCitybyState()
-  {
-    let states_Id =[]
+  selectCitybyState() {
+    let states_Id = []
     this.States.forEach(item => {
       if (item.status == true) {
         states_Id.push(item.id)
@@ -96,17 +95,17 @@ export class DeliveringselectTabShellComponent implements OnInit {
     })
     const body = { governrates: states_Id }
     this.dataService.getcitiesbelongstate(body).subscribe(res => {
-      res.cities.forEach(item => { item.status=false})
+      res.cities.forEach(item => { item.status = false })
 
-      debugger
+
       this.Cities = res.cities
-      if(this.selectAllCities==true)
-      this.selectAllfunCities();
-      this.selectVallgebyState() 
-    
+      if (this.selectAllCities == true)
+        this.selectAllfunCities();
+      this.selectVallgebyState()
+
     })
 
-   
+
 
   }
   selectVallgebyState() {
@@ -122,22 +121,22 @@ export class DeliveringselectTabShellComponent implements OnInit {
 
 
       this.Villages = res.villages
-      debugger
-   
-      if(this.selectAllVillages==true)
-      this.selectAllfunVillages();
+
+
+      if (this.selectAllVillages == true)
+        this.selectAllfunVillages();
     })
 
   }
   handleCityData() { }
   handleStateData() { }
-  handleVillageData(){ }
+  handleVillageData() { }
   private subs = new SubSink();
 
   ngOnInit(): void {
- 
+
     this.renderAllTabs();
-    
+
     //this.getVillages();
     //this.getStates();
     //this.getCities();
@@ -255,7 +254,7 @@ export class DeliveringselectTabShellComponent implements OnInit {
     this.subs.sink = this.dataService.getStateById(id).subscribe(res => {
       this.deliveryArea.patchStateForm(res.state)
       this.hideLoading();
-  
+
 
     }, err => {
       this.hideLoading();
@@ -320,7 +319,7 @@ export class DeliveringselectTabShellComponent implements OnInit {
 
 
       })
-    
+
 
       this.hideLoading();
     }, err => {
@@ -429,81 +428,71 @@ export class DeliveringselectTabShellComponent implements OnInit {
     this.isConfirmDeletePopupVisible = true;
     this.deletedState = obj.name; this.deletedId = obj.id
   }
-  selectAllfun()
-  {
-    if(this.selectAll==true)
-    {
-    this.States.forEach(element => {
-      element.status=true;
-      
-    });
-    // this.Cities.forEach(element => {
-    //   element.status=true;
-      
-    // });
-    // this.Villages.forEach(element => {
-    //   element.status=true;
-      
-    // });
-  }
-    else
-    {
-      
+  selectAllfun() {
+    if (this.selectAll == true) {
       this.States.forEach(element => {
-        element.status=false;
-        
+        element.status = true;
+
+      });
+      // this.Cities.forEach(element => {
+      //   element.status=true;
+
+      // });
+      // this.Villages.forEach(element => {
+      //   element.status=true;
+
+      // });
+    }
+    else {
+
+      this.States.forEach(element => {
+        element.status = false;
+
       });
       // this.Cities.forEach(element => {
       //   element.status=false;
-        
+
       // });
       // this.Villages.forEach(element => {
       //   element.status=false;
-        
+
       // });
     }
   }
-  selectAllfunCities()
-  {
-    if(this.selectAllCities==true)
-    {
-  
-    this.Cities.forEach(element => {
-      element.status=true;
-      
-    });
-  }
-    else
-    {
-      
-     
+  selectAllfunCities() {
+    if (this.selectAllCities == true) {
+
       this.Cities.forEach(element => {
-        element.status=false;
-        
+        element.status = true;
+
       });
-      
+    }
+    else {
+
+
+      this.Cities.forEach(element => {
+        element.status = false;
+
+      });
+
     }
 
   }
-  selectAllfunVillages()
-  
-  {
-    debugger
-    if(this.selectAllVillages==true)
-    {
+  selectAllfunVillages() {
 
-    this.Villages.forEach(element => {
-      element.status=true;
-      
-    });
-  }
-    else
-    {
-      
-   
+    if (this.selectAllVillages == true) {
+
       this.Villages.forEach(element => {
-        element.status=false;
-        
+        element.status = true;
+
+      });
+    }
+    else {
+
+
+      this.Villages.forEach(element => {
+        element.status = false;
+
       });
     }
 
@@ -514,5 +503,5 @@ export class DeliveringselectTabShellComponent implements OnInit {
     private dataService: DataService,
     private loading: LoadingService, private errorService: ErrorHandlerService,
     private toaster: ToasterService) { }
-   
+
 }

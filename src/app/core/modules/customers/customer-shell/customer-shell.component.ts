@@ -15,9 +15,9 @@ import { CustomerPopupComponent } from '../customer-popup/customer-popup.compone
   templateUrl: './customer-shell.component.html',
   styleUrls: ['./customer-shell.component.css'],
 })
-export class CustomerShellComponent implements OnInit , OnDestroy{
-  @ViewChild('popup')popup: CustomerPopupComponent;
-  @ViewChild('list')list: CustomerListComponent
+export class CustomerShellComponent implements OnInit, OnDestroy {
+  @ViewChild('popup') popup: CustomerPopupComponent;
+  @ViewChild('list') list: CustomerListComponent
   isConfirmDeletePopupVisible = false;
   deletedId;
   selectedId;
@@ -29,7 +29,7 @@ export class CustomerShellComponent implements OnInit , OnDestroy{
   Cities;
   addCase;
   isConfirmDeleteunPopupVisible = false
-  listData : Observable<any>;
+  listData: Observable<any>;
   private subs = new SubSink();
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class CustomerShellComponent implements OnInit , OnDestroy{
     this.getVillages();
     this.getStates();
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subs.unsubscribe();
   }
   getCustomerList = (): void => {
@@ -61,16 +61,16 @@ export class CustomerShellComponent implements OnInit , OnDestroy{
   editCustomer = (body) => {
 
     this.showLoading();
-    this.subs.sink = this.dataService.editCustomer(body,this.selectedId).subscribe(res => {
-      if(res['status']== true) {
+    this.subs.sink = this.dataService.editCustomer(body, this.selectedId).subscribe(res => {
+      if (res['status'] == true) {
         this.getCustomerList();
         this.popup.resetForm();
-        
+
         this.hidePopUp();
         this.popup.clearDxValidators();
         this.toaster.showSuccessToast('تم التعديل بنجاح')
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -82,32 +82,32 @@ export class CustomerShellComponent implements OnInit , OnDestroy{
     this.showLoading();
 
     this.subs.sink = this.dataService.addCustomer(body).subscribe(res => {
- 
-      if(res['status']== true) {
+
+      if (res['status'] == true) {
         this.getCustomerList();
         this.popup.resetForm();
-        
+
         this.hidePopUp();
-         this.popup.clearDxValidators();
-         this.toaster.showSuccessToast('تم الأضافة بنجاح')
+        this.popup.clearDxValidators();
+        this.toaster.showSuccessToast('تم الأضافة بنجاح')
       }
-      
+
       this.hideLoading();
     }, err => {
-        this.popup.patchform(body) 
+      this.popup.patchform(body)
       this.hideLoading();
-        this.handleError(err);
-        for (const [key, value] of Object.entries(err.error.errors)) {
-          console.log(`${key}: ${value}`);
-          this.toaster.showErrorToast(`${value}`)
-        }
-      
+      this.handleError(err);
+      for (const [key, value] of Object.entries(err.error.errors)) {
+        console.log(`${key}: ${value}`);
+        this.toaster.showErrorToast(`${value}`)
+      }
+
     });
   }
   getCustomerById = (id) => {
     this.showLoading();
     this.subs.sink = this.dataService.getCustomerById(id).subscribe(res => {
-      this.popup.patchform(res.users)     
+      this.popup.patchform(res.users)
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -117,11 +117,11 @@ export class CustomerShellComponent implements OnInit , OnDestroy{
   deleteCustomer = (id) => {
     this.showLoading();
     this.subs.sink = this.dataService.deleteCustomer(id).subscribe(res => {
-      if(res['status']== true) {
+      if (res['status'] == true) {
         this.getCustomerList();
         this.toaster.showSuccessToast("تم الحذف بنجاح")
       }
-    
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -129,14 +129,14 @@ export class CustomerShellComponent implements OnInit , OnDestroy{
     });
   }
   undeleteCustomer = (id) => {
-    debugger
+
     this.showLoading();
-    let body = { user_id:id}
+    let body = { user_id: id }
     this.subs.sink = this.dataService.activeUser(body).subscribe(res => {
-      
-        this.getCustomerList();
-        this.toaster.showSuccessToast("تم بنجاح")
-      
+
+      this.getCustomerList();
+      this.toaster.showSuccessToast("تم بنجاح")
+
 
       this.hideLoading();
     }, err => {
@@ -179,31 +179,31 @@ export class CustomerShellComponent implements OnInit , OnDestroy{
     this.popup.clearDxValidators();
     this.addCase = true;
     this.isCustomerPopupVisible = true;
-  this.popTitle= obj.text
-  this.selectedId = obj.id;
-  if(obj.text == 'تعديل العميل') {
-    this.addCase = false;
-  this.getCustomerById(obj.id);
+    this.popTitle = obj.text
+    this.selectedId = obj.id;
+    if (obj.text == 'تعديل العميل') {
+      this.addCase = false;
+      this.getCustomerById(obj.id);
+    }
+
+
+  };
+  showDeletePopUp = (id) => {
+    this.isCustomerPopupVisible = true;
+    this.deletedId = id;
   }
-  
-  
-};
-showDeletePopUp = (id) => {
-  this.isCustomerPopupVisible = true;
-  this.deletedId = id;
-}
-whenDeletePopupConfirm = (e) => {
-  if (e) {
-    this.filterDataSourceByRow(this.list.gridRef.dataSource, 'id', this.list.gridRef);
-    this.deleteCustomer(this.deletedId);
-    this.customerList = this.list.gridRef.dataSource;
-      
+  whenDeletePopupConfirm = (e) => {
+    if (e) {
+      this.filterDataSourceByRow(this.list.gridRef.dataSource, 'id', this.list.gridRef);
+      this.deleteCustomer(this.deletedId);
+      this.customerList = this.list.gridRef.dataSource;
+
       this.hideDeletePopup();
     }
     else {
       this.hideDeletePopup();
     }
-}
+  }
   whenunDeletePopupConfirm = (e) => {
     if (e) {
       this.filterDataSourceByRow(this.list.gridRef.dataSource, 'id', this.list.gridRef);
@@ -217,7 +217,7 @@ whenDeletePopupConfirm = (e) => {
     }
   }
 
-filterDataSourceByRow = (
+  filterDataSourceByRow = (
     list: any,
     keyExpr: any,
     gridRef: DxDataGridComponent,
@@ -234,8 +234,8 @@ filterDataSourceByRow = (
     return;
   };
   hideunDeletePopup = (): boolean => this.isConfirmDeleteunPopupVisible = false;
-showDeletePopup = (id) =>{ this.isConfirmDeletePopupVisible = true; this.deletedId = id}
-hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
+  showDeletePopup = (id) => { this.isConfirmDeletePopupVisible = true; this.deletedId = id }
+  hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
   hidePopUp = () => (this.isCustomerPopupVisible = false);
   showLoading = () => this.loading.showLoading();
   hideLoading = () => this.loading.hideLoading();
@@ -243,6 +243,6 @@ hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
   constructor(
     private dataService: DataService,
     private navigationHeaderService: NavigationHeaderService,
-     private loading: LoadingService,private errorService: ErrorHandlerService,
-     private toaster:ToasterService) {}
+    private loading: LoadingService, private errorService: ErrorHandlerService,
+    private toaster: ToasterService) { }
 }

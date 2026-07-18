@@ -30,7 +30,7 @@
             <div class="col-md-2 col-sm-6">
               <div class="customer-item-info">
                 <h6> مرفق بالبنك</h6>
-                <a *ngIf="order.file" href="https://smartvillageapp.com/app/{{order?.file}}" download="https://smartvillageapp.com/app/{{order.file}}"><dx-button class="btn p-0 default-btn w-50" icon="download"></dx-button> </a>
+                <a *ngIf="order.file" href="javascript:void(0)" (click)="downloadFile('https://smartvillageapp.com/app/' + order.file)"><dx-button class="btn p-0 default-btn w-50" icon="download"></dx-button> </a>
                 <p *ngIf="!order.file">لايوجد ملفات</p>
               </div>
             </div>

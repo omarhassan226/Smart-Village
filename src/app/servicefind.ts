@@ -11,33 +11,33 @@ export class servicefind implements OnInit {
   ngOnInit() {
 
 
-    
+
   }
 
   constructor(private dataservice: DataService, private _router: Router, private cookieService: CookieService) {
-    
+
   }
 
   moduleExisting(module): boolean {
-    debugger
-  
+
+
     this.roles = JSON.parse(localStorage.getItem('roles'));
-    
+
     console.log(this.roles)
-    let result=false
-   this.roles.forEach(element => {
+    let result = false
+    this.roles.forEach(element => {
 
 
       element.permissions.forEach(item => {
         if (item.name === module) {
 
-          result= true
-          
-          
-         
+          result = true
+
+
+
         }
 
-        console.log(item.name )
+        console.log(item.name)
 
 
 

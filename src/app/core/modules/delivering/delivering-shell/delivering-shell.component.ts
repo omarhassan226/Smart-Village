@@ -16,14 +16,14 @@ import { DeliveryListComponent } from '../delivery-list/delivery-list.component'
   styleUrls: ['./delivering-shell.component.css'],
 })
 export class DeliveringShellComponent implements OnInit {
-  @ViewChild('list') list : DeliveryListComponent;
+  @ViewChild('list') list: DeliveryListComponent;
   @ViewChild('tab') tab: DeliveringTabShellComponent;
   @ViewChild('tabb') tabb: DeliveringselectTabShellComponent;
   deliverFormEditStatus = false;
   isConfirmDeletePopupVisible = false;
   deletedId;
   showtabs = false;
-  showtabs_Select=false
+  showtabs_Select = false
   private subs = new SubSink();
   shippingList;
   selectedId;
@@ -33,7 +33,7 @@ export class DeliveringShellComponent implements OnInit {
       headerTitle: 'التوصيل',
     });
     this.getShippings();
-   
+
   }
 
   showTabs = () => {
@@ -43,11 +43,11 @@ export class DeliveringShellComponent implements OnInit {
     this.showtabs_Select = true;
   };
   hideTabs = () => { this.showtabs = false; this.showtabs_Select = false; }
- 
+
   handleShippingData = (e) => {
 
 
-    if(this.deliverFormEditStatus) {
+    if (this.deliverFormEditStatus) {
       this.editShipping(e);
     } else {
       this.addShipping(e);
@@ -66,19 +66,19 @@ export class DeliveringShellComponent implements OnInit {
 
   editShipping = (body) => {
 
-    debugger
+
     this.showLoading();
-    this.subs.sink = this.dataService.editShipping(body,this.selectedId).subscribe(res => {
-      if(res['status']== true) {
+    this.subs.sink = this.dataService.editShipping(body, this.selectedId).subscribe(res => {
+      if (res['status'] == true) {
         this.getShippings();
         this.tabb.resetMainForm();
         this.toaster.showSuccessToast('تم التعديل بنجاح');
         this.deliverFormEditStatus = false;
         this.hideTabs();
       }
-      
+
       this.hideLoading();
-      
+
     }, err => {
       this.hideLoading();
       this.handleError(err);
@@ -90,13 +90,13 @@ export class DeliveringShellComponent implements OnInit {
     this.showLoading();
 
     this.subs.sink = this.dataService.addShipping(body).subscribe(res => {
- 
-      if(res['status']== true) {
+
+      if (res['status'] == true) {
         this.tabb.resetMainForm();
-         this.toaster.showSuccessToast('تم الأضافة بنجاح');
-         this.hideTabs();
+        this.toaster.showSuccessToast('تم الأضافة بنجاح');
+        this.hideTabs();
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
@@ -105,7 +105,7 @@ export class DeliveringShellComponent implements OnInit {
   }
   getShippingById = (id) => {
     this.showLoading();
-    this.selectedId=id
+    this.selectedId = id
     this.subs.sink = this.dataService.getShippingById(id).subscribe(res => {
       this.tabb.form.patchForm(res.shipping);
       this.tabb.setData(res.shipping);
@@ -123,29 +123,29 @@ export class DeliveringShellComponent implements OnInit {
   deleteShipping = (id) => {
     this.showLoading();
     this.subs.sink = this.dataService.deleteShipping(id).subscribe(res => {
-      if(res['status']== true) {
+      if (res['status'] == true) {
         this.getShippings();
         this.toaster.showSuccessToast('تم الحذف بنجاح')
       }
-      
+
       this.hideLoading();
     }, err => {
       this.hideLoading();
       this.handleError(err);
     });
   }
- 
+
 
   whenDeletePopupConfirm = (e) => {
     if (e) {
       this.filterDataSourceByRow(this.list.gridRef.dataSource, 'id', this.list.gridRef);
       this.deleteShipping(this.deletedId);
-        
-        this.hideDeletePopup();
-      }
-      else {
-        this.hideDeletePopup();
-      }
+
+      this.hideDeletePopup();
+    }
+    else {
+      this.hideDeletePopup();
+    }
   }
 
   filterDataSourceByRow = (
@@ -164,15 +164,15 @@ export class DeliveringShellComponent implements OnInit {
     }
     return;
   };
- 
+
   showLoading = () => this.loading.showLoading();
   hideLoading = () => this.loading.hideLoading();
   handleError = (error: any) => this.errorService.handleError(error);
-  showDeletePopUp = (id) =>{ this.isConfirmDeletePopupVisible = true; this.deletedId = id}
-hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
+  showDeletePopUp = (id) => { this.isConfirmDeletePopupVisible = true; this.deletedId = id }
+  hideDeletePopup = (): boolean => this.isConfirmDeletePopupVisible = false;
   constructor(
     private dataService: DataService,
     private navigationHeaderService: NavigationHeaderService,
-     private loading: LoadingService,private errorService: ErrorHandlerService,
-     private toaster:ToasterService) {}
+    private loading: LoadingService, private errorService: ErrorHandlerService,
+    private toaster: ToasterService) { }
 }

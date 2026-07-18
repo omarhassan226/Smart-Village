@@ -11,12 +11,12 @@ import { LoadingService } from '../../../../shared/services/loading-service/load
 })
 export class HomeShellComponent implements OnInit {
   dataSource: any;
-  products :any[]
+  products: any[]
   insights: any
-  review :any 
+  review: any
   reportPerOfMonth: any[];
   reportPerOfWeek: any[]
-  reportPerOfYear:any[]
+  reportPerOfYear: any[]
   ngOnInit(): void {
     this.renderAllTabs();
     this.navigationHeaderService.headerObject$.next({
@@ -24,21 +24,20 @@ export class HomeShellComponent implements OnInit {
       headerTitle: 'الرئيسية',
     });
     this.getInsight()
-    this.reviewCount ()
+    this.reviewCount()
     this.getProductsMin()
     this.ReportPerOfMonth()
     this.ReportPerOfWeek()
     this.ReportPerOfYear()
     console.log(this.grossProductData)
   }
-  reviewCount ()
-  {
+  reviewCount() {
     this.dataservice.getOrdersReview().subscribe(
 
-res=>{
-this.review=res.count_review_orders
+      res => {
+        this.review = res.count_review_orders
 
-}
+      }
     )
   }
   renderAllTabs = (): void => {
@@ -113,19 +112,18 @@ this.review=res.count_review_orders
   showDetails = (id) => {
     this.dataservice.$productDetails.next(id);
     this.router.navigate(['/products']);
-    
+
   }
   showLoading = () => this.loading.showLoading();
   hideLoading = () => this.loading.hideLoading();
   constructor(private navigationHeaderService: NavigationHeaderService,
-     private dataservice: DataService, 
-     private loading: LoadingService,
-     private router: Router) {}
+    private dataservice: DataService,
+    private loading: LoadingService,
+    private router: Router) { }
   onPointClick(e) {
     e.target.select();
   }
-  getInsight()
-  {
+  getInsight() {
     /*this.showLoading()*/
     this.dataservice.getInsight().subscribe(res => {
       this.insights = res
@@ -142,8 +140,7 @@ this.review=res.count_review_orders
     this.dataservice.ReportPerOfMonth().subscribe(
       res => {
         this.reportPerOfMonth = res.grossProductData
-        res.grossProductData.forEach(item =>
-        {
+        res.grossProductData.forEach(item => {
           item.year1998 = parseFloat(item.year1998)
           item.year2001 = parseFloat(item.year2001)
         })
@@ -178,27 +175,27 @@ this.review=res.count_review_orders
         })
         this.reportPerOfWeek = res.grossProductData
         console.log(res.grossProductData)
-      }    )
+      })
   }
 
   getProductsMin() {
     this.dataservice.getProductsMin(
-      
+
 
     ).subscribe(res => {
-      debugger
+
       console.log(res)
       console.log(this.products = res.details)
       this.products.forEach(element => {
-        debugger
-        element.discount_price=element.options.map(x=>x).join("-");;
 
-      //  element.options.forEach(item => {
-      //   element.discount_price=  element.discount_price+"-"+item;
+        element.discount_price = element.options.map(x => x).join("-");;
+
+        //  element.options.forEach(item => {
+        //   element.discount_price=  element.discount_price+"-"+item;
 
 
-      //     debugger})
-        element.product.image.image = 'https://smartvillageapp.com/app/' +  element.product.image.image 
+        //     })
+        element.product.image.image = 'https://smartvillageapp.com/app/' + element.product.image.image
 
       })
 

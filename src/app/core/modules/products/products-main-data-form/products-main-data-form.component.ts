@@ -12,9 +12,9 @@ import * as Editor from '../../../../../../src/ckeditor5-31.0.0-ygi80ogtwnzf/bui
 })
 export class ProductsMainDataFormComponent implements OnInit {
   public Editor = Editor;
-public config= {
-  toolbar: {
-    items: [
+  public config = {
+    toolbar: {
+      items: [
         'heading', '|',
         'alignment', '|',
         'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
@@ -27,30 +27,30 @@ public config= {
         'outdent', 'indent', '|',
         'uploadImage', 'blockQuote', '|',
         'undo', 'redo'
-    ],
-    shouldNotGroupWhenFull: true
-}
-}
+      ],
+      shouldNotGroupWhenFull: true
+    }
+  }
 
   @ViewChildren(DxValidatorComponent) validatorViewChildren: QueryList<DxValidatorComponent>;
-  @Output() addProduct:EventEmitter<any> = new EventEmitter <any>();
-  @Output() editProduct:EventEmitter<any> = new EventEmitter <any>();
+  @Output() addProduct: EventEmitter<any> = new EventEmitter<any>();
+  @Output() editProduct: EventEmitter<any> = new EventEmitter<any>();
   @Input() addState;
-  @Input()maincategory;
-  @Input()categories;
-  @Input()banners;
+  @Input() maincategory;
+  @Input() categories;
+  @Input() banners;
   @Input() companies;
-  @Input () suppliers;
-  categoryList : any [] = [];
-  KeywordList:any [] = [];
+  @Input() suppliers;
+  categoryList: any[] = [];
+  KeywordList: any[] = [];
   mainCategoryList: any[] = [];
   minCategoryList: any[] = [];
-  mainKeywordList :any [] =[];
-  imgSrc ='../../../../../assets/images/upload.png';
+  mainKeywordList: any[] = [];
+  imgSrc = '../../../../../assets/images/upload.png';
   selectedImg = ''
-  choices = [{ key:'yes',value:'نعم'}, {key: 'no',value: 'لا'}];
-  secures = [{ key:'yes',value:'نعم'}, {key: 'no',value: 'لا'}];
-  units :any[]
+  choices = [{ key: 'yes', value: 'نعم' }, { key: 'no', value: 'لا' }];
+  secures = [{ key: 'yes', value: 'نعم' }, { key: 'no', value: 'لا' }];
+  units: any[]
   editProductStatus = false;
   name_ar = '';
   name_en = '';
@@ -65,65 +65,63 @@ public config= {
   stock = '';
   min_quantity = '';
   product_unit = '';
-  seller_Id='';
+  seller_Id = '';
   weight = '';
   company_manfacure = '';
   secure = '';
   content_en = '';
   content_ar = '';
-  is_choice="";
-  
-  show_app = false ;
+  is_choice = "";
+
+  show_app = false;
   images = [];
   blanner_type;
   text: any
 
   getMinCatergories() {
-    debugger
 
-  
-    
+
+
+
     let main_category_id = [];
-    if(this. mainCategoryList && this.mainCategoryList.length)
-    {
-    this. mainCategoryList.forEach(item => {
-      main_category_id.push(item)
-    }
-
-    )
-    const body = { main_category_id: main_category_id }
-    console.log(body)
-
-    this.dataservice.filterCategory(body).subscribe(
-      res => {
-        
-        console.log(this.minCategoryList=res.categories)
+    if (this.mainCategoryList && this.mainCategoryList.length) {
+      this.mainCategoryList.forEach(item => {
+        main_category_id.push(item)
       }
-    )
+
+      )
+      const body = { main_category_id: main_category_id }
+      console.log(body)
+
+      this.dataservice.filterCategory(body).subscribe(
+        res => {
+
+          console.log(this.minCategoryList = res.categories)
+        }
+      )
     }
   }
   getKeywords() {
-    debugger
 
-    if(this. categoryList && this.categoryList.length)
-    {
-    
-    let min_category_id = [];
-    this. categoryList.forEach(item => {
-      min_category_id.push(item)
-    }
 
-    )
-    const body = { categories: min_category_id }
-    console.log(body)
+    if (this.categoryList && this.categoryList.length) {
 
-    this.dataservice.Filterkeywords(body).subscribe(
-      res => {
-        this.mainKeywordList=res.keywords;
-        console.log(res);
-        //console.log(this.minCategoryList=res.categories)
+      let min_category_id = [];
+      this.categoryList.forEach(item => {
+        min_category_id.push(item)
       }
-    )
+
+      )
+      const body = { categories: min_category_id }
+      console.log(body)
+
+      this.dataservice.Filterkeywords(body).subscribe(
+        res => {
+          this.mainKeywordList = res.keywords;
+          console.log(res);
+          //console.log(this.minCategoryList=res.categories)
+        }
+      )
     }
   }
 
@@ -140,7 +138,7 @@ public config= {
   }
 
   resetProduct = () => {
-    this.is_choice="";
+    this.is_choice = "";
     this.name_ar = '';
     this.name_en = '';
     this.price = '';
@@ -157,19 +155,19 @@ public config= {
     this.secure = '';
     this.content_en = '';
     this.content_ar = '';
-    this.seller_Id='';
+    this.seller_Id = '';
     this.unit_number = '';
     this.show_app = false;
     this.images = [];
   }
   patchProduct = (data) => {
-    debugger
-    console.log (data)
+
+    console.log(data)
     this.name_ar = data?.name_ar;
     this.name_en = data?.name_en;
-    debugger
+
     this.seller_Id = data?.seller_id;
-    this.is_choice=data?.is_choice;
+    this.is_choice = data?.is_choice;
     this.price = data?.price;
     this.discount_price = data?.discount_price;
     // this.cost = data?.cost;
@@ -177,7 +175,7 @@ public config= {
     this.end_discount = data?.end_discount;
     // this.symbol = data?.symbol;
     this.stock = data?.stock;
-   // this.min_quantity = data?.min_quantity;
+    // this.min_quantity = data?.min_quantity;
     this.product_unit = data?.product_unit;
     this.weight = data?.weight;
     this.company_manfacure = data?.company_manfacure;
@@ -185,55 +183,55 @@ public config= {
     this.unit_number = data?.number;
     this.content_en = data?.content_en;
     this.content_ar = data?.content_ar;
-    this.show_app = data?.show_app == 'false' ? true:false;
+    this.show_app = data?.show_app == 'false' ? true : false;
     this.images = data?.sliders;
-    this.imgSrc ="https://smartvillageapp.com/app/"+data?.sliders[0]?.image;
+    this.imgSrc = "https://smartvillageapp.com/app/" + data?.sliders[0]?.image;
     this.blanner_type = data.blanner_type;
-    let main_categories: any[] = data?.main_categories; 
+    let main_categories: any[] = data?.main_categories;
     let categories: any[] = data?.categories;
-    let keywords:any[] =data?.keywords;
+    let keywords: any[] = data?.keywords;
     this.minCategoryList = data?.categories;
     this.mainKeywordList = data?.keywords;
-    this.mainCategoryList =  this.mainCategoryList || [];
-    this.KeywordList =  this.KeywordList || [];
+    this.mainCategoryList = this.mainCategoryList || [];
+    this.KeywordList = this.KeywordList || [];
     this.categoryList = this.categoryList || [];
-    if(main_categories && main_categories.length) {
+    if (main_categories && main_categories.length) {
       main_categories.forEach(element => {
-        if(element.id) {
-        
+        if (element.id) {
+
           this.mainCategoryList.push(element.id);
         }
-        
-       
+
+
       });
     }
-    if(keywords && keywords.length) {
+    if (keywords && keywords.length) {
       keywords.forEach(element => {
-        if(element.id) {
-        
+        if (element.id) {
+
           this.KeywordList.push(element.id);
         }
-        
-       
+
+
       });
     }
-    
-  if(categories && categories.length) {
-    categories.forEach(element => {
-      if(element.id) {
-        this.categoryList.push(element.id);
-      }
-     
-    });
-  }
- 
+
+    if (categories && categories.length) {
+      categories.forEach(element => {
+        if (element.id) {
+          this.categoryList.push(element.id);
+        }
+
+      });
+    }
+
   }
   handleProductData = () => {
-    debugger
+
     console.log(this.price)
 
     let form = new FormData();
-    form.append("name_ar",this.name_ar);
+    form.append("name_ar", this.name_ar);
     form.append("name_en", this.name_en);
     form.append("price", this.price);
     form.append("number", this.unit_number)
@@ -253,8 +251,8 @@ public config= {
       form.append("end_discount", this.formatDate(this.end_discount));
     }
     // form.append("symbol", this.symbol);
-   // form.append("stock", this.stock);
-   // form.append("min_quantity", this.min_quantity);
+    // form.append("stock", this.stock);
+    // form.append("min_quantity", this.min_quantity);
     form.append("product_unit", this.product_unit);
     form.append("weight", this.weight);
     form.append("company_manfacure", this.company_manfacure);
@@ -262,57 +260,57 @@ public config= {
     form.append("content_en", this.content_en);
     form.append("content_ar", this.content_ar);
     form.append("is_choice", this.is_choice);
-  
-    form.append("show_app", this.show_app.toString() == 'false' ? 'true':'false');
-    form.append("blanner_type",this. blanner_type)
-    form.append("seller_id",this. seller_Id)
-    for(let i =0 ; i< this.images.length ; i++) {
+
+    form.append("show_app", this.show_app.toString() == 'false' ? 'true' : 'false');
+    form.append("blanner_type", this.blanner_type)
+    form.append("seller_id", this.seller_Id)
+    for (let i = 0; i < this.images.length; i++) {
       form.append("images[]", this.images[i]);
     }
-    for(let i =0; i< this.mainCategoryList.length ; i++ ) {
-      form.append(`maincategory[${i}][category_id]`,this.mainCategoryList[i])
+    for (let i = 0; i < this.mainCategoryList.length; i++) {
+      form.append(`maincategory[${i}][category_id]`, this.mainCategoryList[i])
     }
-    for(let i =0; i< this.categoryList.length ; i++ ) {
-      form.append(`categories[${i}][category_id]`,this.categoryList[i])
+    for (let i = 0; i < this.categoryList.length; i++) {
+      form.append(`categories[${i}][category_id]`, this.categoryList[i])
     }
-    for(let i =0; i< this.KeywordList.length ; i++ ) {
-      form.append(`keywords[${i}][word_id]`,this.KeywordList[i])
+    for (let i = 0; i < this.KeywordList.length; i++) {
+      form.append(`keywords[${i}][word_id]`, this.KeywordList[i])
     }
 
-    if( ! this.images.length) {
-this.toaster.showErrorToast("صورة المنتج مطلوبة");
-return;
+    if (!this.images.length) {
+      this.toaster.showErrorToast("صورة المنتج مطلوبة");
+      return;
     }
-    else if(!this.name_ar ||
-   ! this.name_en ||
-   ! this.price ||
- 
-   ! this.product_unit ||
-   ! this.weight ||
-   ! this.company_manfacure ||
-   ! this.secure ||
-   ! this.content_en ||
-      !this.content_ar || !this.unit_number ||!this.is_choice) {
+    else if (!this.name_ar ||
+      !this.name_en ||
+      !this.price ||
+
+      !this.product_unit ||
+      !this.weight ||
+      !this.company_manfacure ||
+      !this.secure ||
+      !this.content_en ||
+      !this.content_ar || !this.unit_number || !this.is_choice) {
       return;
     } else {
-    
+
       this.addProduct.emit(form);
-      
+
     }
   }
   formatDate = (date) => {
     var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
 
     return [year, month, day].join('-');
-}
+  }
   showPreview(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -321,7 +319,7 @@ return;
       this.selectedImg = event.target.files[0];
       this.images = event.target.files;
     }
-    else {      
+    else {
       this.selectedImg = null;
     }
   }
