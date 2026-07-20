@@ -1,55 +1,39 @@
-<dx-popup
-  [visible]="isCustomerPopupVisible"
-  [shading]="true"
-  [title]="popTitle"
-  shadingColor="rgba(0, 0, 0, 0.2)"
-  [closeOnOutsideClick]="true"
-  [rtlEnabled]="true"
-  [maxWidth]="600"
-  height="auto"
-  dragEnabled="true"
-  (onHiding)="OnHiding.emit()"
->
+<dx-popup [visible]="isCustomerPopupVisible" [shading]="true" [title]="popTitle" shadingColor="rgba(0, 0, 0, 0.2)"
+  [closeOnOutsideClick]="true" [rtlEnabled]="true" [maxWidth]="600" height="auto" dragEnabled="true"
+  (onHiding)="OnHiding.emit()" [elementAttr]="{ class: 'customer-popup-wrapper' }">
   <div *dxTemplate="let data of 'content'">
     <div class="row">
       <div class="col-md-2 mt-1">
         <div class="dx-field-label">اسم العميل</div>
       </div>
       <div class="col-md-5 mt-1">
-        <dx-text-box
-          [rtlEnabled]="true"
-          placeholder="الاسم الأول"
-          [(value)]="Fname"
-        >
-        <dx-validator>
-          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
-      </dx-validator>
-      </dx-text-box>
+        <dx-text-box [rtlEnabled]="true" placeholder="الاسم الأول" [(value)]="Fname">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
       </div>
       <div class="col-md-5 mt-1">
-        <dx-text-box
-          [rtlEnabled]="true"
-          placeholder="اسم العائلة"
-          [(value)]="Lname"
-        >
-        <dx-validator>
-          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
-      </dx-validator>
-      </dx-text-box>
+        <dx-text-box [rtlEnabled]="true" placeholder="اسم العائلة" [(value)]="Lname">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
       </div>
     </div>
-   
+
     <div class="row mt-2">
       <div class="col-md-2 mt-1">
         <div class="dx-field-label">كلمة السر</div>
       </div>
       <div class="col-md-10 mt-1">
-        <dx-text-box [(value)]="password"  [editorOptions]="{ mode: 'password' }" [rtlEnabled]="true" placeholder="كلمة السر">
-       
+        <dx-text-box [(value)]="password" [editorOptions]="{ mode: 'password' }" [rtlEnabled]="true"
+          placeholder="كلمة السر">
+
           <dx-validator>
             <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
-          
-        </dx-validator>
+
+          </dx-validator>
         </dx-text-box>
       </div>
     </div>
@@ -58,11 +42,32 @@
         <div class="dx-field-label">رقم الهاتف</div>
       </div>
       <div class="col-md-10 mt-1">
-        <dx-text-box [(value)]="phone" mask="0000 0000 \968+ " [maskRules]="rules" [rtlEnabled]="true" placeholder="رقم الهاتف">
-          <dx-validator>
-            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
-        </dx-validator>
-        </dx-text-box>
+        <div class="d-flex align-items-center" style="direction: ltr; gap: 8px;">
+          <dx-select-box [items]="countries" [(value)]="selectedCountryCode" valueExpr="code" displayExpr="code"
+            [width]="120" [rtlEnabled]="false" fieldTemplate="field" itemTemplate="item">
+            <div *dxTemplate="let data of 'field'">
+              <div class="d-flex align-items-center justify-content-between p-1" style="height: 100%;">
+                <img src="https://flagcdn.com/w40/om.png" width="28" height="18" style="border: 1px solid #ddd; border-radius: 2px; margin-right: 4px;" alt="عمان" />
+                <span class="ml-1" style="font-weight: 500;">{{data?.code}}</span>
+              </div>
+            </div>
+            <div *dxTemplate="let data of 'item'">
+              <div class="d-flex align-items-center">
+                <img class="mr-2" src="https://flagcdn.com/w40/om.png" width="28" height="18" style="border: 1px solid #ddd; border-radius: 2px;" alt="عمان" />
+                <span class="mr-2" style="font-weight: 500;">{{data?.code}}</span>
+                <span style="color: #666; font-size: 0.9em; margin-left: auto;">({{data?.name}})</span>
+              </div>
+            </div>
+          </dx-select-box>
+          <dx-text-box [(value)]="localPhone" [rtlEnabled]="false"
+            placeholder="رقم الهاتف (أدخل 8 أرقام بدون كود الدولة)" style="flex: 1;" (onKeyPress)="onKeyPress($event)">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+              <dxi-validation-rule type="pattern" pattern="^[0-9]{8}$"
+                message="يجب إدخال 8 أرقام فقط بدون كود الدولة (مثال: 91234567)"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
@@ -70,48 +75,35 @@
         <div class="dx-field-label">العنوان</div>
       </div>
       <div class="col-md-4 mt-1">
-        <dx-select-box
-          [rtlEnabled]="true"
-          placeholder="المحافظة"
-          [dataSource]="States"
-          displayExpr="state_ar"
-          valueExpr="id"
-          [(value)]="country_id"
-                        (onValueChanged)="getCitesbystates()"
-        >
-        <dx-validator>
-          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
-      </dx-validator>
-      </dx-select-box>
+        <dx-select-box [rtlEnabled]="true" placeholder="المحافظة" [dataSource]="States" displayExpr="state_ar"
+          valueExpr="id" [(value)]="country_id" (onValueChanged)="getCitesbystates()">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
       </div>
 
       <div class="col-md-3 mt-1">
-        <dx-select-box
-         [dataSource]="Cities"
-          [rtlEnabled]="true"
-          placeholder="الولاية"
-          displayExpr="city_ar"
-        valueExpr="id"
-        [(value)]="city_id"
-          (onValueChanged)= "filterVillage()"
-        >
-        <dx-validator>
-          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
-      </dx-validator>
-      </dx-select-box>
+        <dx-select-box [dataSource]="Cities" [rtlEnabled]="true" placeholder="الولاية" displayExpr="city_ar"
+          valueExpr="id" [(value)]="city_id" (onValueChanged)="filterVillage()">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
       </div>
       <div class="col-md-3 mt-1">
-        <dx-select-box [dataSource]="Villages" [(value)]="village_id"   displayExpr="village_ar"
-        valueExpr="id" [rtlEnabled]="true" placeholder="القرية">
-        <dx-validator>
-          <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
-      </dx-validator>
-      </dx-select-box>
+        <dx-select-box [dataSource]="Villages" [(value)]="village_id" displayExpr="village_ar" valueExpr="id"
+          [rtlEnabled]="true" placeholder="القرية">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="هذا الحقل مطلوب"></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col-md-3 col-sm-4 mx-auto mt-3">
-        <dx-button class="dilvery-list-add-btn" (onClick)="handleData()" [useSubmitBehavior]="true" text="حفظ"> </dx-button>
+        <dx-button class="dilvery-list-add-btn" (onClick)="handleData()" [useSubmitBehavior]="true" text="حفظ">
+        </dx-button>
       </div>
     </div>
   </div>

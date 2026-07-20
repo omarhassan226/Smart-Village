@@ -1,0 +1,4 @@
+::ng-deep .customer-popup-wrapper .dx-popup-normal,
+::ng-deep .customer-popup-wrapper .dx-popup-content {
+  background-color: #ededed !important;
+}

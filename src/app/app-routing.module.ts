@@ -187,6 +187,13 @@ export const AppRoutes: Routes = [
             (m) => m.BanksModule
           ),
       },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./core/modules/contact-info/contact-info.module').then(
+            (m) => m.ContactInfoModule
+          ),
+      },
     ],
   },
 

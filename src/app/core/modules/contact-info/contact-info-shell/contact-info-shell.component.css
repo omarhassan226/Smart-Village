@@ -1,0 +1,26 @@
+.website-bg {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border: 1px solid #eef2f5;
+}
+
+h6 {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.dx-field-value {
+  width: 100% !important;
+}
+
+.default-btn {
+  height: 40px;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.default-btn:hover {
+  opacity: 0.9;
+}

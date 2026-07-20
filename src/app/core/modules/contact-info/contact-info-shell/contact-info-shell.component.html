@@ -1,0 +1,91 @@
+<div class="container-fluid website-bg p-4 mt-3">
+  <dx-validation-group #validationGroup>
+    <!-- Card Header / Title -->
+    <div class="row mb-4">
+      <div class="col-12 text-right">
+        <h4 class="font-weight-bold text-dark border-bottom pb-2">
+          <i class="far fa-address-card ml-2 text-info"></i>التحكم بمعلومات الاتصال
+        </h4>
+        <p class="text-secondary small">قم بتعديل بيانات الاتصال الخاصة بالقرية الذكية لتحديثها مباشرة في التطبيقات والمنصات التابعة.</p>
+      </div>
+    </div>
+
+    <!-- Contact Info Form Fields -->
+    <div class="row">
+      <!-- Email Field -->
+      <div class="col-lg-6 col-md-12 mt-3">
+        <h6 class="font-weight-bold text-right text-muted"><i class="far fa-envelope ml-2 text-primary"></i>البريد الإلكتروني</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="example@domain.com"
+                         [rtlEnabled]="true" 
+                         [(value)]="email">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="البريد الإلكتروني مطلوب"></dxi-validation-rule>
+                <dxi-validation-rule type="email" message="الرجاء إدخال بريد إلكتروني صحيح"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Field -->
+      <div class="col-lg-6 col-md-12 mt-3">
+        <h6 class="font-weight-bold text-right text-muted"><i class="fas fa-map-marker-alt ml-2 text-danger"></i>العنوان</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="ادخل العنوان بالتفصيل" 
+                         [rtlEnabled]="true" 
+                         [(value)]="address">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="العنوان مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+
+      <!-- Work Hours Field -->
+      <div class="col-lg-6 col-md-12 mt-3">
+        <h6 class="font-weight-bold text-right text-muted"><i class="far fa-clock ml-2 text-warning"></i>ساعات العمل</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="مثال: 9 AM - 6 PM" 
+                         [rtlEnabled]="true" 
+                         [(value)]="work_hour">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="ساعات العمل مطلوبة"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+
+      <!-- Location URL Field -->
+      <div class="col-lg-6 col-md-12 mt-3">
+        <h6 class="font-weight-bold text-right text-muted"><i class="fas fa-link ml-2 text-success"></i>رابط الموقع الجغرافي (Google Maps)</h6>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-text-box placeholder="https://maps.app.goo.gl/..." 
+                         [rtlEnabled]="true" 
+                         [(value)]="locations">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="رابط الموقع الجغرافي مطلوب"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-left mt-5 border-top pt-3">
+      <dx-button text="حفظ التغييرات" 
+                 [useSubmitBehavior]="true" 
+                 class="btn py-0 default-btn shadow-sm px-4" 
+                 style="background-color: #1cbbb2; border-color: #1cbbb2;" 
+                 (onClick)="saveContactInfo()">
+      </dx-button>
+    </div>
+  </dx-validation-group>
+</div>

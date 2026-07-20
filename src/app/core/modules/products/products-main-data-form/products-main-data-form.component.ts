@@ -76,6 +76,7 @@ export class ProductsMainDataFormComponent implements OnInit {
   show_app = false;
   images = [];
   blanner_type;
+  productId;
   text: any
 
   getMinCatergories() {
@@ -159,6 +160,7 @@ export class ProductsMainDataFormComponent implements OnInit {
     this.unit_number = '';
     this.show_app = false;
     this.images = [];
+    this.productId = '';
   }
   patchProduct = (data) => {
 
@@ -186,7 +188,8 @@ export class ProductsMainDataFormComponent implements OnInit {
     this.show_app = data?.show_app == 'false' ? true : false;
     this.images = data?.sliders;
     this.imgSrc = "https://smartvillageapp.com/app/" + data?.sliders[0]?.image;
-    this.blanner_type = data.blanner_type;
+    this.blanner_type = data.id;
+    this.productId = data.blanner_type;
     let main_categories: any[] = data?.main_categories;
     let categories: any[] = data?.categories;
     let keywords: any[] = data?.keywords;
@@ -262,7 +265,7 @@ export class ProductsMainDataFormComponent implements OnInit {
     form.append("is_choice", this.is_choice);
 
     form.append("show_app", this.show_app.toString() == 'false' ? 'true' : 'false');
-    form.append("blanner_type", this.blanner_type)
+    form.append("blanner_type", this.productId)
     form.append("seller_id", this.seller_Id)
     for (let i = 0; i < this.images.length; i++) {
       form.append("images[]", this.images[i]);

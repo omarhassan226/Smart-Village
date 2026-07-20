@@ -250,6 +250,9 @@ export class DataService {
   getNotifications = (): Observable<any> => this.http.get<any>(`${this.apiUrl}/get/notification`, this.httpOptions);
   getReturnOrders = (): Observable<any> => this.http.get<any>(`${this.apiUrl}/get/orders/return/products`, this.httpOptions);
 
+  getContactInfo = (): Observable<any> => this.http.get<any>(`${this.apiUrl}/contact-info`, this.httpOptions);
+  updateContactInfo = (body): Observable<any> => this.http.post<any>(`${this.apiUrl}/contact-info`, body, this.httpOptions);
+
 
 
   constructor(private http: HttpClient, private cookieService: CookieService) {

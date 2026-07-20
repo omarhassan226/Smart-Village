@@ -84,6 +84,12 @@ export class SideNavComponent implements OnInit {
     text: 'البنوك',
     icon: 'fas fa-university',
     route: 'banks'
+  },
+  {
+    id: '23',
+    text: 'معلومات الاتصال',
+    icon: 'far fa-address-card',
+    route: 'contact-info'
   }
 
   ]
